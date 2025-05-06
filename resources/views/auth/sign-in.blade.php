@@ -24,18 +24,36 @@
                     @csrf
 
                     <div class="mb-2">
-                        <x-form.label />
+                        <x-form.label :props="[
+                            'for' => 'username',
+                            'label' => 'nama pengguna',
+                            'required' => true,
+                        ]" />
 
-                        <x-form.input />
+                        <x-form.input :props="[
+                            'id' => 'username',
+                            'name' => 'username',
+                            'placeholder' => 'Masukkan nama pengguna',
+                        ]" />
                     </div>
 
                     <div class="mb-6">
-                        <x-form.label />
+                        <x-form.label :props="[
+                            'for' => 'password',
+                            'label' => 'kata sandi',
+                            'required' => true,
+                        ]" />
 
-                        <x-form.input />
+                        <x-form.input :props="[
+                            'type' => 'password',
+                            'id' => 'password',
+                            'name' => 'password',
+                            'placeholder' => 'Masukkan kata sandi',
+                        ]" />
                     </div>
 
                     <x-form.submit :props="[
+                        'id' => 'sign-in-button',
                         'label' => 'Masuk',
                     ]" />
                 </form>
@@ -43,10 +61,9 @@
         </main>
 
         <footer class="text-center py-4">
-            <h1 class="text-gray-500 tracking-wide">&copy; 2025 Point of Sale</h1>
+            <h1 class="text-gray-500 tracking-wide">Copyright &copy; 2025 Point of Sale</h1>
         </footer>
     </section>
-
 
     @vite(['resources/js/app.js'])
 </body>
