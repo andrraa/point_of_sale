@@ -5,33 +5,25 @@ declare(strict_types=1);
 use Flasher\Prime\Configuration;
 
 return Configuration::from([
-    // Default notification library (e.g., 'flasher', 'toastr', 'noty', 'notyf', 'sweetalert')
     'default' => 'flasher',
 
-    // Path to the main PHPFlasher JavaScript file
     'main_script' => '/vendor/flasher/flasher.min.js',
 
-    // List of CSS files to style your notifications
     'styles' => [
         '/vendor/flasher/flasher.min.css',
     ],
 
-    // Set global options for all notifications (optional)
-    // 'options' => [
-    //     'timeout' => 5000, // Time in milliseconds before the notification disappears
-    //     'position' => 'top-right', // Where the notification appears on the screen
-    // ],
+    'options' => [
+        'timeout' => 5000,
+        'position' => 'top-right',
+    ],
 
-    // Automatically inject JavaScript and CSS assets into your HTML pages
     'inject_assets' => true,
 
-    // Enable message translation using Laravel's translation service
     'translate' => true,
 
-    // URL patterns to exclude from asset injection and flash_bag conversion
     'excluded_paths' => [],
 
-    // Map Laravel flash message keys to notification types
     'flash_bag' => [
         'success' => ['success'],
         'error' => ['error', 'danger'],
@@ -39,17 +31,61 @@ return Configuration::from([
         'info' => ['info', 'notice', 'alert'],
     ],
 
-    // Set criteria to filter which notifications are displayed (optional)
-    // 'filter' => [
-    //     'limit' => 5, // Maximum number of notifications to show at once
-    // ],
-
-    // Define notification presets to simplify notification creation (optional)
-    // 'presets' => [
-    //     'entity_saved' => [
-    //         'type' => 'success',
-    //         'title' => 'Entity saved',
-    //         'message' => 'Entity saved successfully',
-    //     ],
-    // ],
+    'presets' => [
+        // AUTHENTICATION
+        'auth_failed' => [
+            'type' => 'error',
+            'message' => 'Username atau kata sandi tidak sesuai.',
+            'title' => 'Gagal',
+        ],
+        'auth_success' => [
+            'type' => 'success',
+            'message' => 'Selamat datang di point of sale.',
+            'title' => 'Sukses',
+        ],
+        // CREATE DATA
+        'create_success' => [
+            'type' => 'success',
+            'message' => 'Data berhasil disimpan.',
+            'title' => 'Sukses',
+        ],
+        'create_failed' => [
+            'type' => 'error',
+            'message' => 'Data gagal disimpan.',
+            'title' => 'Gagal'
+        ],
+        // UPDATE DATA
+        'update_success' => [
+            'type' => 'success',
+            'message' => 'Data berhasil diubah.',
+            'title' => 'Sukses'
+        ],
+        'update_failed' => [
+            'type' => 'error',
+            'message' => 'Data gagal diubah.',
+            'title' => 'Gagal'
+        ],
+        // DELETE DATA
+        'delete_success' => [
+            'type' => 'success',
+            'message' => 'Data berhasil dihapus.',
+            'title' => 'Sukses'
+        ],
+        'delete_failed' => [
+            'type' => 'error',
+            'message' => 'Data gagal dihapus.',
+            'title' => 'Gagal'
+        ],
+        // RESTORE DATA
+        'restore_success' => [
+            'type' => 'success',
+            'message' => 'Data berhasil dikembalikan.',
+            'title' => 'Sukses'
+        ],
+        'restore_failed' => [
+            'type' => 'error',
+            'message' => 'Data gagal dikembalikan.',
+            'title' => 'Gagal'
+        ],
+    ]
 ]);

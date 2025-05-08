@@ -20,7 +20,7 @@
                     <h1 class="text-lg font-medium">Masuk Akun</h1>
                 </div>
 
-                <form action="">
+                <form id="form-sign-in" action="{{ route('login') }}" method="POST">
                     @csrf
 
                     <div class="mb-2">
@@ -66,6 +66,11 @@
     </section>
 
     @vite(['resources/js/app.js'])
+
+    <script type="module" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+    <script type="module">
+        {!! $validator !!}
+    </script>
 </body>
 
 </html>
