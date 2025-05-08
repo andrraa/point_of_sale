@@ -2,6 +2,6 @@
     {{ $props['label'] }}
 
     @if (isset($props['required']) && $props['required'])
-        <span class="text-orange-500 font-bold">*</span>
+        <span class="text-coral-red font-bold">*</span>
     @endif
 </label>

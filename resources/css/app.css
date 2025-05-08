@@ -6,11 +6,13 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --color-ufo-green: #34C759;
+    --color-azure: #007AFF;
+    --color-vivid-gamboge: #FF9500;
+    --color-coral-red: #FF3B30;
 }
 
 /* VALIDATION STYLE */
 .invalid-feedback {
-    @apply text-orange-500 mt-0.5 tracking-wide;
+    @apply text-coral-red mt-0.5 tracking-wide;
 }
