@@ -10,5 +10,12 @@ class User extends Authenticable
     use SoftDeletes;
 
     protected $table = 'tbl_users';
+
     protected $primaryKey = 'user_id';
+
+    protected $fillable = [
+        'username',
+        'password',
+        'active'
+    ];
 }

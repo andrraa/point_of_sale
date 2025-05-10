@@ -48,7 +48,7 @@
                                     <div class="flex gap-1.5">
                                         <a href="{{ route('subcategory.edit', ['category' => $category->category_id]) }}"
                                             class="px-3 py-1.5 rounded-lg border text-xs border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white font-medium tracking-wide transition duration-200">
-                                            Edit
+                                            Ubah
                                         </a>
                                         <button type="button" data-id="{{ $category->category_id }}"
                                             class="delete-button px-3 py-1.5 rounded-lg border text-xs border-red-900 text-red-900 hover:bg-red-900 hover:text-white font-medium tracking-wide transition duration-200 cursor-pointer">

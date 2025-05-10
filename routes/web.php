@@ -43,5 +43,5 @@ Route::middleware('auth')->group(function () {
     });
 
     // USER
-    Route::resource('user', UserController::class);
+    Route::resource('user', UserController::class)->except('show');
 });
