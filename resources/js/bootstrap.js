@@ -10,3 +10,7 @@ window.$ = window.jQuery = jQuery;
 // SWEETALERT2
 import Swal from 'sweetalert2';
 window.Swal = Swal;
+
+// SELECT2
+import select2 from 'select2';
+select2();

@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Category')
+@section('title', 'Kategori')
 
-@section('navTitle', 'Category')
+@section('navTitle', 'Kategori')
 
 @section('content')
     <div class="flex h-full max-h-full overflow-hidden gap-2">
@@ -10,13 +10,13 @@
 
         <main class="flex-1 h-full overflow-y-auto px-4 py-2">
             <div>
-                <h1 class="font-medium tracking-wider text-blue-900">Category List</h1>
+                <h1 class="font-medium tracking-wider text-blue-900">Daftar Kategori</h1>
             </div>
 
             <div class="py-4">
                 <x-action-button :props="[
                     'url' => route('category.create'),
-                    'label' => 'New Category',
+                    'label' => 'Kategori Baru',
                 ]" />
             </div>
 
@@ -26,9 +26,9 @@
                     <thead class="text-left bg-gray-100">
                         <tr>
                             <th class="p-3 text-sm tracking-wider text-blue-900">#</th>
-                            <th class="p-3 text-sm tracking-wider text-blue-900">Category Code</th>
-                            <th class="p-3 text-sm tracking-wider text-blue-900">Category Name</th>
-                            <th class="p-3 text-sm tracking-wider text-blue-900">Actions</th>
+                            <th class="p-3 text-sm tracking-wider text-blue-900">Kode Kategori</th>
+                            <th class="p-3 text-sm tracking-wider text-blue-900">Nama Kategori</th>
+                            <th class="p-3 text-sm tracking-wider text-blue-900">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
@@ -46,11 +46,11 @@
                                     <div class="flex gap-1.5">
                                         <a href="{{ route('category.edit', ['category' => $category->category_id]) }}"
                                             class="px-3 py-1.5 rounded-lg border text-xs border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white font-medium tracking-wide transition duration-200">
-                                            Edit
+                                            Ubah
                                         </a>
                                         <button type="button" data-id="{{ $category->category_id }}"
                                             class="delete-button px-3 py-1.5 rounded-lg border text-xs border-red-900 text-red-900 hover:bg-red-900 hover:text-white font-medium tracking-wide transition duration-200 cursor-pointer">
-                                            Delete
+                                            Hapus
                                         </button>
                                     </div>
                                 </td>
@@ -70,11 +70,12 @@
                 const categoryId = $(this).data('id');
 
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'Category will be deleted',
+                    title: 'Apakah yakin?',
+                    text: 'Kategori akan dihapus.',
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Delete'
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Batal',
                 }).then((res) => {
                     if (res.isConfirmed) {
                         $.ajax({

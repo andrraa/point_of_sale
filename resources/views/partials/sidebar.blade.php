@@ -23,25 +23,25 @@
                     'routeUrl' => '',
                     'routePattern' => 'customer',
                     'navIcon' => 'fa-solid fa-user-tag',
-                    'navTitle' => 'Customer',
+                    'navTitle' => 'Pelanggan',
                 ],
                 [
                     'routeUrl' => '',
                     'routePattern' => 'supplier',
                     'navIcon' => 'fa-solid fa-dolly',
-                    'navTitle' => 'Supplier',
+                    'navTitle' => 'Pemasok',
                 ],
                 [
                     'routeUrl' => '',
                     'routePattern' => 'report',
                     'navIcon' => 'fa-solid fa-file-lines',
-                    'navTitle' => 'Report',
+                    'navTitle' => 'Laporan',
                 ],
                 [
                     'routeUrl' => route('category.index'),
-                    'routePattern' => ['category.*', 'sub.category.*', 'user.*'],
+                    'routePattern' => ['category.*', 'subcategory.*', 'user.*'],
                     'navIcon' => 'fa-solid fa-gear',
-                    'navTitle' => 'Settings',
+                    'navTitle' => 'Pengaturan',
                 ],
             ];
         @endphp
@@ -55,7 +55,7 @@
 
                 <li>
                     <a href="{{ $menu['routeUrl'] }}">
-                        <div class="flex items-center gap-3 rounded-lg py-2 px-4 {{ $navActiveClass }}">
+                        <div class="flex items-center gap-3 rounded-lg py-2 px-4 outline-none {{ $navActiveClass }}">
                             <div class="w-4 h-4 flex items-center justify-center">
                                 <i class="{{ $menu['navIcon'] }} text-sm"></i>
                             </div>

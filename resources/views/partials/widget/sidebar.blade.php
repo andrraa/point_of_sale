@@ -5,19 +5,19 @@
                 'routeUrl' => route('category.index'),
                 'routePattern' => 'category.*',
                 'menuIcon' => 'fa-solid fa-list',
-                'menuTitle' => 'Category',
+                'menuTitle' => 'Induk Kategori',
             ],
             [
-                'routeUrl' => route('sub.category.index'),
-                'routePattern' => 'sub.category.*',
+                'routeUrl' => route('subcategory.index'),
+                'routePattern' => 'subcategory.*',
                 'menuIcon' => 'fa-solid fa-list-check',
-                'menuTitle' => 'Sub Category',
+                'menuTitle' => 'Sub Kategori',
             ],
             [
                 'routeUrl' => route('user.index'),
                 'routePattern' => 'user.*',
                 'menuIcon' => 'fa-regular fa-user',
-                'menuTitle' => 'User',
+                'menuTitle' => 'Pengguna',
             ],
         ];
     @endphp
@@ -25,8 +25,8 @@
         @foreach ($menuItems as $menu)
             @php
                 $navActiveClass = request()->routeIs($menu['routePattern'])
-                    ? 'text-blue-900 font-medium'
-                    : 'text-gray-600 hover:bg-blue-900/5';
+                    ? 'text-blue-900 font-semibold'
+                    : 'text-gray-400 hover:bg-blue-900/5';
             @endphp
             <li>
                 <a href="{{ $menu['routeUrl'] }}">

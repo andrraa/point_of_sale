@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
     // DASHBOARD
     Route::get('/', DashboardController::class)->name('dashboard');
 
+    // CATEGORY & SUB CATEGORY
     Route::controller(CategoryController::class)->group(function () {
         // CATEGORY
         Route::get('category', 'categoryIndex')->name('category.index');
@@ -26,11 +27,19 @@ Route::middleware('auth')->group(function () {
             Route::post('create', 'createCategory');
             Route::get('{category}/edit', 'editCategoryPage')->name('category.edit');
             Route::put('{category}/update', 'updateCategory')->name('category.update');
-            Route::delete('{category}', 'deleteCategory')->name('category.delete');
         });
 
         // SUB CATEGORY
-        Route::get('sub-category', 'subCategoryIndex')->name('sub.category.index');
+        Route::get('sub-category', 'subCategoryIndex')->name('subcategory.index');
+        Route::prefix('sub-category')->group(function () {
+            Route::get('create', 'createSubCategoryPage')->name('subcategory.create');
+            Route::post('create', 'createSubCategory');
+            Route::get('{category}/edit', 'editSubCategoryPage')->name('subcategory.edit');
+            Route::put('{category}/update', 'updateSubCategory')->name('subcategory.update');
+        });
+
+        // DESTROY CATEGORY & SUBCATEGORY
+        Route::delete('category/{category}', 'deleteCategory')->name('category.delete');
     });
 
     // USER

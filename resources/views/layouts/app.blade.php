@@ -34,6 +34,11 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
+            // SELETCt2
+            $('.select2').select2({
+                placeholder: '------ Pilih ------',
+            });
         });
     </script>
 
