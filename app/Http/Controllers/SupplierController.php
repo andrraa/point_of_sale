@@ -35,9 +35,9 @@ class SupplierController
 
     public function edit(Supplier $supplier): View
     {
-        $validator = $this->validationService->generateValidation(SupplierRequest::class, '#form-create-supplier');
+        $validator = $this->validationService->generateValidation(SupplierRequest::class, '#form-edit-supplier');
 
-        return view('supplier.create', compact(['supplier', 'validator']));
+        return view('supplier.edit', compact(['supplier', 'validator']));
     }
 
     public function update(SupplierRequest $request, Supplier $supplier)

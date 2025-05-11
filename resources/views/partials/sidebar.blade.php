@@ -8,75 +8,120 @@
         @php
             $menus = [
                 [
-                    'routeUrl' => route('dashboard'),
-                    'routePattern' => 'dashboard',
-                    'navIcon' => 'fa-solid fa-home',
-                    'navTitle' => 'Dashboard',
+                    'group' => 'Menu Utama',
+                    'menus' => [
+                        [
+                            'routeUrl' => route('dashboard'),
+                            'routePattern' => 'dashboard',
+                            'navIcon' => 'fa-solid fa-home',
+                            'navTitle' => 'Dashboard',
+                        ],
+                        [
+                            'routeUrl' => '',
+                            'routePattern' => 'point-of-sale',
+                            'navIcon' => 'fa-solid fa-laptop',
+                            'navTitle' => 'Kasir POS',
+                        ],
+                    ],
                 ],
                 [
-                    'routeUrl' => '',
-                    'routePattern' => 'point-of-sale',
-                    'navIcon' => 'fa-solid fa-laptop',
-                    'navTitle' => 'POS',
+                    'group' => 'Data Utama',
+                    'menus' => [
+                        [
+                            'routeUrl' => route('customer.index'),
+                            'routePattern' => 'customer.*',
+                            'navIcon' => 'fa-solid fa-user-tag',
+                            'navTitle' => 'Pelanggan',
+                        ],
+                        [
+                            'routeUrl' => route('supplier.index'),
+                            'routePattern' => 'supplier.*',
+                            'navIcon' => 'fa-solid fa-dolly',
+                            'navTitle' => 'Pemasok',
+                        ],
+                        [
+                            'routeUrl' => route('stock.index'),
+                            'routePattern' => 'stock.*',
+                            'navIcon' => 'fa-solid fa-boxes-stacked',
+                            'navTitle' => 'Stok Barang',
+                        ],
+                    ],
                 ],
                 [
-                    'routeUrl' => route('customer.index'),
-                    'routePattern' => 'customer.*',
-                    'navIcon' => 'fa-solid fa-user-tag',
-                    'navTitle' => 'Pelanggan',
+                    'group' => 'Akutansi & Laporan',
+                    'menus' => [
+                        [
+                            'routeUrl' => route('purchase.index'),
+                            'routePattern' => 'purchase.*',
+                            'navIcon' => 'fa-solid fa-boxes-packing',
+                            'navTitle' => 'Pembelian',
+                        ],
+                        [
+                            'routeUrl' => route('sale.index'),
+                            'routePattern' => 'sale.*',
+                            'navIcon' => 'fa-solid fa-truck-ramp-box',
+                            'navTitle' => 'Penjualan',
+                        ],
+                        [
+                            'routeUrl' => route('report'),
+                            'routePattern' => 'report',
+                            'navIcon' => 'fa-solid fa-file-lines',
+                            'navTitle' => 'Laporan',
+                        ],
+                    ],
                 ],
                 [
-                    'routeUrl' => route('supplier.index'),
-                    'routePattern' => 'supplier.*',
-                    'navIcon' => 'fa-solid fa-dolly',
-                    'navTitle' => 'Pemasok',
-                ],
-                [
-                    'routeUrl' => '',
-                    'routePattern' => 'report',
-                    'navIcon' => 'fa-solid fa-file-lines',
-                    'navTitle' => 'Laporan',
-                ],
-                [
-                    'routeUrl' => route('category.index'),
-                    'routePattern' => ['category.*', 'subcategory.*', 'user.*'],
-                    'navIcon' => 'fa-solid fa-gear',
-                    'navTitle' => 'Pengaturan',
+                    'group' => 'Menu Lainnya',
+                    'menus' => [
+                        [
+                            'routeUrl' => route('category.index'),
+                            'routePattern' => ['category.*', 'subcategory.*', 'user.*'],
+                            'navIcon' => 'fa-solid fa-gear',
+                            'navTitle' => 'Pengaturan',
+                        ],
+                    ],
                 ],
             ];
         @endphp
         <ul class="space-y-1">
             @foreach ($menus as $menu)
-                @php
-                    $navActiveClass = request()->routeIs($menu['routePattern'])
-                        ? 'bg-blue-900 text-white'
-                        : 'hover:bg-blue-900/20 text-gray-600';
-                @endphp
+                <div class="py-1">
+                    <span class="uppercase text-[11px] font-medium tracking-wide text-gray-400">
+                        {{ $menu['group'] }}
+                    </span>
+                </div>
+                @foreach ($menu['menus'] as $item)
+                    @php
+                        $navActiveClass = request()->routeIs($item['routePattern'])
+                            ? 'bg-blue-900 text-white'
+                            : 'hover:bg-blue-900/20 text-gray-600';
+                    @endphp
 
-                <li>
-                    <a href="{{ $menu['routeUrl'] }}">
-                        <div class="flex items-center gap-3 rounded-lg py-2 px-4 outline-none {{ $navActiveClass }}">
-                            <div class="w-4 h-4 flex items-center justify-center">
-                                <i class="{{ $menu['navIcon'] }} text-sm"></i>
+                    <li>
+                        <a href="{{ $item['routeUrl'] }}">
+                            <div class="flex items-center gap-3 rounded-lg py-2 px-4 outline-none {{ $navActiveClass }}">
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="{{ $item['navIcon'] }} text-sm"></i>
+                                </div>
+                                <div class="mt-auto">
+                                    <span class="text-sm tracking-wider">{{ $item['navTitle'] }}</span>
+                                </div>
                             </div>
-                            <div class="mt-auto">
-                                <span class="text-sm tracking-wider">{{ $menu['navTitle'] }}</span>
-                            </div>
-                        </div>
-                    </a>
-                </li>
+                        </a>
+                    </li>
+                @endforeach
             @endforeach
         </ul>
     </div>
 
     {{-- Logout --}}
-    <div id="logout-button"
+    <button id="logout-button"
         class="flex items-center gap-3 rounded-lg py-2 px-4 border border-red-500 text-red-500 transition duraiton-200 hover:bg-red-500 hover:text-white hover:font-medium cursor-pointer">
         <div class="w-4 h-4 flex items-center justify-center">
             <i class="fa-solid fa-right-from-bracket text-sm"></i>
         </div>
         <div class="mt-auto">
-            <span class="text-sm tracking-wider">Sign Out</span>
+            <span class="text-sm tracking-wider">Keluar</span>
         </div>
-    </div>
+    </button>
 </aside>

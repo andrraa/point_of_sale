@@ -4,6 +4,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -52,4 +56,16 @@ Route::middleware('auth')->group(function () {
 
     // SUPPLIER
     Route::resource('supplier', SupplierController::class)->except('show');
+
+    // PURCHASE
+    Route::resource('purchase', PurchaseController::class)->except('show');
+
+    // SALE
+    Route::resource('sale', SaleController::class)->except('show');
+
+    // REPORT
+    Route::get('report', ReportController::class)->name('report');
+
+    // STOCK
+    Route::resource('stock', StockController::class)->except('show');
 });
