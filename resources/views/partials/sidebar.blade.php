@@ -20,14 +20,14 @@
                     'navTitle' => 'POS',
                 ],
                 [
-                    'routeUrl' => '',
-                    'routePattern' => 'customer',
+                    'routeUrl' => route('customer.index'),
+                    'routePattern' => 'customer.*',
                     'navIcon' => 'fa-solid fa-user-tag',
                     'navTitle' => 'Pelanggan',
                 ],
                 [
-                    'routeUrl' => '',
-                    'routePattern' => 'supplier',
+                    'routeUrl' => route('supplier.index'),
+                    'routePattern' => 'supplier.*',
                     'navIcon' => 'fa-solid fa-dolly',
                     'navTitle' => 'Pemasok',
                 ],
