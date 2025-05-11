@@ -17,7 +17,7 @@
         <main class="flex-1 flex items-center justify-center">
             <div class="bg-white rounded-lg border border-gray-200 shadow-lg p-4 w-[380px]">
                 <div class="mb-4 pb-2 border-b border-b-gray-200">
-                    <h1 class="text-lg font-medium">Masuk Akun</h1>
+                    <h1 class="text-lg font-bold text-blue-900 traking-wide">Masuk Akun</h1>
                 </div>
 
                 <form id="form-sign-in" action="{{ route('login') }}" method="POST">

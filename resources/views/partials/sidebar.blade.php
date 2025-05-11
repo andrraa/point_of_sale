@@ -115,13 +115,17 @@
     </div>
 
     {{-- Logout --}}
-    <button id="logout-button"
-        class="flex items-center gap-3 rounded-lg py-2 px-4 border border-red-500 text-red-500 transition duraiton-200 hover:bg-red-500 hover:text-white hover:font-medium cursor-pointer">
-        <div class="w-4 h-4 flex items-center justify-center">
-            <i class="fa-solid fa-right-from-bracket text-sm"></i>
-        </div>
-        <div class="mt-auto">
-            <span class="text-sm tracking-wider">Keluar</span>
-        </div>
-    </button>
+    <form id="form-logout" action="{{ route('logout') }}" method="POST">
+        @csrf
+
+        <button id="logout-button"
+            class="flex items-center gap-3 rounded-lg py-2 px-4 border border-red-500 text-red-500 transition duraiton-200 hover:bg-red-500 hover:text-white hover:font-medium cursor-pointer w-full">
+            <div class="w-4 h-4 flex items-center justify-center">
+                <i class="fa-solid fa-right-from-bracket text-sm"></i>
+            </div>
+            <div class="mt-auto">
+                <span class="text-sm tracking-wider">Keluar</span>
+            </div>
+        </button>
+    </form>
 </aside>
