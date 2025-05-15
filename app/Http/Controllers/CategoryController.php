@@ -8,68 +8,88 @@ use App\Models\Category;
 use App\Services\ValidationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class CategoryController
 {
     protected $validationService;
+    protected $itemCacheKey = 'item_cache_key';
+    protected $customerCacheKey = 'customer_cache_key';
 
     public function __construct(ValidationService $validationService)
     {
         $this->validationService = $validationService;
     }
 
-    // CATEGORY
-    public function categoryIndex(): View
+    // ITEM CATEGORY
+    public function itemCategory(): View
     {
-        $categories = Category::query()->select([
-            'category_id',
-            'category_code',
-            'category_name'
-        ])
-            ->whereNull('category_parent_id')
-            ->get();
+        $categories = Cache::remember($this->itemCacheKey, 84600, function () {
+            return Category::query()->select([
+                'category_id',
+                'category_code',
+                'category_name'
+            ])
+                ->whereNull('category_parent_id')
+                ->get();
+        });
 
         return view('settings.category.index', compact('categories'));
     }
 
-    public function createCategoryPage(): View
+    public function createCategoryItem(): View
     {
         $validator = $this->validationService->generateValidation(CategoryRequest::class, '#form-create-category');
 
         return view('settings.category.create', compact(['validator']));
     }
 
-    public function createCategory(CategoryRequest $request): RedirectResponse
+    public function storeCategoryItem(CategoryRequest $request): RedirectResponse
     {
         $validated = $request->validated();
 
-        Category::create($validated)
-            ? flash()->preset('create_success')
-            : flash()->preset('create_failed');
+        $result = Category::create($validated);
+
+        if ($result) {
+            Cache::forget($this->itemCacheKey);
+            flash()->preset('create_success');
+        } else {
+            flash()->preset('create_failed');
+        }
 
         return redirect()->route('category.index');
     }
 
-    public function editCategoryPage(Category $category): View
+    public function editCategoryItem(Category $category): View
     {
         $validator = $this->validationService->generateValidation(CategoryRequest::class, '#form-edit-category');
 
         return view('settings.category.edit', compact(['category', 'validator']));
     }
 
-    public function updateCategory(CategoryRequest $request, Category $category): RedirectResponse
+    public function updateCategoryItem(CategoryRequest $request, Category $category): RedirectResponse
     {
         $validated = $request->validated();
 
-        $category->update($validated)
-            ? flash()->preset('update_success')
-            : flash()->preset('update_failed');
+        $result = $category->update($validated);
+
+        if ($result) {
+            Cache::forget($this->itemCacheKey);
+            flash()->preset('update_success');
+        } else {
+            flash()->preset('update_failed');
+        }
 
         return redirect()->route('category.index');
     }
 
-    // SUB CATEGORY
+    public function deleteCategoryItem()
+    {
+
+    }
+
+    // CUSTOMER CATEGORY
     public function subCategoryIndex(): View
     {
         $subCategories = Category::with('parent')

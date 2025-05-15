@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CategoryRequest extends FormRequest
+class RegionRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -15,22 +15,17 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_code' => [
+            'region_code' => [
                 'required',
                 'string',
                 'max:20',
-                Rule::unique('tbl_categories', 'category_code')
-                    ->ignore($this->route('category')->category_id ?? null, 'category_id')
+                Rule::unique('tbl_regions', 'region_code')
+                    ->ignore($this->route('region')->region_id ?? null, 'region_id')
             ],
-            'category_name' => [
+            'region_name' => [
                 'required',
                 'string',
                 'max:50'
-            ],
-            'category_type' => [
-                'required',
-                'integer',
-                'in:0,1'
             ]
         ];
     }
@@ -38,7 +33,7 @@ class CategoryRequest extends FormRequest
     public function prepareForValidation(): void
     {
         $this->merge([
-            'category_name' => strtoupper($this->category_name)
+            'region_name' => strtoupper($this->region_name)
         ]);
     }
 }

@@ -5,13 +5,19 @@
                 'routeUrl' => route('category.index'),
                 'routePattern' => 'category.*',
                 'menuIcon' => 'fa-solid fa-list',
-                'menuTitle' => 'Induk Kategori',
+                'menuTitle' => 'Kategori Barang',
             ],
             [
                 'routeUrl' => route('subcategory.index'),
                 'routePattern' => 'subcategory.*',
-                'menuIcon' => 'fa-solid fa-list-check',
-                'menuTitle' => 'Sub Kategori',
+                'menuIcon' => 'fa-solid fa-list',
+                'menuTitle' => 'Kategori Pelanggan',
+            ],
+            [
+                'routeUrl' => route('region.index'),
+                'routePattern' => 'region.*',
+                'menuIcon' => 'fa-solid fa-location-dot',
+                'menuTitle' => 'Wilayah',
             ],
             [
                 'routeUrl' => route('user.index'),

@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\RegionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\StockController;
@@ -50,6 +51,9 @@ Route::middleware('auth')->group(function () {
         // DESTROY CATEGORY & SUBCATEGORY
         Route::delete('category/{category}', 'deleteCategory')->name('category.delete');
     });
+
+    // REGION
+    Route::resource('region', RegionController::class)->except('show');
 
     // USER
     Route::resource('user', UserController::class)->except('show');

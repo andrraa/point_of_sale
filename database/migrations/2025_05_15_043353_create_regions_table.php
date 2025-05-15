@@ -7,11 +7,10 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('tbl_categories', function (Blueprint $table) {
-            $table->id('category_id');
-            $table->string('category_code', 20)->unique();
-            $table->string('category_name', 50);
-            $table->boolean('category_type');
+        Schema::create('tbl_regions', function (Blueprint $table) {
+            $table->id('region_id');
+            $table->string('region_code', 20)->unique();
+            $table->string('region_name', 50);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -19,6 +18,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('tbl_categories');
+        Schema::dropIfExists('tbl_regions');
     }
 };

@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Category extends Model
 {
+    public const CATEGORY_CUSTOMER = 0;
+    public const ITEM_CATEGORY = 1;
+
     protected $table = 'tbl_categories';
 
     protected $primaryKey = 'category_id';
@@ -14,11 +16,6 @@ class Category extends Model
     protected $fillable = [
         'category_code',
         'category_name',
-        'category_parent_id'
+        'category_type'
     ];
-
-    public function parent(): BelongsTo
-    {
-        return $this->belongsTo(Category::class, 'category_parent_id', 'category_id');
-    }
 }
