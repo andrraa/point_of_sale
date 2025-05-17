@@ -1,5 +1,21 @@
 <div class="mb-2">
     <x-form.label :props="[
+        'for' => 'category_type',
+        'label' => 'Tipe Kategori',
+        'required' => true,
+    ]" />
+
+    <x-form.input :props="[
+        'id' => 'category_type',
+        'name' => 'category_type',
+        'placeholder' => 'Tipe Kategori',
+        'value' => 'Barang',
+        'readonly' => true,
+    ]" />
+</div>
+
+<div class="mb-2">
+    <x-form.label :props="[
         'for' => 'category_code',
         'label' => 'Kode Kategori',
         'required' => true,

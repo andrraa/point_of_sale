@@ -31,21 +31,21 @@ Route::middleware('auth')->group(function () {
     // CATEGORY & SUB CATEGORY
     Route::controller(CategoryController::class)->group(function () {
         // CATEGORY
-        Route::get('category', 'categoryIndex')->name('category.index');
+        Route::get('category', 'itemCategory')->name('category.index');
         Route::prefix('category')->group(function () {
-            Route::get('create', 'createCategoryPage')->name('category.create');
-            Route::post('create', 'createCategory');
-            Route::get('{category}/edit', 'editCategoryPage')->name('category.edit');
-            Route::put('{category}/update', 'updateCategory')->name('category.update');
+            Route::get('create', 'createCategoryItem')->name('category.create');
+            Route::post('create', 'storeCategoryItem');
+            Route::get('{category}/edit', 'editCategoryItem')->name('category.edit');
+            Route::put('{category}/update', 'UpdateCategoryItem')->name('category.update');
         });
 
         // SUB CATEGORY
-        Route::get('sub-category', 'subCategoryIndex')->name('subcategory.index');
-        Route::prefix('sub-category')->group(function () {
-            Route::get('create', 'createSubCategoryPage')->name('subcategory.create');
-            Route::post('create', 'createSubCategory');
-            Route::get('{category}/edit', 'editSubCategoryPage')->name('subcategory.edit');
-            Route::put('{category}/update', 'updateSubCategory')->name('subcategory.update');
+        Route::get('customer-category', 'customerCategory')->name('customer-category.index');
+        Route::prefix('customer-category')->group(function () {
+            Route::get('create', 'createCategoryCustomer')->name('customer-category.create');
+            Route::post('create', 'storeCategoryCustomer');
+            Route::get('{category}/edit', 'editCategoryCustomer')->name('customer-category.edit');
+            Route::put('{category}/update', 'updateCategoryCustomer')->name('customer-category.update');
         });
 
         // DESTROY CATEGORY & SUBCATEGORY

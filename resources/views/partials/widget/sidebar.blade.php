@@ -8,8 +8,8 @@
                 'menuTitle' => 'Kategori Barang',
             ],
             [
-                'routeUrl' => route('subcategory.index'),
-                'routePattern' => 'subcategory.*',
+                'routeUrl' => route('customer-category.index'),
+                'routePattern' => 'customer-category.*',
                 'menuIcon' => 'fa-solid fa-list',
                 'menuTitle' => 'Kategori Pelanggan',
             ],

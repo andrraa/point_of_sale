@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
-use App\Http\Requests\SubCategoryRequest;
 use App\Models\Category;
 use App\Services\ValidationService;
 use Illuminate\Http\JsonResponse;
@@ -31,7 +30,7 @@ class CategoryController
                 'category_code',
                 'category_name'
             ])
-                ->whereNull('category_parent_id')
+                ->where('category_type', Category::ITEM_CATEGORY)
                 ->get();
         });
 
@@ -84,43 +83,30 @@ class CategoryController
         return redirect()->route('category.index');
     }
 
-    public function deleteCategoryItem()
-    {
-
-    }
-
     // CUSTOMER CATEGORY
-    public function subCategoryIndex(): View
+    public function customerCategory(): View
     {
-        $subCategories = Category::with('parent')
+        $customerCategories = Category::query()
             ->select([
                 'category_id',
                 'category_code',
                 'category_name',
-                'category_parent_id'
             ])
-            ->whereNotNull('category_parent_id')
+            ->where('category_type', Category::CATEGORY_CUSTOMER)
             ->get();
 
-        return view('settings.sub-category.index', compact('subCategories'));
+        return view('settings.customer.index', compact('customerCategories'));
     }
 
-    public function createSubCategoryPage(): View
+    public function createCategoryCustomer(): View
     {
-        $validator = $this->validationService->generateValidation(SubCategoryRequest::class, '#form-create-subcategory');
+        $validator = $this->validationService->generateValidation(CategoryRequest::class, '#form-create-subcategory');
 
-        $categories = Category::whereNull('category_parent_id')
-            ->select([
-                'category_id',
-                'category_name'
-            ])
-            ->pluck('category_name', 'category_id');
-
-        return view('settings.sub-category.create', compact(['validator', 'categories']));
+        return view('settings.customer.create', compact(['validator']));
 
     }
 
-    public function createSubCategory(SubCategoryRequest $request): RedirectResponse
+    public function storeCategoryCustomer(CategoryRequest $request): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -128,24 +114,17 @@ class CategoryController
             ? flash()->preset('create_success')
             : flash()->preset('create_failed');
 
-        return redirect()->route('subcategory.index');
+        return redirect()->route('customer-category.index');
     }
 
-    public function editSubCategoryPage(Category $category): View
+    public function editCategoryCustomer(Category $category): View
     {
-        $validator = $this->validationService->generateValidation(SubCategoryRequest::class, '#form-edit-subcategory');
+        $validator = $this->validationService->generateValidation(CategoryRequest::class, '#form-edit-subcategory');
 
-        $categories = Category::whereNull('category_parent_id')
-            ->select([
-                'category_id',
-                'category_name'
-            ])
-            ->pluck('category_name', 'category_id');
-
-        return view('settings.sub-category.edit', compact(['category', 'validator', 'categories']));
+        return view('settings.customer.edit', compact(['category', 'validator']));
     }
 
-    public function updateSubCategory(SubCategoryRequest $request, Category $category): RedirectResponse
+    public function updateCategoryCustomer(CategoryRequest $request, Category $category): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -153,13 +132,17 @@ class CategoryController
             ? flash()->preset('update_success')
             : flash()->preset('update_failed');
 
-        return redirect()->route('subcategory.index');
+        return redirect()->route('customer-category.index');
     }
 
     // DESTROY CATEGORY & SUBCATEGORY
     public function deleteCategory(Category $category): JsonResponse
     {
         abort_unless(request()->expectsJson(), 403);
+
+        $category->category_type === Category::ITEM_CATEGORY
+            ? Cache::forget($this->itemCacheKey)
+            : Cache::forget($this->customerCacheKey);
 
         $result = $category->delete();
 

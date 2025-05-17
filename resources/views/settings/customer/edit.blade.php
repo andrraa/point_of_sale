@@ -14,15 +14,15 @@
             </div>
 
             <div class="bg-white rounded-lg p-6 border border-gray-200">
-                <form id="form-edit-category" action="{{ route('subcategory.update', $category->category_id) }}"
+                <form id="form-edit-category" action="{{ route('customer-category.update', $category->category_id) }}"
                     method="POST">
                     @csrf
                     @method('PUT')
 
-                    @include('settings.sub-category._form')
+                    @include('settings.customer._form')
 
                     <x-form.action :props="[
-                        'url' => route('subcategory.index'),
+                        'url' => route('category.customer.index'),
                     ]" />
                 </form>
             </div>

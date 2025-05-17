@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Sub Kategori')
+@section('title', 'Kategori Pelanggan')
 
-@section('navTitle', 'Sub Kategori')
+@section('navTitle', 'Kategori Pelanggan')
 
 @section('content')
     <div class="flex h-full max-h-full overflow-hidden gap-2">
@@ -10,13 +10,13 @@
 
         <main class="flex-1 h-full overflow-y-auto px-4 py-2">
             <div>
-                <h1 class="font-medium tracking-wider text-blue-900">Daftar Sub Kategori</h1>
+                <h1 class="font-medium tracking-wider text-blue-900">Daftar Kategori Pelanggan</h1>
             </div>
 
             <div class="py-4">
                 <x-action-button :props="[
-                    'url' => route('subcategory.create'),
-                    'label' => 'Sub Kategori Baru',
+                    'url' => route('customer-category.create'),
+                    'label' => 'Kategori Pelanggan Baru',
                 ]" />
             </div>
 
@@ -28,12 +28,11 @@
                             <th class="p-3 text-sm tracking-wider text-blue-900">#</th>
                             <th class="p-3 text-sm tracking-wider text-blue-900">Kode Kategori</th>
                             <th class="p-3 text-sm tracking-wider text-blue-900">Nama Kategori</th>
-                            <th class="p-3 text-sm tracking-wider text-blue-900">Induk Kategori</th>
                             <th class="p-3 text-sm tracking-wider text-blue-900">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
-                        @foreach ($subCategories as $index => $category)
+                        @foreach ($customerCategories as $index => $category)
                             @php
                                 $class = $index % 2 != 0 ? 'bg-gray-50' : '';
                                 $border = $loop->last ? 'border-b border-b-gray-200' : '';
@@ -43,10 +42,9 @@
                                 <td class="p-3 text-sm tracking-wider">{{ $index + 1 }}</td>
                                 <td class="p-3 text-sm tracking-wider">{{ $category->category_code }}</td>
                                 <td class="p-3 text-sm tracking-wider">{{ $category->category_name }}</td>
-                                <td class="p-3 text-sm tracking-wider">{{ $category->parent->category_name }}</td>
                                 <td class="p-3 text-sm tracking-wider">
                                     <div class="flex gap-1.5">
-                                        <a href="{{ route('subcategory.edit', ['category' => $category->category_id]) }}"
+                                        <a href="{{ route('category.customer.edit', ['category' => $category->category_id]) }}"
                                             class="px-3 py-1.5 rounded-lg border text-xs border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white font-medium tracking-wide transition duration-200">
                                             Ubah
                                         </a>

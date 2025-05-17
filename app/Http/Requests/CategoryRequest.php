@@ -29,8 +29,6 @@ class CategoryRequest extends FormRequest
             ],
             'category_type' => [
                 'required',
-                'integer',
-                'in:0,1'
             ]
         ];
     }
@@ -38,7 +36,8 @@ class CategoryRequest extends FormRequest
     public function prepareForValidation(): void
     {
         $this->merge([
-            'category_name' => strtoupper($this->category_name)
+            'category_name' => strtoupper($this->category_name),
+            'category_type' => $this->category_type === 'Barang' ? 1 : 0
         ]);
     }
 }
