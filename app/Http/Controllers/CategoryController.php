@@ -13,8 +13,8 @@ use Illuminate\View\View;
 class CategoryController
 {
     protected $validationService;
-    protected $itemCacheKey = 'item_cache_key';
-    protected $customerCacheKey = 'customer_cache_key';
+    protected $itemCacheKey = CATEGORY::ITEM_CACHE_KEY;
+    protected $customerCacheKey = CATEGORY::CUSTOMER_CACHE_KEY;
 
     public function __construct(ValidationService $validationService)
     {

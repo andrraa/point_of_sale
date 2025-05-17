@@ -44,7 +44,7 @@
                                 <td class="p-3 text-sm tracking-wider">{{ $category->category_name }}</td>
                                 <td class="p-3 text-sm tracking-wider">
                                     <div class="flex gap-1.5">
-                                        <a href="{{ route('category.customer.edit', ['category' => $category->category_id]) }}"
+                                        <a href="{{ route('customer-category.edit', ['category' => $category->category_id]) }}"
                                             class="px-3 py-1.5 rounded-lg border text-xs border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white font-medium tracking-wide transition duration-200">
                                             Ubah
                                         </a>

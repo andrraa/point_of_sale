@@ -18,3 +18,10 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    <script type="module" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+    <script type="module">
+        {!! $validator !!}
+    </script>
+@endpush
