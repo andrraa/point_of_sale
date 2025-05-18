@@ -63,7 +63,12 @@ class StockRequest extends FormRequest
     public function prepareForValidation(): void
     {
         $this->merge([
-            'stock_name' => strtoupper(strtolower($this->stock_name))
+            'stock_name' => strtoupper(strtolower($this->stock_name)),
+            'stock_purchase_price' => str_replace('.', '', $this->stock_purchase_price),
+            'stock_sale_price_1' => str_replace('.', '', $this->stock_sale_price_1),
+            'stock_sale_price_2' => str_replace('.', '', $this->stock_sale_price_2),
+            'stock_sale_price_3' => str_replace('.', '', $this->stock_sale_price_3),
+            'stock_sale_price_4' => str_replace('.', '', $this->stock_sale_price_4),
         ]);
     }
 }

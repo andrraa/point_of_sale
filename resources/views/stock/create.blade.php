@@ -19,6 +19,7 @@
 @endsection
 
 @push('scripts')
+    @vite('resources/js/function.js')
     <script type="module" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
     <script type="module">
         {!! $validator !!}
@@ -27,7 +28,7 @@
         $(document).ready(function() {
             $('.price-input').on('input',
                 function() {
-                    this.value = this.value.replace(/[^0-9]/g, '');
+                    this.value = formatNumberToRupiah(this.value.replace(/[^0-9]/g, ''));
                 });
         });
     </script>
