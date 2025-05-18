@@ -14,6 +14,9 @@ class Category extends Model
     public const ITEM_CACHE_KEY = 'item_category_cache';
     public const CUSTOMER_CACHE_KEY = 'customer_category_cache';
 
+    public const ITEM_DROPDOWN_CACHE_KEY = 'item_dropdown_cache';
+    public const CUSTOMER_DROPDOWN_CACHE_KEY = 'customer_dropdown_cache';
+
     protected $table = 'tbl_categories';
 
     protected $primaryKey = 'category_id';
@@ -27,7 +30,7 @@ class Category extends Model
     public static function getItemCategories(): Collection
     {
         return Cache::remember(
-            self::ITEM_CACHE_KEY,
+            self::ITEM_DROPDOWN_CACHE_KEY,
             now()->addHours(2),
             fn() =>
             self::where('category_type', self::ITEM_CATEGORY)

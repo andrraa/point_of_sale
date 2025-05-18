@@ -13,8 +13,7 @@ use Illuminate\View\View;
 class CategoryController
 {
     protected $validationService;
-    protected $itemCacheKey = CATEGORY::ITEM_CACHE_KEY;
-    protected $customerCacheKey = CATEGORY::CUSTOMER_CACHE_KEY;
+
 
     public function __construct(ValidationService $validationService)
     {
@@ -24,7 +23,7 @@ class CategoryController
     // ITEM CATEGORY
     public function itemCategory(): View
     {
-        $categories = Cache::remember($this->itemCacheKey, 84600, function () {
+        $categories = Cache::remember(Category::ITEM_CACHE_KEY, 84600, function () {
             return Category::query()->select([
                 'category_id',
                 'category_code',
@@ -51,7 +50,8 @@ class CategoryController
         $result = Category::create($validated);
 
         if ($result) {
-            Cache::forget($this->itemCacheKey);
+            $this->clearItemCache();
+
             flash()->preset('create_success');
         } else {
             flash()->preset('create_failed');
@@ -74,7 +74,8 @@ class CategoryController
         $result = $category->update($validated);
 
         if ($result) {
-            Cache::forget($this->itemCacheKey);
+            $this->clearItemCache();
+
             flash()->preset('update_success');
         } else {
             flash()->preset('update_failed');
@@ -83,17 +84,25 @@ class CategoryController
         return redirect()->route('category.index');
     }
 
+    private function clearItemCache(): void
+    {
+        Cache::forget(Category::ITEM_CACHE_KEY);
+        Cache::forget(Category::ITEM_DROPDOWN_CACHE_KEY);
+    }
+
     // CUSTOMER CATEGORY
     public function customerCategory(): View
     {
-        $customerCategories = Category::query()
-            ->select([
-                'category_id',
-                'category_code',
-                'category_name',
-            ])
-            ->where('category_type', Category::CATEGORY_CUSTOMER)
-            ->get();
+        $customerCategories = Cache::remember(Category::CUSTOMER_CACHE_KEY, 84600, function () {
+            return Category::query()
+                ->select([
+                    'category_id',
+                    'category_code',
+                    'category_name',
+                ])
+                ->where('category_type', Category::CATEGORY_CUSTOMER)
+                ->get();
+        });
 
         return view('settings.customer.index', compact('customerCategories'));
     }
@@ -114,6 +123,8 @@ class CategoryController
             ? flash()->preset('create_success')
             : flash()->preset('create_failed');
 
+        $this->clearCustomerCache();
+
         return redirect()->route('customer-category.index');
     }
 
@@ -132,7 +143,15 @@ class CategoryController
             ? flash()->preset('update_success')
             : flash()->preset('update_failed');
 
+        $this->clearCustomerCache();
+
         return redirect()->route('customer-category.index');
+    }
+
+    private function clearCustomerCache(): void
+    {
+        Cache::forget(Category::CUSTOMER_CACHE_KEY);
+        Cache::forget(Category::CUSTOMER_DROPDOWN_CACHE_KEY);
     }
 
     // DESTROY CATEGORY & SUBCATEGORY
@@ -141,8 +160,8 @@ class CategoryController
         abort_unless(request()->expectsJson(), 403);
 
         $category->category_type === Category::ITEM_CATEGORY
-            ? Cache::forget($this->itemCacheKey)
-            : Cache::forget($this->customerCacheKey);
+            ? $this->clearItemCache()
+            : $this->clearCustomerCache();
 
         $result = $category->delete();
 

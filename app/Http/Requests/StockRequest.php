@@ -39,23 +39,23 @@ class StockRequest extends FormRequest
             ],
             'stock_purchase_price' => [
                 'required',
-                'numeric'
+                'string'
             ],
             'stock_sale_price_1' => [
                 'required',
-                'numeric'
+                'string'
             ],
             'stock_sale_price_2' => [
                 'required',
-                'numeric'
+                'string'
             ],
             'stock_sale_price_3' => [
                 'required',
-                'numeric'
+                'string'
             ],
             'stock_sale_price_4' => [
                 'required',
-                'numeric'
+                'string'
             ]
         ];
     }

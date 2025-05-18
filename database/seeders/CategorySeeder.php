@@ -91,6 +91,22 @@ class CategorySeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
+            [
+                'category_id' => 11,
+                'category_code' => '200',
+                'category_name' => 'KONTAN',
+                'category_type' => 0,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'category_id' => 12,
+                'category_code' => '120',
+                'category_name' => 'GROSIR',
+                'category_type' => 0,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
         ];
 
         DB::table('tbl_categories')->insert($categories);

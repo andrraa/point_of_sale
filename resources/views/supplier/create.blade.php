@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="bg-white rounded-lg p-8 border border-gray-200">
-        <form id="form-create-customer" action="{{ route('supplier.store') }}" method="POST">
+        <form id="form-create-supplier" action="{{ route('supplier.store') }}" method="POST">
             @csrf
 
             @include('supplier._form')
@@ -17,3 +17,25 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    @vite('resources/js/function.js')
+    <script type="module" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+    <script type="module">
+        {!! $validator !!}
+
+        $(document).ready(function() {
+            const customFunction = window.CustomFunction;
+
+            $('.price-input').on('input',
+                function() {
+                    this.value = customFunction.formatNumberToRupiah(customFunction.numberOnly(this.value));
+                });
+
+            $('.number-input').on('input',
+                function() {
+                    this.value = customFunction.numberOnly(this.value);
+                });
+        });
+    </script>
+@endpush

@@ -13,7 +13,6 @@ use Illuminate\View\View;
 class RegionController
 {
     protected $validationService;
-    protected $cacheKey = 'region_cache';
 
     public function __construct(ValidationService $validationService)
     {
@@ -22,7 +21,7 @@ class RegionController
 
     public function index(): View
     {
-        $regions = Cache::remember($this->cacheKey, 86400, function () {
+        $regions = Cache::remember(Region::REGION_CACHE, 86400, function () {
             return Region::query()
                 ->select(['region_id', 'region_code', 'region_name'])
                 ->get();
@@ -45,7 +44,8 @@ class RegionController
         $result = Region::create($validated);
 
         if ($result) {
-            Cache::forget($this->cacheKey);
+            $this->clearCache();
+
             flash()->preset('create_success');
         } else {
             flash()->preset('create_failed');
@@ -68,7 +68,8 @@ class RegionController
         $result = $region->update($validated);
 
         if ($result) {
-            Cache::forget($this->cacheKey);
+            $this->clearCache();
+
             flash()->preset('update_success');
         } else {
             flash()->preset('update_failed');
@@ -84,12 +85,19 @@ class RegionController
         $result = $region->delete();
 
         if ($result) {
-            Cache::forget($this->cacheKey);
+            $this->clearCache();
+
             flash()->preset('delete_success');
         } else {
             flash()->preset('delete_failed');
         }
 
         return response()->json($result ? true : false);
+    }
+
+    private function clearCache(): void
+    {
+        Cache::forget(Region::REGION_CACHE);
+        Cache::forget(Region::REGION_DROPDOWN_CACHE);
     }
 }

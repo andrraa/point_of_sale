@@ -26,9 +26,11 @@
     </script>
     <script type="module">
         $(document).ready(function() {
+            const customFunction = window.CustomFunction;
+
             $('.price-input').on('input',
                 function() {
-                    this.value = formatNumberToRupiah(this.value.replace(/[^0-9]/g, ''));
+                    this.value = customFunction.formatNumberToRupiah(this.value.replace(/[^0-9]/g, ''));
                 });
         });
     </script>

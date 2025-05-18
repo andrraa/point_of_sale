@@ -26,13 +26,15 @@
         {!! $validator !!}
 
         $(document).ready(function() {
+            const customFunction = window.CustomFunction;
+
             $('.price-input').each(function() {
-                this.value = formatNumberToRupiah(this.value);
+                this.value = customFunction.formatNumberToRupiah(this.value);
             });
 
             $('.price-input').on('input',
                 function() {
-                    this.value = formatNumberToRupiah(this.value.replace(/[^0-9]/g, ''));
+                    this.value = customFunction.formatNumberToRupiah(this.value.replace(/[^0-9]/g, ''));
                 });
         });
     </script>

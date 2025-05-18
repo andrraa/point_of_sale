@@ -48,17 +48,17 @@
 
     <div>
         <x-form.label :props="[
-            'for' => 'suppler_area',
+            'for' => 'supplier_region_id',
             'label' => 'Wilayah Pemasok',
             'required' => true,
         ]" />
 
-        <x-form.input :props="[
-            'id' => 'suppler_area',
-            'name' => 'suppler_area',
-            'placeholder' => 'Wilayah Pemasok. Contoh: Jakarta',
-            'value' => old('suppler_area', $supplier->suppler_area ?? null),
-        ]" />
+        <x-form.select :props="[
+            'id' => 'supplier_region_id',
+            'name' => 'supplier_region_id',
+            'value' => old('supplier_region_id', $supplier->supplier_region_id ?? null),
+            'class' => 'w-full',
+        ]" :options="$regions" />
     </div>
 </div>
 
@@ -79,29 +79,31 @@
 <div class="grid grid-cols-2 gap-4 mb-4">
     <div>
         <x-form.label :props="[
-            'for' => 'supplier_phone',
+            'for' => 'supplier_telepon_number',
             'label' => 'Nomor Telepon',
         ]" />
 
         <x-form.input :props="[
-            'id' => 'supplier_phone',
-            'name' => 'supplier_phone',
+            'id' => 'supplier_telepon_number',
+            'name' => 'supplier_telepon_number',
             'placeholder' => 'Nomor Telepon. Contoh: 0271823xxxx',
-            'value' => old('supplier_phone', $supplier->supplier_phone ?? null),
+            'class' => 'number-input',
+            'value' => old('supplier_telepon_number', $supplier->supplier_telepon_number ?? null),
         ]" />
     </div>
 
     <div>
         <x-form.label :props="[
-            'for' => 'supplier_phone_number',
+            'for' => 'supplier_handphone_number',
             'label' => 'Nomor Handphone',
         ]" />
 
         <x-form.input :props="[
-            'id' => 'supplier_phone_number',
-            'name' => 'supplier_phone_number',
+            'id' => 'supplier_handphone_number',
+            'name' => 'supplier_handphone_number',
             'placeholder' => 'Nomor Handphone. Contoh: 0812765xxxxx',
-            'value' => old('supplier_phone_number', $supplier->supplier_phone_number ?? null),
+            'class' => 'number-input',
+            'value' => old('supplier_handphone_number', $supplier->supplier_handphone_number ?? null),
         ]" />
     </div>
 </div>
@@ -116,6 +118,7 @@
         'id' => 'supplier_npwp_number',
         'name' => 'supplier_npwp_number',
         'placeholder' => 'Masukkan nomor NPWP 16 digit',
+        'class' => 'number-input',
         'value' => old('supplier_npwp_number', $supplier->supplier_npwp_number ?? null),
     ]" />
 </div>
@@ -137,29 +140,31 @@
 <div class="grid grid-cols-2 gap-4 mb-4">
     <div>
         <x-form.label :props="[
-            'for' => 'supplier_credit_start',
+            'for' => 'supplier_first_debt',
             'label' => 'Hutang Awal',
         ]" />
 
         <x-form.input :props="[
-            'id' => 'supplier_credit_start',
-            'name' => 'supplier_credit_start',
+            'id' => 'supplier_first_debt',
+            'name' => 'supplier_first_debt',
             'placeholder' => 'Masukkan Hutang Awal',
-            'value' => old('supplier_credit_start', $supplier->supplier_credit_start ?? 0),
+            'class' => 'price-input',
+            'value' => old('supplier_first_debt', $supplier->supplier_first_debt ?? 0),
         ]" />
     </div>
 
     <div>
         <x-form.label :props="[
-            'for' => 'supplier_buy',
+            'for' => 'supplier_purchase',
             'label' => 'Pembelian',
         ]" />
 
         <x-form.input :props="[
-            'id' => 'supplier_buy',
-            'name' => 'supplier_buy',
+            'id' => 'supplier_purchase',
+            'name' => 'supplier_purchase',
             'placeholder' => 'Masukkan Pembelian',
-            'value' => old('supplier_buy', $customer->supplier_buy ?? 0),
+            'class' => 'price-input',
+            'value' => old('supplier_purchase', $customer->supplier_purchase ?? 0),
         ]" />
     </div>
 </div>
@@ -175,21 +180,23 @@
             'id' => 'supplier_payment',
             'name' => 'supplier_payment',
             'placeholder' => 'Masukkan Pembayaran',
+            'class' => 'price-input',
             'value' => old('supplier_payment', $customer->supplier_payment ?? 0),
         ]" />
     </div>
 
     <div class="mb-4">
         <x-form.label :props="[
-            'for' => 'supplier_credit_end',
+            'for' => 'supplier_last_debt',
             'label' => 'Hutang Akhir',
         ]" />
 
         <x-form.input :props="[
-            'id' => 'supplier_credit_end',
-            'name' => 'supplier_credit_end',
+            'id' => 'supplier_last_debt',
+            'name' => 'supplier_last_debt',
             'placeholder' => 'Masukkan Hutang Akhir',
-            'value' => old('supplier_credit_end', $customer->supplier_credit_end ?? 0),
+            'class' => 'price-input',
+            'value' => old('supplier_last_debt', $customer->supplier_last_debt ?? 0),
         ]" />
     </div>
 </div>

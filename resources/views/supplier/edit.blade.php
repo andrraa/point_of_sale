@@ -18,3 +18,25 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    @vite('resources/js/function.js')
+    <script type="module" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+    <script type="module">
+        {!! $validator !!}
+
+        $(document).ready(function() {
+            const customFunction = window.CustomFunction;
+
+            $('.price-input').on('input',
+                function() {
+                    this.value = customFunction.formatNumberToRupiah(customFunction.numberOnly(this.value));
+                });
+
+            $('.number-input').on('input',
+                function() {
+                    this.value = customFunction.numberOnly(this.value);
+                });
+        });
+    </script>
+@endpush
