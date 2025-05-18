@@ -127,22 +127,62 @@ import DataTables from "datatables.net";
 
 // ACTION BUTTON
 export function actions(data, selector) {
-    let actions = ``;
+    let actions = `<div class="flex items-center gap-1 shrink-0">`;
+
+    console.log(data);
 
     if (data.hasOwnProperty('edit')) {
-
-    }
-
-    if (data.hasOwnProperty('detail')) {
-
+        actions += `
+            <a href="${data.edit}" title="Ubah Data">
+                <div class="w-6 h-6 p-2 rounded-md flex items-center justify-center shrink-0 border border-gray-200 text-blue-500 hover:bg-blue-500 hover:text-white">
+                    <i class="fa-solid fa-pencil text-xs"></i>
+                </div>
+            </a>
+        `;
     }
 
     if (data.hasOwnProperty('delete')) {
-        
+        actions += `
+            <button type="button" data-url="${data.delete}" data-selector="${selector}" title="Hapus Data" class="cursor-pointer dt-delete">
+                <div class="w-6 h-6 p-2 rounded-md flex items-center justify-center shrink-0 border border-gray-200 text-red-500 hover:bg-red-500 hover:text-white">
+                    <i class="fa-solid fa-trash text-xs"></i>
+                </div>
+            </button>
+        `;
     }
 
-    return actions += ``;
+    return actions += `</div>`;
 }
+
+// DELETE BUTTON
+$(document).on('click', '.dt-delete', function(e) {
+    e.preventDefault();
+
+    const button = $(this);
+    const url = button.data("url");
+    const selector = button.data("selector");
+    const table = $(selector).DataTable();
+
+    Swal.fire({
+        title: 'Perhatian',
+        text: 'Data yang dihapus tidak dapat dipulihkan!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Hapus',
+        cancelButtonText: 'Batal',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: url,
+                method: 'DELETE',
+                success: function(response) {
+                    Swal.fire('Berhasil!', 'Data berhasil dihapus.', 'success');
+                    table.ajax.reload(null, false);
+                }
+            });
+        }
+    });
+});
 
 // EXPORT THE WINDOW
 window.DataTables = DataTables;

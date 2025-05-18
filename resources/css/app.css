@@ -51,3 +51,16 @@
 .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
     @apply bg-blue-900 font-semibold;
 }
+
+/* DATATABLE */
+.dt-length label {
+    @apply text-gray-500 ms-1 text-sm tracking-wide;
+}
+
+.dt-info {
+    @apply text-gray-500 text-sm tracking-wide;
+}
+
+.dt-empty {
+    @apply p-3 tracking-wide text-gray-500;
+}

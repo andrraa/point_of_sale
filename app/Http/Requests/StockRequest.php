@@ -59,4 +59,11 @@ class StockRequest extends FormRequest
             ]
         ];
     }
+
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'stock_name' => strtoupper(strtolower($this->stock_name))
+        ]);
+    }
 }

@@ -77,7 +77,7 @@ class StockController
 
         $categories = Category::getItemCategories();
 
-        return view('stock.edit', compact(['stock', 'validator']));
+        return view('stock.edit', compact(['stock', 'validator', 'categories']));
     }
 
     public function update(StockRequest $request, Stock $stock): RedirectResponse
@@ -91,8 +91,12 @@ class StockController
         return redirect()->route('stock.index');
     }
 
-    public function destroy()
+    public function destroy(Stock $stock): JsonResponse
     {
+        abort_unless(request()->expectsJson(), 403);
 
+        $result = $stock->delete();
+
+        return response()->json($result ? true : false);
     }
 }

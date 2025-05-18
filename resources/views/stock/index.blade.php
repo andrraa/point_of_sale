@@ -43,32 +43,38 @@
                 serverSide: true,
                 ajax: "{{ route('stock.index') }}",
                 columns: [{
-                        data: 'stock_id',
-                        name: 'stock_id'
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
                     },
                     {
                         data: 'stock_code',
-                        name: 'stock_code'
+                        name: 'stock_code',
+                        class: 'font-bold tracking-wide text-blue-900'
                     },
                     {
                         data: 'stock_name',
-                        name: 'stock_name'
+                        name: 'stock_name',
+                        class: 'font-medium tracking-wide text-gray-400'
                     },
                     {
                         data: 'stock_total',
-                        name: 'stock_total'
+                        name: 'stock_total',
+                        class: 'font-medium tracking-wide'
                     },
                     {
                         data: 'stock_current',
-                        name: 'stock_current'
+                        name: 'stock_current',
+                        class: 'font-medium tracking-wide text-blue-500'
                     },
                     {
                         data: 'stock_in',
-                        name: 'stock_in'
+                        name: 'stock_in',
+                        class: 'font-medium tracking-wide text-green-500'
                     },
                     {
                         data: 'stock_out',
-                        name: 'stock_out'
+                        name: 'stock_out',
+                        class: 'font-medium tracking-wide text-red-500'
                     },
                     {
                         data: 'actions',
@@ -77,7 +83,12 @@
                             return dataTableAction(data, '#stock-table');
                         }
                     },
-                ]
+                ],
+                columnDefs: [{
+                    target: [0, -1],
+                    searchable: false,
+                    orderable: false
+                }]
             });
         });
     </script>
