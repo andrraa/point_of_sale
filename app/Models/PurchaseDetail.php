@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Purchase extends Model
+class PurchaseDetail extends Model
 {
-    protected $table = 'tbl_purchases';
+    protected $table = 'tbl_purchase_details';
 
-    protected $primaryKey = 'purchase_id';
+    protected $primaryKey = 'p_detail_id';
 
     protected $fillable = [
         'purchase_invoice',

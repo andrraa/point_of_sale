@@ -66,6 +66,7 @@ Route::middleware('auth')->group(function () {
 
     // PURCHASE
     Route::resource('purchase', PurchaseController::class)->except('show');
+    Route::post('purchase/get-item', [PurchaseController::class, 'getItem'])->name('purchase.get.item');
 
     // SALE
     Route::resource('sale', SaleController::class)->except('show');

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Collection;
 
 class Stock extends Model
 {
@@ -26,6 +27,13 @@ class Stock extends Model
         'stock_in',
         'stock_out'
     ];
+
+    public static function getStockDropdown(): Collection
+    {
+        return self::query()
+            ->select(['stock_id', 'stock_name'])
+            ->pluck('stock_name', 'stock_id');
+    }
 
     public function category(): BelongsTo
     {

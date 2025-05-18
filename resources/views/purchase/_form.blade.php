@@ -1,49 +1,32 @@
-<div class="grid grid-cols-2 gap-4 mb-4">
-    <div>
-        <x-form.label :props="[
-            'for' => 'purchase_code',
-            'label' => 'Bukti',
-            'required' => true,
-        ]" />
+<div class="mb-4">
+    <x-form.label :props="[
+        'for' => 'purchase_invoice',
+        'label' => 'Bukti / Faktur Beli',
+        'required' => true,
+    ]" />
 
-        <x-form.input :props="[
-            'id' => 'purchase_code',
-            'name' => 'purchase_code',
-            'placeholder' => 'Kode Bukti. Contoh: 000',
-            'value' => old('purchase_code', $purchase->purchase_code ?? null),
-        ]" />
-    </div>
-
-    <div>
-        <x-form.label :props="[
-            'for' => 'purchase_invoice',
-            'label' => 'Faktur Beli',
-            'required' => true,
-        ]" />
-
-        <x-form.input :props="[
-            'id' => 'purchase_invoice',
-            'name' => 'purchase_invoice',
-            'placeholder' => 'Faktu Beli',
-            'value' => old('purchase_invoice', $purchase->purchase_invoice ?? null),
-        ]" />
-    </div>
+    <x-form.input :props="[
+        'id' => 'purchase_invoice',
+        'name' => 'purchase_invoice',
+        'placeholder' => 'Faktu Beli',
+        'value' => old('purchase_invoice', $purchase->purchase_invoice ?? null),
+    ]" />
 </div>
 
 <div class="grid grid-cols-2 gap-4 mb-4">
     <div>
         <x-form.label :props="[
-            'for' => 'purchase_supplier',
+            'for' => 'purchase_supplier_id',
             'label' => 'Pemasok / Supplier',
             'required' => true,
         ]" />
 
-        <x-form.input :props="[
-            'id' => 'purchase_supplier',
-            'name' => 'purchase_supplier',
-            'placeholder' => 'Pemasok / Supplier',
-            'value' => old('purchase_supplier', $purchase->purchase_supplier ?? null),
-        ]" />
+        <x-form.select :props="[
+            'id' => 'purchase_supplier_id',
+            'name' => 'purchase_supplier_id',
+            'value' => old('purchase_supplier_id', $purchase->purchase_supplier_id ?? null),
+            'class' => 'w-full',
+        ]" :options="$suppliers" />
     </div>
 
     <div>
@@ -53,12 +36,12 @@
             'required' => true,
         ]" />
 
-        <x-form.input :props="[
-            'id' => 'purchase_area',
-            'name' => 'purchase_area',
-            'placeholder' => 'Wilayah',
-            'value' => old('purchase_area', $purchase->purchase_area ?? null),
-        ]" />
+        <x-form.select :props="[
+            'id' => 'purchase_region_id',
+            'name' => 'purchase_region_id',
+            'value' => old('purchase_region_id', $purchase->purchase_region_id ?? null),
+            'class' => 'w-full',
+        ]" :options="$regions" />
     </div>
 </div>
 
@@ -66,7 +49,6 @@
     <x-form.label :props="[
         'for' => 'purchase_note',
         'label' => 'Keterangan',
-        'required' => true,
     ]" />
 
     <x-form.input :props="[
@@ -77,34 +59,36 @@
     ]" />
 </div>
 
-<div class="grid grid-cols-2 gap-4 mb-4">
-    <div>
-        <x-form.label :props="[
-            'for' => 'purchase_payment_type',
-            'label' => 'Cara Bayar',
-            'required' => true,
-        ]" />
+<div class="h-0.5 bg-gray-200 mt-4 mb-4"></div>
 
+{{-- ITEMS --}}
+<div class="mb-4">
+    <h1 class="font-medium tracking-wide text-blue-900">Tambahkan Data Barang</h1>
+</div>
+
+<div class="grid grid-cols-3 gap-4 mb-4">
+    <div>
+        <x-form.select :props="[
+            'id' => 'item',
+            'name' => 'item',
+            'class' => 'w-full',
+            'value' => null,
+        ]" :options="$stocks" />
+    </div>
+
+    <div>
         <x-form.input :props="[
-            'id' => 'purchase_payment_type',
-            'name' => 'purchase_payment_type',
-            'placeholder' => 'Cara Bayar',
-            'value' => old('purchase_payment_type', $purchase->purchase_payment_type ?? null),
+            'id' => 'quantity',
+            'name' => 'quantity',
+            'class' => 'number-input',
+            'placeholder' => 'Masukkan Jumlah Barang (PCS)',
         ]" />
     </div>
 
     <div>
-        <x-form.label :props="[
-            'for' => 'purchase_payment_due_date',
-            'label' => 'Tanggal Jatuh Tempo',
-            'required' => true,
-        ]" />
-
-        <x-form.input :props="[
-            'id' => 'purchase_payment_due_date',
-            'name' => 'purchase_payment_due_date',
-            'placeholder' => 'Tanggal Jatuh Tempo',
-            'value' => old('purchase_payment_due_date', $purchase->purchase_payment_due_date ?? null),
-        ]" />
+        <button type="button" id="item-button"
+            class="px-4 py-[10px] border border-blue-900 rounded-md cursor-pointer text-blue-900 bg-white hover:bg-blue-900 hover:text-white font-medium transition duration-200">
+            Tambah Barang
+        </button>
     </div>
 </div>

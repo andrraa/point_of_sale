@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 
 class Supplier extends Model
 {
@@ -29,6 +30,13 @@ class Supplier extends Model
         'supplier_purchase',
         'supplier_payment',
     ];
+
+    public static function getSupplierDropdown(): Collection
+    {
+        return self::query()
+            ->select(['supplier_id', 'supplier_name'])
+            ->pluck('supplier_name', 'supplier_id');
+    }
 
     public function region(): BelongsTo
     {
