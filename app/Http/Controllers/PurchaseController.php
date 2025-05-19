@@ -126,17 +126,23 @@ class PurchaseController
         if (!$purchaseDetail) {
             DB::rollBack();
             flash()->preset('create_error');
-            return redirect()->back();
+            return redirect()->route('purchase.index');
         }
 
         DB::commit();
         flash()->preset('create_success');
-        return redirect()->back();
+        return redirect()->route('purchase.index');
     }
 
     public function show(Purchase $purchase): View
     {
-        return view('purchase.detail');
+        $purchase->load([
+            'supplier.region',
+            'region',
+            'details.stock'
+        ]);
+
+        return view('purchase.detail', compact('purchase'));
     }
 
     public function destroy()

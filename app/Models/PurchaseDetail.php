@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PurchaseDetail extends Model
 {
@@ -16,4 +17,9 @@ class PurchaseDetail extends Model
         'purchase_detail_quantity',
         'purchase_detail_price'
     ];
+
+    public function stock(): BelongsTo
+    {
+        return $this->belongsTo(Stock::class, 'purchase_detail_stock_id', 'stock_id');
+    }
 }
