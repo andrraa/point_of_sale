@@ -8,10 +8,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('tbl_purchase_details', function (Blueprint $table) {
-            $table->id('p_detail_id');
-            $table->unsignedBigInteger('p_detail_purchase_id');
-            $table->unsignedBigInteger('p_detail_stock_id');
-            $table->integer('p_detail_quantity');
+            $table->id('purchase_detail_id');
+            $table->unsignedBigInteger('purchase_detail_purchase_id');
+            $table->unsignedBigInteger('purchase_detail_stock_id');
+            $table->integer('purchase_detail_quantity');
+            $table->double('purchase_detail_price');
             $table->softDeletes();
             $table->timestamps();
         });

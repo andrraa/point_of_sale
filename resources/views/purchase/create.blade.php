@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="bg-white rounded-lg p-8 border border-gray-200">
-        <form id="form-create-customer" action="{{ route('purchase.store') }}" method="POST">
+        <form id="form-create-purchase" action="{{ route('purchase.store') }}" method="POST">
             @csrf
 
             @include('purchase._form')
@@ -60,16 +60,18 @@
                     return;
                 }
 
+                const index = $('table tbody tr').length;
+
                 $.ajax({
                     url: "{{ route('purchase.get.item') }}",
                     method: 'POST',
                     data: {
                         item: item,
                         quantity: quantity,
+                        index: index
                     },
                     success: function(response) {
                         $('#quantity').val('');
-
                         $('table tbody').append(response);
                     },
                 });

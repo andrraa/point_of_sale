@@ -9,7 +9,8 @@
         'id' => 'purchase_invoice',
         'name' => 'purchase_invoice',
         'placeholder' => 'Faktu Beli',
-        'value' => old('purchase_invoice', $purchase->purchase_invoice ?? null),
+        'value' => old('purchase_invoice', $purchase->purchase_invoice ?? $invoice),
+        'readonly' => true,
     ]" />
 </div>
 

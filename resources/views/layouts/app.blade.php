@@ -29,15 +29,16 @@
 
     <script type="module">
         $(document).ready(function() {
+            // AJAX SETUP
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
-            // SELETCt2
+            // SELETCT2
             $('.select2').select2({
-                placeholder: '------ Pilih ------',
+                placeholder: 'Pilih salah satu opsi',
             });
         });
     </script>

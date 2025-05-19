@@ -8,12 +8,12 @@ class PurchaseDetail extends Model
 {
     protected $table = 'tbl_purchase_details';
 
-    protected $primaryKey = 'p_detail_id';
+    protected $primaryKey = 'purchase_detail_id';
 
     protected $fillable = [
-        'purchase_invoice',
-        'purchase_supplier_id',
-        'purchase_region_id',
-        'purchase_description'
+        'purchase_detail_purchase_id',
+        'purchase_detail_stock_id',
+        'purchase_detail_quantity',
+        'purchase_detail_price'
     ];
 }
