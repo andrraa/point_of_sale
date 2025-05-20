@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
@@ -30,5 +31,15 @@ class Region extends Model
                 ->select(['region_id', 'region_name'])
                 ->pluck('region_name', 'region_id')
         );
+    }
+
+    public function suppliers(): HasMany
+    {
+        return $this->hasMany(Supplier::class, 'supplier_region_id', 'region_id');
+    }
+
+    public function purchases(): HasMany
+    {
+        return $this->hasMany(Purchase::class, 'purchase_region_id', 'region_id');
     }
 }

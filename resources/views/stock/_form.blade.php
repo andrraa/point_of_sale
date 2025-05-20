@@ -1,4 +1,4 @@
-<div class="grid grid-cols-2 gap-4 mb-2">
+<div class="grid grid-cols-2 gap-4 mb-3">
     <div>
         <x-form.label :props="[
             'for' => 'stock_code',
@@ -30,7 +30,7 @@
     </div>
 </div>
 
-<div class="grid grid-cols-3 gap-4 mb-2">
+<div class="grid grid-cols-3 gap-4 mb-3">
     <div class="col-span-2">
         <x-form.label :props="[
             'for' => 'stock_category_id',
@@ -63,7 +63,7 @@
     </div>
 </div>
 
-<div class="mb-2">
+<div class="mb-3">
     <x-form.label :props="[
         'for' => 'stock_purchase_price',
         'label' => 'Harga Pokok / Harga Beli',
@@ -79,11 +79,11 @@
     ]" />
 </div>
 
-<div class="grid grid-cols-2 gap-4 mb-2">
+<div class="grid grid-cols-3 gap-4 mb-6">
     <div>
         <x-form.label :props="[
             'for' => 'stock_sale_price_1',
-            'label' => 'Harga Jual 1',
+            'label' => 'Harga Jual 1 (Umum)',
             'required' => true,
         ]" />
 
@@ -99,7 +99,7 @@
     <div>
         <x-form.label :props="[
             'for' => 'stock_sale_price_2',
-            'label' => 'Harga Jual 2',
+            'label' => 'Harga Jual 2 (Grosir)',
             'required' => true,
         ]" />
 
@@ -111,13 +111,11 @@
             'value' => old('stock_sale_price_2', $stock->stock_sale_price_2 ?? 0),
         ]" />
     </div>
-</div>
 
-<div class="grid grid-cols-2 gap-4 mb-2">
     <div>
         <x-form.label :props="[
             'for' => 'stock_sale_price_3',
-            'label' => 'Harga Jual 3',
+            'label' => 'Harga Jual 3 (Gudang)',
             'required' => true,
         ]" />
 
@@ -127,22 +125,6 @@
             'class' => 'price-input',
             'placeholder' => 'Masukkan Harga Jual 3',
             'value' => old('stock_sale_price_3', $stock->stock_sale_price_3 ?? 0),
-        ]" />
-    </div>
-
-    <div>
-        <x-form.label :props="[
-            'for' => 'stock_sale_price_4',
-            'label' => 'Harga Jual 4',
-            'required' => true,
-        ]" />
-
-        <x-form.input :props="[
-            'id' => 'stock_sale_price_4',
-            'name' => 'stock_sale_price_4',
-            'class' => 'price-input',
-            'placeholder' => 'Masukkan Harga Jual 4',
-            'value' => old('stock_sale_price_4', $stock->stock_sale_price_4 ?? 0),
         ]" />
     </div>
 </div>

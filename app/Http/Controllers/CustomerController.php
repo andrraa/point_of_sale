@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerRequest;
+use App\Models\Category;
 use App\Models\Customer;
+use App\Models\Region;
 use App\Services\ValidationService;
 use Illuminate\View\View;
 
@@ -23,9 +25,14 @@ class CustomerController
 
     public function create(): View
     {
-        $validator = $this->validationService->generateValidation(CustomerRequest::class, '#form-create-customer');
+        $validator = $this->validationService
+            ->generateValidation(CustomerRequest::class, '#form-create-customer');
 
-        return view('customer.create', compact(['validator']));
+        $regions = Region::getRegionDropdown();
+
+        $categories = Category::getCustomerCategories();
+
+        return view('customer.create', compact(['validator', 'regions', 'categories']));
     }
 
     public function store(CustomerRequest $request)

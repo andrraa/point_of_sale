@@ -99,6 +99,7 @@ class CategoryController
                     'category_id',
                     'category_code',
                     'category_name',
+                    'category_price_level'
                 ])
                 ->where('category_type', Category::CATEGORY_CUSTOMER)
                 ->get();
@@ -158,6 +159,11 @@ class CategoryController
     public function deleteCategory(Category $category): JsonResponse
     {
         abort_unless(request()->expectsJson(), 403);
+
+        if ($category->stocks()->exists()) {
+            flash()->preset('delete_failed');
+            return response()->json(false);
+        }
 
         $category->category_type === Category::ITEM_CATEGORY
             ? $this->clearItemCache()

@@ -9,16 +9,16 @@
         @include('partials.widget.sidebar')
 
         <main class="flex-1 h-full overflow-y-auto px-4 py-2">
-            <div>
+            <div class="pb-4">
                 <h1 class="font-medium tracking-wider text-blue-900">Daftar Kategori Pelanggan</h1>
             </div>
 
-            <div class="py-4">
+            {{-- <div class="py-4">
                 <x-action-button :props="[
                     'url' => route('customer-category.create'),
                     'label' => 'Kategori Pelanggan Baru',
                 ]" />
-            </div>
+            </div> --}}
 
             {{-- DATA --}}
             <div class="bg-white rounded-lg border border-gray-200 p-6">
@@ -28,7 +28,8 @@
                             <th class="p-3 text-sm tracking-wider text-blue-900">#</th>
                             <th class="p-3 text-sm tracking-wider text-blue-900">Kode Kategori</th>
                             <th class="p-3 text-sm tracking-wider text-blue-900">Nama Kategori</th>
-                            <th class="p-3 text-sm tracking-wider text-blue-900">Aksi</th>
+                            <th class="p-3 text-sm tracking-wider text-blue-900">Level Harga</th>
+                            {{-- <th class="p-3 text-sm tracking-wider text-blue-900">Aksi</th> --}}
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
@@ -42,7 +43,8 @@
                                 <td class="p-3 text-sm tracking-wider">{{ $index + 1 }}</td>
                                 <td class="p-3 text-sm tracking-wider">{{ $category->category_code }}</td>
                                 <td class="p-3 text-sm tracking-wider">{{ $category->category_name }}</td>
-                                <td class="p-3 text-sm tracking-wider">
+                                <td class="p-3 text-sm tracking-wider">{{ $category->category_price_level }}</td>
+                                {{-- <td class="p-3 text-sm tracking-wider">
                                     <div class="flex gap-1.5">
                                         <a href="{{ route('customer-category.edit', ['category' => $category->category_id]) }}"
                                             class="px-3 py-1.5 rounded-lg border text-xs border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white font-medium tracking-wide transition duration-200">
@@ -53,7 +55,7 @@
                                             Delete
                                         </button>
                                     </div>
-                                </td>
+                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>
@@ -64,7 +66,7 @@
 @endsection
 
 @push('scripts')
-    <script type="module">
+    {{-- <script type="module">
         $(document).ready(function() {
             $('.delete-button').on('click', function() {
                 const categoryId = $(this).data('id');
@@ -89,5 +91,5 @@
                 });
             });
         });
-    </script>
+    </script> --}}
 @endpush

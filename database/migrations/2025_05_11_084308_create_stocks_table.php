@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->double('stock_sale_price_1');
             $table->double('stock_sale_price_2');
             $table->double('stock_sale_price_3');
-            $table->double('stock_sale_price_4');
             $table->integer('stock_total')->default(0);
             $table->integer('stock_current')->default(0);
             $table->integer('stock_in')->default(0);

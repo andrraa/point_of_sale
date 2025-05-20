@@ -32,7 +32,8 @@ class RegionController
 
     public function create(): View
     {
-        $validator = $this->validationService->generateValidation(RegionRequest::class, '#form-create-region');
+        $validator = $this->validationService
+            ->generateValidation(RegionRequest::class, '#form-create-region');
 
         return view('settings.region.create', compact('validator'));
     }
@@ -56,7 +57,8 @@ class RegionController
 
     public function edit(Region $region): View
     {
-        $validator = $this->validationService->generateValidation(RegionRequest::class, '#form-edit-region');
+        $validator = $this->validationService
+            ->generateValidation(RegionRequest::class, '#form-edit-region');
 
         return view('settings.region.edit', compact(['region', 'validator']));
     }
@@ -81,6 +83,11 @@ class RegionController
     public function destroy(Region $region): JsonResponse
     {
         abort_unless(request()->expectsJson(), 403);
+
+        if ($region->purchases()->exists() || $region->suppliers()->exists()) {
+            flash()->preset('delete_failed');
+            return response()->json(false);
+        }
 
         $result = $region->delete();
 

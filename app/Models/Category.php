@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
@@ -24,7 +25,8 @@ class Category extends Model
     protected $fillable = [
         'category_code',
         'category_name',
-        'category_type'
+        'category_type',
+        'category_price_level'
     ];
 
     public static function getItemCategories(): Collection
@@ -39,4 +41,20 @@ class Category extends Model
         );
     }
 
+    public static function getCustomerCategories(): Collection
+    {
+        return Cache::remember(
+            self::CUSTOMER_DROPDOWN_CACHE_KEY,
+            now()->addHours(2),
+            fn() =>
+            self::where('category_type', self::CATEGORY_CUSTOMER)
+                ->select(['category_id', 'category_name'])
+                ->pluck('category_name', 'category_id')
+        );
+    }
+
+    public function stocks(): HasMany
+    {
+        return $this->hasMany(Stock::class, 'stock_category_id', 'category_id');
+    }
 }

@@ -145,9 +145,9 @@ class PurchaseController
         return view('purchase.detail', compact('purchase'));
     }
 
-    public function destroy()
+    public function destroy(Purchase $purchase)
     {
-
+        abort_unless(request()->expectsJson(), 403);
     }
 
     // EXTRA FUNCTION

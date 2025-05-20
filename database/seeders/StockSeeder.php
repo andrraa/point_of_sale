@@ -21,7 +21,6 @@ class StockSeeder extends Seeder
                 'stock_sale_price_1' => 50000,
                 'stock_sale_price_2' => 50000,
                 'stock_sale_price_3' => 0,
-                'stock_sale_price_4' => 0,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -35,7 +34,6 @@ class StockSeeder extends Seeder
                 'stock_sale_price_1' => 60000,
                 'stock_sale_price_2' => 60000,
                 'stock_sale_price_3' => 0,
-                'stock_sale_price_4' => 0,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
