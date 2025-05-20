@@ -7,10 +7,10 @@
 @section('content')
     <div class="bg-white rounded-lg p-8 border border-gray-200">
         <div>
-            <h1 class="font-semibold tracking-wider text-[16px] mb-1 text-blue-900">
+            <h1 class="font-semibold text-[16px] mb-1 text-blue-900">
                 Nomor Invoice: {{ $purchase['purchase_invoice'] }}
             </h1>
-            <h1 class="text-black/90 tracking-wider text-sm">
+            <h1 class="text-black/90 text-sm">
                 Tanggal Pembelian: {{ \Carbon\Carbon::parse($purchase['created_at'])->translatedFormat('d M y H:i') }} WIB
             </h1>
         </div>
@@ -20,17 +20,17 @@
         <div class="flex flex-col">
             {{-- SUPPLIER --}}
             <div class="mb-4">
-                <h1 class="font-semibold tracking-wider text-[16px] text-blue-900 mb-1">
+                <h1 class="font-semibold text-[16px] text-blue-900 mb-1">
                     Supplier / Pemasok:
                 </h1>
-                <h1 class="text-sm tracking-wider text-gray-900 mb-0.5">
+                <h1 class="text-sm text-gray-900 mb-0.5">
                     {{ $purchase['supplier']['supplier_code'] }} -
                     {{ $purchase['supplier']['supplier_name'] }}
                 </h1>
-                <h1 class="text-sm tracking-wider text-gray-900 mb-0.5">
+                <h1 class="text-sm text-gray-900 mb-0.5">
                     {{ $purchase['supplier']['supplier_address'] }}
                 </h1>
-                <h1 class="text-sm tracking-wider text-gray-900 mb-0.5">
+                <h1 class="text-sm text-gray-900 mb-0.5">
                     {{ $purchase['supplier']['region']['region_code'] }} -
                     {{ $purchase['supplier']['region']['region_name'] }}
                 </h1>
@@ -38,10 +38,10 @@
 
             {{-- REGION --}}
             <div class="mb-4">
-                <h1 class="font-semibold tracking-wider text-[16px] text-blue-900 mb-1">
+                <h1 class="font-semibold text-[16px] text-blue-900 mb-1">
                     Region / Wilayah:
                 </h1>
-                <h1 class="text-sm tracking-wider text-gray-900 mb-0.5">
+                <h1 class="text-sm text-gray-900 mb-0.5">
                     {{ $purchase['region']['region_code'] }} -
                     {{ $purchase['region']['region_name'] }}
                 </h1>

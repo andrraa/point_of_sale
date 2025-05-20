@@ -49,27 +49,27 @@
                     {
                         data: 'purchase_invoice',
                         name: 'purchase_invoice',
-                        class: 'font-medium tracking-wide !text-blue-900'
+                        class: 'font-bold tracking-wider !text-blue-900'
                     },
                     {
                         data: 'supplier.supplier_code',
                         name: 'supplier.supplier_code',
-                        class: 'font-medium tracking-wide !text-black/90'
+                        class: 'tracking-wider !text-gray-900'
                     },
                     {
                         data: 'supplier.supplier_name',
                         name: 'supplier.supplier_name',
-                        class: 'font-medium tracking-wide !text-black/90'
+                        class: 'tracking-wider !text-gray-900'
                     },
                     {
                         data: 'region.region_code',
                         name: 'region.region_code',
-                        class: 'font-medium tracking-wide !text-black/90'
+                        class: 'tracking-wider !text-gray-900'
                     },
                     {
                         data: 'region.region_name',
                         name: 'region.region_name',
-                        class: 'font-medium tracking-wide !text-black/90'
+                        class: 'tracking-wider !text-gray-900'
                     },
                     {
                         data: 'actions',

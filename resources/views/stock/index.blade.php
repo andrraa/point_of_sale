@@ -49,32 +49,32 @@
                     {
                         data: 'stock_code',
                         name: 'stock_code',
-                        class: 'font-bold tracking-wide text-blue-900'
+                        class: 'font-bold tracking-wide !text-blue-900'
                     },
                     {
                         data: 'stock_name',
                         name: 'stock_name',
-                        class: 'font-medium tracking-wide text-gray-400'
+                        class: 'tracking-wider !text-gray-900'
                     },
                     {
                         data: 'stock_total',
                         name: 'stock_total',
-                        class: 'font-medium tracking-wide'
+                        class: 'fot-medium tracking-wider !text-gray-900'
                     },
                     {
                         data: 'stock_current',
                         name: 'stock_current',
-                        class: 'font-medium tracking-wide text-blue-500'
+                        class: 'fot-medium tracking-wider 1text-blue-500'
                     },
                     {
                         data: 'stock_in',
                         name: 'stock_in',
-                        class: 'font-medium tracking-wide text-green-500'
+                        class: 'fot-medium tracking-wider !text-green-500'
                     },
                     {
                         data: 'stock_out',
                         name: 'stock_out',
-                        class: 'font-medium tracking-wide text-red-500'
+                        class: 'fot-medium tracking-wider !text-red-500'
                     },
                     {
                         data: 'actions',

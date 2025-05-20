@@ -47,17 +47,17 @@
                     {
                         data: 'supplier_code',
                         name: 'supplier_code',
-                        class: 'font-bold tracking-wide text-blue-900'
+                        class: 'font-semibold tracking-wider !text-sm !text-blue-900'
                     },
                     {
                         data: 'supplier_name',
                         name: 'supplier_name',
-                        class: 'font-medium tracking-wide text-gray-400'
+                        class: 'tracking-wider !text-sm !text-gray-900'
                     },
                     {
                         data: 'region.region_name',
                         name: 'region.region_name',
-                        class: 'font-medium tracking-wide text-gray-400'
+                        class: 'tracking-wider !text-sm !text-gray-900'
                     },
                     {
                         data: 'actions',
