@@ -54,27 +54,27 @@
                     {
                         data: 'stock_name',
                         name: 'stock_name',
-                        class: 'tracking-wider !text-gray-900'
+                        class: 'tracking-wider !text-gray-900 line-clamp-1'
                     },
                     {
                         data: 'stock_total',
                         name: 'stock_total',
-                        class: 'fot-medium tracking-wider !text-gray-900'
+                        class: 'font-medium tracking-wider !text-gray-900'
                     },
                     {
                         data: 'stock_current',
                         name: 'stock_current',
-                        class: 'fot-medium tracking-wider 1text-blue-500'
+                        class: 'font-medium tracking-wider 1text-blue-500'
                     },
                     {
                         data: 'stock_in',
                         name: 'stock_in',
-                        class: 'fot-medium tracking-wider !text-green-500'
+                        class: 'font-medium tracking-wider !text-green-500'
                     },
                     {
                         data: 'stock_out',
                         name: 'stock_out',
-                        class: 'fot-medium tracking-wider !text-red-500'
+                        class: 'font-medium tracking-wider !text-red-500'
                     },
                     {
                         data: 'actions',

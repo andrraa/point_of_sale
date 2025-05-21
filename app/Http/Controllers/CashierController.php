@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\View\View;
 
-class ReportController
+class CashierController
 {
     public function index(): View
     {
-        return view('report.index');
+        return view('cashier.index');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CashierController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
@@ -72,8 +73,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('sale', SaleController::class)->except('show');
 
     // REPORT
-    Route::get('report', ReportController::class)->name('report');
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('report', 'index')->name('report');
+    });
 
     // STOCK
     Route::resource('stock', StockController::class)->except('show');
+
+    // CASHIER
+    Route::controller(CashierController::class)->group(function () {
+        Route::get('cashier', 'index')->name('cashier');
+    });
 });

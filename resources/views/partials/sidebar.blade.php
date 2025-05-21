@@ -13,12 +13,12 @@
                         [
                             'routeUrl' => route('dashboard'),
                             'routePattern' => 'dashboard',
-                            'navIcon' => 'fa-solid fa-home',
+                            'navIcon' => 'fa-solid fa-layer-group',
                             'navTitle' => 'Dashboard',
                         ],
                         [
-                            'routeUrl' => '',
-                            'routePattern' => 'point-of-sale',
+                            'routeUrl' => route('cashier'),
+                            'routePattern' => 'cashier',
                             'navIcon' => 'fa-solid fa-laptop',
                             'navTitle' => 'Kasir POS',
                         ],
@@ -53,7 +53,7 @@
                         [
                             'routeUrl' => route('purchase.index'),
                             'routePattern' => 'purchase.*',
-                            'navIcon' => 'fa-solid fa-boxes-packing',
+                            'navIcon' => 'fa-solid fa-basket-shopping',
                             'navTitle' => 'Pembelian',
                         ],
                         [
