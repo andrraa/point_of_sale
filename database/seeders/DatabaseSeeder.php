@@ -13,7 +13,8 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             RegionSeeder::class,
             SupplierSeeder::class,
-            StockSeeder::class
+            StockSeeder::class,
+            CustomerSeeder::class
         ]);
     }
 }

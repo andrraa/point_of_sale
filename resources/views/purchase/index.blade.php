@@ -17,11 +17,12 @@
             <thead class="text-sm tracking-wide text-left">
                 <tr>
                     <th class="p-3 bg-gray-100">#</th>
-                    <th class="p-3 bg-gray-100">Nomor Invoice</th>
-                    <th class="p-3 bg-gray-100">Kode Pemasok</th>
-                    <th class="p-3 bg-gray-100">Nama Pemasok</th>
-                    <th class="p-3 bg-gray-100">Kode Wilayah</th>
-                    <th class="p-3 bg-gray-100">Nama Wilayah</th>
+                    <th class="p-3 bg-gray-100">Invoice</th>
+                    <th class="p-3 bg-gray-100">Pemasok</th>
+                    <th class="p-3 bg-gray-100">Wilayah</th>
+                    <th class="p-3 bg-gray-100">Total Barang</th>
+                    <th class="p-3 bg-gray-100">Total Harga</th>
+                    <th class="p-3 bg-gray-100">Tanggal</th>
                     <th class="p-3 bg-gray-100">Aksi</th>
                 </tr>
             </thead>
@@ -52,24 +53,35 @@
                         class: 'font-bold tracking-wider !text-blue-900'
                     },
                     {
-                        data: 'supplier.supplier_code',
-                        name: 'supplier.supplier_code',
-                        class: 'tracking-wider !text-gray-900'
-                    },
-                    {
                         data: 'supplier.supplier_name',
                         name: 'supplier.supplier_name',
-                        class: 'tracking-wider !text-gray-900'
-                    },
-                    {
-                        data: 'region.region_code',
-                        name: 'region.region_code',
-                        class: 'tracking-wider !text-gray-900'
+                        class: 'tracking-wider !text-gray-900',
+                        render: function(data, type, row) {
+                            return `${row.supplier.supplier_code} - ${row.supplier.supplier_name}`;
+                        }
                     },
                     {
                         data: 'region.region_name',
                         name: 'region.region_name',
-                        class: 'tracking-wider !text-gray-900'
+                        class: 'tracking-wider !text-gray-900',
+                        render: function(data, type, row) {
+                            return `${row.region.region_code} - ${row.region.region_name}`;
+                        }
+                    },
+                    {
+                        data: 'total_items',
+                        name: 'total_items',
+                        class: 'tracking-wider !text-gray-900',
+                    },
+                    {
+                        data: 'total_price',
+                        name: 'total_price',
+                        class: 'tracking-wider !text-gray-900',
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at',
+                        class: 'tracking-wider !text-gray-900',
                     },
                     {
                         data: 'actions',
@@ -80,7 +92,7 @@
                     },
                 ],
                 columnDefs: [{
-                    target: [0, -1],
+                    target: [0, -1, 4, 5],
                     searchable: false,
                     orderable: false
                 }]

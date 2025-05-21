@@ -35,7 +35,6 @@
         <x-form.label :props="[
             'for' => 'customer_address',
             'label' => 'Alamat Pelanggan',
-            'required' => true,
         ]" />
 
         <x-form.input :props="[
@@ -104,7 +103,7 @@
         'id' => 'customer_credit_limit',
         'name' => 'customer_credit_limit',
         'placeholder' => 'Masukkan Plafon Piutang',
-        'value' => old('customer_credit_limit', $customer->customer_credit_limit ?? null),
+        'value' => old('customer_credit_limit', $customer->customer_credit_limit ?? 0),
         'class' => 'price-input',
     ]" />
 </div>

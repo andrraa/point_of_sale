@@ -184,8 +184,16 @@ $(document).on("click", ".dt-delete", function (e) {
                 url: url,
                 method: "DELETE",
                 success: function (response) {
-                    Swal.fire("Berhasil!", "Data berhasil dihapus.", "success");
-                    table.ajax.reload(null, false);
+                    if (response) {
+                        Swal.fire(
+                            "Berhasil!",
+                            "Data berhasil dihapus.",
+                            "success"
+                        );
+                        table.ajax.reload(null, false);
+                    } else {
+                        Swal.fire("Gagal!", "Data gagal dihapus", "error");
+                    }
                 },
             });
         }

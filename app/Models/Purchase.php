@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,6 +19,11 @@ class Purchase extends Model
         'purchase_region_id',
         'purchase_description'
     ];
+
+    public function getCreatedAtAttribute($value): string
+    {
+        return Carbon::parse($value)->translatedFormat('d M Y, H:i');
+    }
 
     public function supplier(): BelongsTo
     {

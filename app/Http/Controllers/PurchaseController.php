@@ -32,13 +32,14 @@ class PurchaseController
             $purchases = Purchase::with([
                 'supplier',
                 'region',
-                'details'
+                'details.stock'
             ])
                 ->select([
                     'purchase_id',
                     'purchase_invoice',
                     'purchase_region_id',
                     'purchase_supplier_id',
+                    'created_at'
                 ]);
 
             return DataTables::of($purchases)
@@ -48,6 +49,17 @@ class PurchaseController
                     'detail' => route('purchase.show', $purchase->purchase_id),
                     'delete' => route('purchase.destroy', $purchase->purchase_id)
                 ])
+                ->addColumn('total_items', function ($purchase) {
+                    $itemCount = $purchase->details->count();
+                    $totalQuantity = $purchase->details->sum('purchase_detail_quantity');
+
+                    return "{$itemCount} barang ({$totalQuantity} pcs)";
+                })
+                ->addColumn('total_price', function ($purchase) {
+                    return $purchase->details->sum(function ($detail) {
+                        return $detail->purchase_detail_quantity * ($detail->stock->stock_purchase_price ?? 0);
+                    });
+                })
                 ->toJson();
         }
 
