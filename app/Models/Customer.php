@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Collection;
 
 class Customer extends Model
 {
+    public $customerDropdownCache = 'customer_dropdown_cache';
+
     protected $table = 'tbl_customers';
 
     protected $primaryKey = 'customer_id';
@@ -21,6 +24,13 @@ class Customer extends Model
         'customer_credit_limit',
         'customer_status'
     ];
+
+    public static function getCustomerDropdown(): Collection
+    {
+        return self::query()
+            ->select(['customer_id', 'customer_name'])
+            ->pluck('customer_name', 'customer_id');
+    }
 
     public function category(): BelongsTo
     {

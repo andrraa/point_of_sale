@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class Stock extends Model
 {
@@ -32,6 +33,16 @@ class Stock extends Model
         return self::query()
             ->select(['stock_id', 'stock_name'])
             ->pluck('stock_name', 'stock_id');
+    }
+
+    public static function getConcatedStockDropdown(): Collection
+    {
+        return self::query()
+            ->select([
+                'stock_id',
+                DB::raw("CONCAT(stock_name, ' (Stock: ', stock_current, ')') as stock_label")
+            ])
+            ->pluck('stock_label', 'stock_id');
     }
 
     public function category(): BelongsTo

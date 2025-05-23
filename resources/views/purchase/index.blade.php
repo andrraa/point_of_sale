@@ -31,13 +31,15 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/datatables.js'])
+    @vite(['resources/js/datatables.js', 'resources/js/function.js'])
 
     <script type="module">
         $(document).ready(function() {
             const dataTable = window.DataTables;
             const dataTableAction = window.DataTablesAction;
             const dataTableSelector = "#purchase-table";
+
+            const customFunction = window.CustomFunction;
 
             $(dataTableSelector).dataTable({
                 processing: true,
@@ -77,6 +79,9 @@
                         data: 'total_price',
                         name: 'total_price',
                         class: 'tracking-wider !text-gray-900',
+                        render: function(data) {
+                            return 'Rp ' + customFunction.formatNumberToRupiah(data);
+                        }
                     },
                     {
                         data: 'created_at',

@@ -11,7 +11,7 @@
                 Nomor Invoice: {{ $purchase['purchase_invoice'] }}
             </h1>
             <h1 class="text-black/90 text-sm">
-                Tanggal Pembelian: {{ \Carbon\Carbon::parse($purchase['created_at'])->translatedFormat('d M y H:i') }} WIB
+                Tanggal Pembelian: {{ $purchase['created_at'] }} WIB
             </h1>
         </div>
 
