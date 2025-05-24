@@ -417,6 +417,10 @@
                 $('#sales_discount').val(0);
                 renderCartItems();
             }
+
+            function checkout() {
+
+            }
         });
     </script>
 @endpush

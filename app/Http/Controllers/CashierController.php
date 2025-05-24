@@ -61,4 +61,15 @@ class CashierController
 
         $customer = Customer::where('customer_id', $customerId)->first();
     }
+
+    public function checkout(Request $request)
+    {
+        $customerId = $request->input('customerId');
+        $paymentType = $request->input('paymentType');
+        $totalPayment = $request->input('totalPayment');
+        $discount = $request->input('discount');
+        $items = $request->input('items');
+
+
+    }
 }

@@ -9,6 +9,17 @@ return new class extends Migration {
     {
         Schema::create('tbl_sale_details', function (Blueprint $table) {
             $table->id('sale_detail_id');
+            $table->unsignedBigInteger('sale_detail_sales_id');
+            $table->unsignedBigInteger('sale_detail_stock_id');
+            $table->string('sale_detail_stock_code', 100);
+            $table->string('sale_detail_stock_name', 150);
+            $table->unsignedBigInteger('sale_detail_stock_category_id');
+            $table->string('sale_detail_stock_category_name', 100);
+            $table->string('sale_detail_stock_unit', 10)->default('PCS');
+            $table->double('sale_detail_cost_price');
+            $table->double('sale_detail_price');
+            $table->integer('sale_detail_quantity');
+            $table->integer('sale_detail_total_price');
             $table->softDeletes();
             $table->timestamps();
         });
