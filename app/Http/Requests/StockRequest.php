@@ -52,10 +52,6 @@ class StockRequest extends FormRequest
             'stock_sale_price_3' => [
                 'required',
                 'string'
-            ],
-            'stock_sale_price_4' => [
-                'required',
-                'string'
             ]
         ];
     }

@@ -10,6 +10,10 @@ class Customer extends Model
 {
     public $customerDropdownCache = 'customer_dropdown_cache';
 
+    public const CUSTOMER_GENERAL_PRICE = 11;
+    public const CUSTOMER_GROCIER_PRICE = 12;
+    public const CUSTOMER_WAREHOUSE_PRICE = 13;
+
     protected $table = 'tbl_customers';
 
     protected $primaryKey = 'customer_id';

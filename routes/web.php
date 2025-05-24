@@ -83,5 +83,7 @@ Route::middleware('auth')->group(function () {
     // CASHIER
     Route::controller(CashierController::class)->group(function () {
         Route::get('cashier', 'index')->name('cashier');
+        Route::post('cashier/get-item', 'getItem')->name('cashier.get-item');
+        Route::post('cashier/get-credit', 'getCredit')->name('cashier.get-credit');
     });
 });
