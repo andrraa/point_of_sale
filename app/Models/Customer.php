@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
 class Customer extends Model
@@ -44,5 +45,10 @@ class Customer extends Model
     public function region(): BelongsTo
     {
         return $this->belongsTo(Region::class, 'customer_region_id', 'region_id');
+    }
+
+    public function credits(): HasMany
+    {
+        return $this->hasMany(CustomerCredit::class, 'customer_credit_customer_id', 'customer_id');
     }
 }

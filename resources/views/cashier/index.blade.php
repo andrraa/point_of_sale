@@ -260,9 +260,10 @@
                 function() {
                     const customerId = $('#sales_customer_id').val();
                     const paymentType = $('#sales_payment_type').val();
-                    const totalPayment = $('#sales_payment').val();
+                    const totalPayment = parseFloat($('#sales_payment').val().replace(/\./g, ''));
                     const discount = $('#sales_discount').val();
                     const items = cartItems;
+                    let is_credit = 0;
 
                     let totalPrice = 0;
                     cartItems.forEach(item => {
@@ -278,11 +279,65 @@
                         return;
                     }
 
-                    console.log(customerId);
-                    console.log(paymentType);
-                    console.log(totalPayment);
-                    console.log(discount);
-                    console.log(items);
+                    if ((totalPayment < totalPrice) && customerId != 1) {
+                        Swal.fire({
+                            title: 'Perhatian',
+                            text: 'Jumlah bayar kurang. Apakah ingin dijadikan hutang?',
+                            icon: 'warning'
+                        }).then((res) => {
+                            if (res.isConfirmed) {
+                                is_credit = 1;
+                                showLoadingAndSubmit();
+                            }
+                        });
+                    } else {
+                        showLoadingAndSubmit();
+                    }
+
+                    function showLoadingAndSubmit() {
+                        Swal.fire({
+                            title: 'Memproses...',
+                            text: 'Silakan tunggu sebentar',
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+
+                        submitPayment();
+                    }
+
+                    function submitPayment() {
+                        $.ajax({
+                            url: "{{ route('cashier.checkout') }}",
+                            type: 'POST',
+                            data: {
+                                customer_id: customerId,
+                                payment_type: paymentType,
+                                total_payment: totalPayment,
+                                discount: discount,
+                                items: items,
+                                is_credit: is_credit
+                            },
+                            success: function(res) {
+                                if (res.success) {
+                                    Swal.fire({
+                                        title: 'Sukses',
+                                        text: res.message,
+                                        icon: 'success'
+                                    }).then(() => {
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: res.message,
+                                        icon: 'error'
+                                    });
+                                }
+                            }
+                        });
+                    }
                 });
 
             $('#sales_payment_type').on('change',
@@ -416,10 +471,6 @@
                 $('#sales_payment').val('');
                 $('#sales_discount').val(0);
                 renderCartItems();
-            }
-
-            function checkout() {
-
             }
         });
     </script>
