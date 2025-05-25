@@ -260,7 +260,7 @@
                 function() {
                     const customerId = $('#sales_customer_id').val();
                     const paymentType = $('#sales_payment_type').val();
-                    const totalPayment = parseFloat($('#sales_payment').val().replace(/\./g, ''));
+                    const totalPayment = parseFloat($('#sales_payment').val().replace(/\./g, '') || 0);
                     const discount = $('#sales_discount').val();
                     const items = cartItems;
                     let is_credit = 0;
@@ -269,6 +269,8 @@
                     cartItems.forEach(item => {
                         totalPrice += item.price * item.quantity
                     });
+
+                    console.log((totalPayment < totalPrice) && customerId == 1);
 
                     if ((totalPayment < totalPrice) && customerId == 1) {
                         Swal.fire({
