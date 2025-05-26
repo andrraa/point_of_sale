@@ -12,7 +12,7 @@ class Sale extends Model
 
     protected $table = 'tbl_sales';
 
-    protected $primaryKey = 'sale_id';
+    protected $primaryKey = 'sales_id';
 
     protected $fillable = [
         'sales_invoice',

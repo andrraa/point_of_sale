@@ -96,7 +96,7 @@ class CashierController
             'sales_total_change' => $totalChange,
             'sales_discount' => $validated['discount'],
             'sales_total_discount' => $totalDiscount,
-            'sales_status' => Sale::PAID_STATUS
+            'sales_status' => $validated['is_credit'] ? Sale::CREDIT_STATUS : Sale::PAID_STATUS
         ];
 
         // IF CUSTOMER WANT TO CREDIT (HUTANG)
@@ -125,6 +125,7 @@ class CashierController
         // INSERT TO TABLE CUSTOMER CREDIT
         if ($creditAmount > 0 && $validated['is_credit']) {
             $creditData = [
+                'customer_credit_sales_id' => $salesResult->sales_id,
                 'customer_credit_customer_id' => $validated['customer_id'],
                 'customer_credit_invoice' => $invoice,
                 'customer_credit_total_purchase' => $totalPriceAfterDiscount,
@@ -145,7 +146,7 @@ class CashierController
         }
 
         // SAVE TO SALE DETAILS
-        $salesId = $salesResult->sale_id;
+        $salesId = $salesResult->sales_id;
         $saleDetails = [];
 
         foreach ($validated['items'] as $item) {

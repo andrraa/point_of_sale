@@ -10,6 +10,7 @@ return new class extends Migration {
         Schema::create('tbl_customer_credits', function (Blueprint $table) {
             $table->id('customer_credit_id');
             $table->unsignedBigInteger('customer_credit_customer_id');
+            $table->unsignedBigInteger('customer_credit_sales_id');
             $table->string('customer_credit_invoice');
             $table->double('customer_credit_total_purchase');
             $table->double('customer_credit_total_payment');
@@ -21,6 +22,9 @@ return new class extends Migration {
             $table->foreign('customer_credit_customer_id')
                 ->references('customer_id')
                 ->on('tbl_customers');
+            $table->foreign('customer_credit_sales_id')
+                ->references('sales_id')
+                ->on('tbl_sales');
         });
     }
 
