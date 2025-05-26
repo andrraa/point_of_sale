@@ -15,6 +15,7 @@ class CustomerCredit extends Model
     protected $primaryKey = 'customer_credit_id';
 
     protected $fillable = [
+        'customer_credit_sales_id',
         'customer_credit_customer_id',
         'customer_credit_invoice',
         'customer_credit_total_purchase',

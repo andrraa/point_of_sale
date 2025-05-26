@@ -118,6 +118,10 @@
                 </div>
             </div>
 
+            {{-- HAS CREDIT OR NO --}}
+            <div id="customerCredit">
+            </div>
+
             {{-- SUMMARY --}}
             <div class="mt-6 mb-4 rounded-lg border border-gray-200 p-4">
                 <div class="flex items-center justify-between mb-2">
@@ -184,7 +188,23 @@
             // Customer
             $('#sales_customer_id').on('change',
                 function() {
+                    const customerId = $(this).val();
+
                     resetCartItems();
+
+                    // Check Credit
+                    if (customerId != 1) {
+                        $.ajax({
+                            url: "{{ route('cashier.get-credit') }}",
+                            type: "POST",
+                            data: {
+                                customerId: customerId
+                            },
+                            success: function(response) {
+                                $('#customerCredit').append(response);
+                            }
+                        });
+                    }
                 });
 
             // CHART
@@ -285,7 +305,9 @@
                         Swal.fire({
                             title: 'Perhatian',
                             text: 'Jumlah bayar kurang. Apakah ingin dijadikan hutang?',
-                            icon: 'warning'
+                            icon: 'warning',
+                            showCancelButton: true,
+                            cancelButtonText: 'Batal'
                         }).then((res) => {
                             if (res.isConfirmed) {
                                 is_credit = 1;
@@ -472,6 +494,7 @@
                 cartItems.length = 0;
                 $('#sales_payment').val('');
                 $('#sales_discount').val(0);
+                $('#customerCredit').html('');
                 renderCartItems();
             }
         });

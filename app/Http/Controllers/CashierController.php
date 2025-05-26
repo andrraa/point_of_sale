@@ -61,11 +61,19 @@ class CashierController
         ]);
     }
 
-    public function getCredit(Request $request)
+    public function getCredit(Request $request): View
     {
         $customerId = $request->input('customerId');
 
-        $customer = Customer::where('customer_id', $customerId)->first();
+        $customer = Customer::with([
+            'credits' => function ($query) {
+                $query->where('customer_credit_status', CustomerCredit::UNPAID_STATUS);
+            }
+        ])
+            ->where('customer_id', $customerId)
+            ->first();
+
+        return view('cashier._credit', compact('customer'));
     }
 
     public function checkout(CheckoutRequest $request): JsonResponse

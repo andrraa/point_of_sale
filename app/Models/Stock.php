@@ -42,6 +42,7 @@ class Stock extends Model
                 'stock_id',
                 DB::raw("CONCAT(stock_name, ' (Stock: ', stock_current, ')') as stock_label")
             ])
+            ->where('stock_current', '>', 0)
             ->pluck('stock_label', 'stock_id');
     }
 
