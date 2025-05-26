@@ -72,7 +72,7 @@
                         class: 'tracking-wider !text-sm !text-gray-900',
                         render: function(data) {
                             const label = data == 1 ? 'Aktif' : 'Tidak Aktif';
-                            const color = data == 1 ? 'bg-blue-500' : 'bg-red-500';
+                            const color = data == 1 ? 'bg-blue-900' : 'bg-red-900';
 
                             return `
                                 <span class="text-xs py-1 px-2 font-medium rounded-md text-white ${color}">
