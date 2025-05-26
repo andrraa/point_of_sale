@@ -33,6 +33,7 @@ class SaleController
 
                     if ($sale->sales_status != Sale::CANCEL_STATUS) {
                         $actions['delete'] = route('sale.destroy', $sale->sales_id);
+                        $actions['print'] = $sale->sales_id;
                     }
 
                     return $actions;
@@ -41,6 +42,13 @@ class SaleController
         }
 
         return view('sale.index');
+    }
+
+    public function show(Sale $sale): View
+    {
+        $sale->load(['details', 'customer']);
+
+        return view('sale._print', compact('sale'));
     }
 
     public function destroy(Sale $sale): JsonResponse
@@ -54,12 +62,13 @@ class SaleController
         foreach ($sale->details as $detail) {
             $stock = $detail->stock;
 
-            if ($stock) {
-                $stock->update([
-                    'stock_current' => $stock->stock_current + $detail->sale_detail_quantity,
-                    'stock_out' => $stock->stock_out - $detail->sale_detail_quantity
-                ]);
-            }
+            $stockCurrent = $stock->stock_current + $detail->sale_detail_quantity;
+            $stockOut = $stock->stock_out - $detail->sale_detail_quantity;
+
+            $stock->update([
+                'stock_current' => $stockCurrent,
+                'stock_out' => $stockOut
+            ]);
         }
 
         $sale->update([

@@ -1,5 +1,42 @@
 @extends('layouts.app')
 
+@push('styles')
+    <style>
+        @media print {
+            body * {
+                visibility: hidden !important;
+            }
+
+            #modal-container,
+            #modal-container * {
+                visibility: visible !important;
+            }
+
+            #modal-container {
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 75mm !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+                box-shadow: none !important;
+                display: block !important;
+            }
+
+            #modal-card {
+                all: unset;
+                width: 100%;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+@endpush
+
+
 @section('title', 'Penjualan')
 
 @section('navTitle', 'Daftar Penjualan')
@@ -20,6 +57,14 @@
                 </tr>
             </thead>
         </table>
+    </div>
+
+    {{-- MODAL --}}
+    <div id="modal-container"
+        class="fixed inset-0 bg-gray-600/50 overflow-y-auto h-full w-full items-center justify-center hidden">
+        <div id="modal-card"
+            class="relative mx-auto p-4 border border-gray-300 w-full max-w-[400px] shadow-lg rounded-lg bg-white">
+        </div>
     </div>
 @endsection
 
@@ -118,6 +163,44 @@
                     orderable: false
                 }]
             });
+
+            // PRINT BUTTON
+            const modalCard = $('#modal-card');
+            const modalContainer = $('#modal-container');
+
+            $(document).on("click", ".dt-print",
+                function(e) {
+                    e.preventDefault();
+
+                    const id = $(this).data('id');
+
+                    $.ajax({
+                        url: `/sale/${id}`,
+                        type: "GET",
+                        success: function(res) {
+                            modalCard.html(res);
+                            modalContainer.removeClass('hidden').addClass('flex');
+                            setTimeout(() => {
+                                window.print();
+                            }, 100);
+                        }
+                    });
+                });
+
+            $(window).on('click',
+                function(e) {
+                    if ($(e.target).is(modalContainer)) {
+                        modalContainer.addClass('hidden').removeClass('flex');
+                        modalCard.html('');
+                    }
+                });
+
+            $(document).on('keydown',
+                function(event) {
+                    if (event.key === 'Escape' && modalContainer.hasClass('flex')) {
+                        modalContainer.addClass('hidden').removeClass('flex');
+                    }
+                });
         });
     </script>
 @endpush

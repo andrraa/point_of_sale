@@ -71,7 +71,7 @@ Route::middleware('auth')->group(function () {
     Route::post('purchase/get-item', [PurchaseController::class, 'getItem'])->name('purchase.get.item');
 
     // SALE
-    Route::resource('sale', SaleController::class)->except('show');
+    Route::resource('sale', SaleController::class)->only(['index', 'show', 'destroy']);
 
     // REPORT
     Route::controller(ReportController::class)->group(function () {

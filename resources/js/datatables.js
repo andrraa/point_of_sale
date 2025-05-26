@@ -139,6 +139,16 @@ export function actions(data, selector) {
         `;
     }
 
+    if (data.hasOwnProperty("print")) {
+        actions += `
+            <button type="button" data-id="${data.print}" title="Print Data" class="cursor-pointer dt-print">
+                <div class="w-6 h-6 p-2 rounded-md flex items-center justify-center shrink-0 border border-gray-200 text-blue-900 hover:bg-blue-900 hover:text-white">
+                    <i class="fa-solid fa-print text-xs"></i>
+                </div>
+            </button>
+        `;
+    }
+
     if (data.hasOwnProperty("detail")) {
         actions += `
             <a href="${data.detail}" title="Lihat Data">
