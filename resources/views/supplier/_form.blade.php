@@ -122,7 +122,7 @@
         'value' => old('supplier_npwp_number', $supplier->supplier_npwp_number ?? null),
     ]" />
 </div>
-
+{{-- 
 <div class="mb-4">
     <x-form.label :props="[
         'for' => 'supplier_last_buy',
@@ -199,4 +199,4 @@
             'value' => old('supplier_last_debt', $customer->supplier_last_debt ?? 0),
         ]" />
     </div>
-</div>
+</div> --}}
