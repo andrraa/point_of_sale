@@ -278,6 +278,15 @@
             // CHECKOUT
             $('#checkout-button').on('click',
                 function() {
+                    if (cartItems.length == 0) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Keranjang Kosong!',
+                            icon: 'error'
+                        });
+                        return;
+                    }
+
                     const customerId = $('#sales_customer_id').val();
                     const paymentType = $('#sales_payment_type').val();
                     const totalPayment = parseFloat($('#sales_payment').val().replace(/\./g, '') || 0);
@@ -289,8 +298,6 @@
                     cartItems.forEach(item => {
                         totalPrice += item.price * item.quantity
                     });
-
-                    console.log((totalPayment < totalPrice) && customerId == 1);
 
                     if ((totalPayment < totalPrice) && customerId == 1) {
                         Swal.fire({

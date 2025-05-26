@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CustomerRequest;
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\CustomerCredit;
 use App\Models\Region;
+use App\Models\Sale;
 use App\Services\ValidationService;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -43,7 +46,8 @@ class CustomerController
                 ->escapeColumns()
                 ->addColumn('actions', fn($customer) => [
                     'edit' => route('customer.edit', $customer->customer_id),
-                    'delete' => route('customer.destroy', $customer->customer_id)
+                    'detail' => route('customer.show', $customer->customer_id),
+                    'delete' => route('customer.destroy', $customer->customer_id),
                 ])
                 ->toJson();
         }
@@ -72,6 +76,13 @@ class CustomerController
             : flash()->preset('create_failed');
 
         return redirect()->route('customer.index');
+    }
+
+    public function show(Customer $customer): View
+    {
+        $customer->load(['credits', 'category', 'region']);
+
+        return view('customer.show', compact('customer'));
     }
 
     public function edit(Customer $customer): View
@@ -110,5 +121,22 @@ class CustomerController
         ]);
 
         return response()->json($result ? true : false);
+    }
+
+    public function pay(Request $request): JsonResponse
+    {
+        $creditId = $request->input('creditId');
+
+        $creditData = CustomerCredit::with(['customer', 'sales'])
+            ->where('customer_credit_id', $creditId)
+            ->first();
+
+        $creditData->customer_credit_payment_date = Carbon::now();
+        $creditData->customer_credit_status = CustomerCredit::PAID_STATUS;
+        $creditData->sales->sales_status = Sale::PAID_STATUS;
+        $creditData->save();
+        $creditData->sales->save();
+
+        return response()->json(true);
     }
 }

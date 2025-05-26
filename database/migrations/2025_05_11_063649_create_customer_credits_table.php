@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->double('customer_credit_total_payment');
             $table->double('customer_credit');
             $table->boolean('customer_credit_status');
+            $table->dateTime('customer_credit_payment_date')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

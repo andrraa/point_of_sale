@@ -60,7 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('user', UserController::class)->except('show');
 
     // CUSTOMER
-    Route::resource('customer', CustomerController::class)->except('show');
+    Route::resource('customer', CustomerController::class);
+    Route::post('customer/pay', [CustomerController::class, 'pay'])->name('customer.pay');
 
     // SUPPLIER
     Route::resource('supplier', SupplierController::class)->except('show');
@@ -83,8 +84,10 @@ Route::middleware('auth')->group(function () {
     // CASHIER
     Route::controller(CashierController::class)->group(function () {
         Route::get('cashier', 'index')->name('cashier');
-        Route::post('cashier/get-item', 'getItem')->name('cashier.get-item');
-        Route::post('cashier/get-credit', 'getCredit')->name('cashier.get-credit');
-        Route::post('cashier/checkout', 'checkout')->name('cashier.checkout');
+        Route::prefix('cashier')->group(function () {
+            Route::post('get-item', 'getItem')->name('cashier.get-item');
+            Route::post('get-credit', 'getCredit')->name('cashier.get-credit');
+            Route::post('checkout', 'checkout')->name('cashier.checkout');
+        });
     });
 });
