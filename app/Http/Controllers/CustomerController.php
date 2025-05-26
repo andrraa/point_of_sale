@@ -127,15 +127,12 @@ class CustomerController
     {
         $creditId = $request->input('creditId');
 
-        $creditData = CustomerCredit::with(['customer', 'sales'])
-            ->where('customer_credit_id', $creditId)
+        $creditData = CustomerCredit::where('customer_credit_id', $creditId)
             ->first();
 
         $creditData->customer_credit_payment_date = Carbon::now();
         $creditData->customer_credit_status = CustomerCredit::PAID_STATUS;
-        $creditData->sales->sales_status = Sale::PAID_STATUS;
         $creditData->save();
-        $creditData->sales->save();
 
         return response()->json(true);
     }

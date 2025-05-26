@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SaleDetail extends Model
 {
@@ -23,4 +24,9 @@ class SaleDetail extends Model
         'sale_detail_quantity',
         'sale_detail_total_price'
     ];
+
+    public function stock(): BelongsTo
+    {
+        return $this->belongsTo(Stock::class, 'sale_detail_stock_id', 'stock_id');
+    }
 }
