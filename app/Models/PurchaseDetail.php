@@ -14,8 +14,15 @@ class PurchaseDetail extends Model
     protected $fillable = [
         'purchase_detail_purchase_id',
         'purchase_detail_stock_id',
+        'purchase_detail_stock_code',
+        'purchase_detail_stock_name',
+        'purchase_detail_stock_category_id',
+        'purchase_detail_stock_category_name',
+        'purchase_detail_stock_unit',
+        'purchase_detail_cost_price',
+        'purchase_detail_price',
         'purchase_detail_quantity',
-        'purchase_detail_price'
+        'purchase_detail_total_price'
     ];
 
     public function stock(): BelongsTo

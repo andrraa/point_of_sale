@@ -116,8 +116,15 @@ class PurchaseController
             $purchaseDetails[] = [
                 'purchase_detail_purchase_id' => $purchase->purchase_id,
                 'purchase_detail_stock_id' => $item['id'],
-                'purchase_detail_quantity' => $item['quantity'],
+                'purchase_detail_stock_code' => '',
+                'purchase_detail_stock_name' => '',
+                'purchase_detail_stock_category_id' => '',
+                'purchase_detail_stock_category_name' => '',
+                'purchase_detail_stock_unit' => '',
+                'purchase_detail_cost_price' => '',
                 'purchase_detail_price' => $item['price'],
+                'purchase_detail_quantity' => $item['quantity'],
+                'purchase_detail_total_price' => '',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
