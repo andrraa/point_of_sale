@@ -23,11 +23,26 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    // DASHBOARD
+    Route::get('/', DashboardController::class)->name('dashboard');
+
     // LOGOUT
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-    // DASHBOARD
-    Route::get('/', DashboardController::class)->name('dashboard');
+    // REGION
+    Route::resource('region', RegionController::class)->except('show');
+
+    // USER
+    Route::resource('user', UserController::class)->except('show');
+
+    // SUPPLIER
+    Route::resource('supplier', SupplierController::class)->except('show');
+
+    // SALE
+    Route::resource('sale', SaleController::class)->only(['index', 'show', 'destroy']);
+
+    // STOCK
+    Route::resource('stock', StockController::class)->except('show');
 
     // CATEGORY & SUB CATEGORY
     Route::controller(CategoryController::class)->group(function () {
@@ -53,33 +68,24 @@ Route::middleware('auth')->group(function () {
         Route::delete('category/{category}', 'deleteCategory')->name('category.delete');
     });
 
-    // REGION
-    Route::resource('region', RegionController::class)->except('show');
-
-    // USER
-    Route::resource('user', UserController::class)->except('show');
-
-    // CUSTOMER
-    Route::resource('customer', CustomerController::class);
-    Route::post('customer/pay', [CustomerController::class, 'pay'])->name('customer.pay');
-
-    // SUPPLIER
-    Route::resource('supplier', SupplierController::class)->except('show');
-
-    // PURCHASE
-    Route::resource('purchase', PurchaseController::class)->except(['edit', 'update']);
-    Route::post('purchase/get-item', [PurchaseController::class, 'getItem'])->name('purchase.get.item');
-
-    // SALE
-    Route::resource('sale', SaleController::class)->only(['index', 'show', 'destroy']);
-
     // REPORT
     Route::controller(ReportController::class)->group(function () {
         Route::get('report', 'index')->name('report');
     });
 
-    // STOCK
-    Route::resource('stock', StockController::class)->except('show');
+    // CUSTOMER
+    Route::resource('customer', CustomerController::class);
+    Route::prefix('customer')->controller(CustomerController::class)
+        ->group(function () {
+            Route::post('pay', 'pay')->name('customer.pay');
+        });
+
+    // PURCHASE
+    Route::resource('purchase', PurchaseController::class)->except(['edit', 'update']);
+    Route::prefix('purchase')->controller(PurchaseController::class)
+        ->group(function () {
+            Route::post('get-item', 'getItem')->name('purchase.get.item');
+        });
 
     // CASHIER
     Route::controller(CashierController::class)->group(function () {

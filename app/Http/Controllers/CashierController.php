@@ -199,6 +199,7 @@ class CashierController
 
         return response()->json([
             'success' => true,
+            'id' => $salesId,
             'message' => "Pembelian berhasil. Nomor invoice $invoice"
         ]);
     }

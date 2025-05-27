@@ -1,5 +1,41 @@
 @extends('layouts.app')
 
+@push('styles')
+    <style>
+        @media print {
+            body * {
+                visibility: hidden !important;
+            }
+
+            #modal-container,
+            #modal-container * {
+                visibility: visible !important;
+            }
+
+            #modal-container {
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 75mm !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+                box-shadow: none !important;
+                display: block !important;
+            }
+
+            #modal-card {
+                all: unset;
+                width: 100%;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+@endpush
+
 @section('title', 'Kasir')
 
 @section('navTitle', 'Kasir POS')
@@ -164,6 +200,14 @@
                 class="px-4 py-2 w-full font-medium tracking-wide bg-blue-900 hover:bg-blue-950 rounded-md text-white transition duration-200 cursor-pointer active:scale-95">
                 Proses Pembayaran
             </button>
+        </div>
+    </div>
+
+    {{-- MODAL --}}
+    <div id="modal-container"
+        class="fixed inset-0 bg-gray-600/50 overflow-y-auto h-full w-full items-center justify-center hidden">
+        <div id="modal-card"
+            class="relative mx-auto p-4 border border-gray-300 w-full max-w-[400px] shadow-lg rounded-lg bg-white">
         </div>
     </div>
 @endsection
@@ -357,7 +401,8 @@
                                         text: res.message,
                                         icon: 'success'
                                     }).then(() => {
-                                        location.reload();
+                                        print(res.id);
+                                        resetCartItems();
                                     });
                                 } else {
                                     Swal.fire({
@@ -371,21 +416,23 @@
                     }
                 });
 
-            $('#sales_payment_type').on('change',
-                function() {
-                    const customerId = $('#sales_customer_id').val();
-                    const paymentType = $(this).val();
+            const modalCard = $('#modal-card');
+            const modalContainer = $('#modal-container');
 
-                    if (customerId == 1 && paymentType == 'credit') {
-                        if (customerId == 1 && paymentType == 'credit') {
-                            const select = $(this);
-                            setTimeout(() => {
-                                select.val('cash').trigger('change');
-                                Swal.fire('Error',
-                                    'Pelanggan Umum tidak bisa membayar dengan Credit/Tempo',
-                                    'error');
-                            }, 10);
-                        }
+            $(window).on('click',
+                function(e) {
+                    if ($(e.target).is(modalContainer)) {
+                        modalContainer.addClass('hidden').removeClass('flex');
+                        modalCard.html('');
+                        location.reload()
+                    }
+                });
+
+            $(document).on('keydown',
+                function(event) {
+                    if (event.key === 'Escape' && modalContainer.hasClass('flex')) {
+                        modalContainer.addClass('hidden').removeClass('flex');
+                        location.reload()
                     }
                 });
 
@@ -410,16 +457,34 @@
                     calculateSummary();
                 });
 
-            $('#sales_discount, #sales_payment').on('input',
-                function() {
-                    calculateSummary();
-                });
-
             $(document).on('click', '.delete-item',
                 function() {
                     const index = $(this).closest('.stockItem').data('index');
                     cartItems.splice(index, 1);
                     renderCartItems();
+                });
+
+            $('#sales_discount, #sales_payment').on('input',
+                function() {
+                    calculateSummary();
+                });
+
+            $('#sales_payment_type').on('change',
+                function() {
+                    const customerId = $('#sales_customer_id').val();
+                    const paymentType = $(this).val();
+
+                    if (customerId == 1 && paymentType == 'credit') {
+                        if (customerId == 1 && paymentType == 'credit') {
+                            const select = $(this);
+                            setTimeout(() => {
+                                select.val('cash').trigger('change');
+                                Swal.fire('Error',
+                                    'Pelanggan Umum tidak bisa membayar dengan Credit/Tempo',
+                                    'error');
+                            }, 10);
+                        }
+                    }
                 });
 
             function calculateSummary() {
@@ -503,6 +568,20 @@
                 $('#sales_discount').val(0);
                 $('#customerCredit').html('');
                 renderCartItems();
+            }
+
+            function print(salesId) {
+                $.ajax({
+                    url: `/sale/${salesId}`,
+                    type: "GET",
+                    success: function(res) {
+                        modalCard.html(res);
+                        modalContainer.removeClass('hidden').addClass('flex');
+                        setTimeout(() => {
+                            window.print();
+                        }, 100);
+                    }
+                });
             }
         });
     </script>

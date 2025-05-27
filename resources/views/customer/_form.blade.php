@@ -93,7 +93,7 @@
     </div>
 </div>
 
-<div class="mb-6">
+{{-- <div class="mb-6">
     <x-form.label :props="[
         'for' => 'customer_credit_limit',
         'label' => 'Batas Hutang',
@@ -106,4 +106,4 @@
         'value' => old('customer_credit_limit', $customer->customer_credit_limit ?? 0),
         'class' => 'price-input',
     ]" />
-</div>
+</div> --}}
