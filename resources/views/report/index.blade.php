@@ -55,7 +55,7 @@
                         'class' => 'w-full',
                     ]" :options="[
                         'detail' => 'Laporan Detail',
-                        'analyse' => 'Laporan Analisis',
+                        // 'analyse' => 'Laporan Analisis',
                     ]" />
                 </div>
 
@@ -70,7 +70,9 @@
                         'name' => 'sale_category',
                         'value' => null,
                         'class' => 'w-full',
-                    ]" :options="$categories" />
+                    ]" :options="[
+                        'all' => 'Semua',
+                    ]" />
                 </div>
 
                 <div>
@@ -84,7 +86,7 @@
     </div>
 
     {{-- PEMBELIAN --}}
-    <div class="bg-white rounded-lg p-6 border border-gray-200 mb-4">
+    {{-- <div class="bg-white rounded-lg p-6 border border-gray-200 mb-4">
         <div class="border-b border-b-gray-200 pb-2 mb-2">
             <h2 class="text-blue-900 tracking-wide font-medium">Laporan Pembelian</h2>
         </div>
@@ -159,5 +161,5 @@
                 </div>
             </div>
         </form>
-    </div>
+    </div> --}}
 @endsection

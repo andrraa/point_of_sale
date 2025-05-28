@@ -35,14 +35,14 @@
 </head>
 
 <body>
-    <div>
+    {{-- <div>
         <h1>PT JAYA ABADI</h1>
         <span style="display: block; margin-bottom: 4px;">Laporan Penjualan Detail</span>
         <span style="display: block; margin-bottom: 4px;">
             Periode: {{ $formattedStartDate }} s.d {{ $formattedEndDate }}
         </span>
         <span style="display: block; margin-bottom: 4px;">Kategori: BARANG IMPORT</span>
-    </div>
+    </div> --}}
 
     @forelse ($reportData as $index => $report)
         <div style="margin-top: 20px;">
