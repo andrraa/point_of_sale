@@ -43,17 +43,18 @@
                 ajax: "{{ route('customer.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
-                        name: 'DT_RowIndex'
+                        name: 'DT_RowIndex',
+                        class: 'font-semibold tracking-wider !text-xs'
                     },
                     {
                         data: 'customer_name',
                         name: 'customer_name',
-                        class: 'font-semibold tracking-wider !text-sm !text-blue-900'
+                        class: 'font-semibold tracking-wider !text-xs !text-blue-900'
                     },
                     {
                         data: 'category.category_name',
                         name: 'category.category_name',
-                        class: 'tracking-wider !text-sm !text-gray-900',
+                        class: 'tracking-wider !text-xs !text-gray-900',
                         render: function(data, type, row) {
                             return `${row.category.category_code} - ${row.category.category_name}`;
                         }
@@ -61,7 +62,7 @@
                     {
                         data: 'region.region_name',
                         name: 'region.region_name',
-                        class: 'tracking-wider !text-sm !text-gray-900',
+                        class: 'tracking-wider !text-xs !text-gray-900',
                         render: function(data, type, row) {
                             return `${row.region.region_code} - ${row.region.region_name}`;
                         }
@@ -69,7 +70,7 @@
                     {
                         data: 'customer_status',
                         name: 'customer_status',
-                        class: 'tracking-wider !text-sm !text-gray-900',
+                        class: 'tracking-wider !text-xs !text-gray-900',
                         render: function(data) {
                             const label = data == 1 ? 'Aktif' : 'Tidak Aktif';
                             const color = data == 1 ? 'bg-blue-900' : 'bg-red-900';

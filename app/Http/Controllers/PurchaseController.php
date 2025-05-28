@@ -113,23 +113,24 @@ class PurchaseController
         }
 
         foreach ($mergeItems as $item) {
+            $stock = Stock::with('category')
+                ->where('stock_id', $item['id'])->first();
+
             $purchaseDetails[] = [
                 'purchase_detail_purchase_id' => $purchase->purchase_id,
                 'purchase_detail_stock_id' => $item['id'],
-                'purchase_detail_stock_code' => '',
-                'purchase_detail_stock_name' => '',
-                'purchase_detail_stock_category_id' => '',
-                'purchase_detail_stock_category_name' => '',
-                'purchase_detail_stock_unit' => '',
-                'purchase_detail_cost_price' => '',
+                'purchase_detail_stock_code' => $stock->stock_code,
+                'purchase_detail_stock_name' => $stock->stock_name,
+                'purchase_detail_stock_category_id' => $stock->stock_category_id,
+                'purchase_detail_stock_category_name' => $stock->category->category_name,
+                'purchase_detail_stock_unit' => $stock->stock_unit,
+                'purchase_detail_cost_price' => $stock->stock_purchase_price,
                 'purchase_detail_price' => $item['price'],
                 'purchase_detail_quantity' => $item['quantity'],
-                'purchase_detail_total_price' => '',
+                'purchase_detail_total_price' => $item['price'] * $item['quantity'],
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
-
-            $stock = Stock::where('stock_id', $item['id'])->first();
 
             if ($stock) {
                 $stock->update([

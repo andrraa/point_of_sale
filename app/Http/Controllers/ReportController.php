@@ -10,4 +10,14 @@ class ReportController
     {
         return view('report.index');
     }
+
+    public function sales()
+    {
+
+    }
+
+    public function purchase()
+    {
+
+    }
 }

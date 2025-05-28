@@ -90,17 +90,17 @@
                     {
                         data: 'sales_invoice',
                         name: 'sales_invoice',
-                        class: 'font-bold tracking-wider !text-blue-900'
+                        class: 'font-bold !text-xs tracking-wider !text-blue-900'
                     },
                     {
                         data: 'customer.customer_name',
                         name: 'customer.customer_name',
-                        class: 'tracking-wider !text-gray-900',
+                        class: 'tracking-wider !text-xs !text-gray-900',
                     },
                     {
                         data: 'sales_total_price',
                         name: 'sales_total_price',
-                        class: 'tracking-wider !text-gray-900',
+                        class: 'tracking-wider !text-xs !text-gray-900',
                         render: function(data) {
                             return 'Rp ' + customFunction.formatNumberToRupiah(data);
                         }
@@ -108,7 +108,7 @@
                     {
                         data: 'sales_total_payment',
                         name: 'sales_total_payment',
-                        class: 'tracking-wider !text-gray-900',
+                        class: 'tracking-wider !text-xs !text-gray-900',
                         render: function(data) {
                             return 'Rp ' + customFunction.formatNumberToRupiah(data);
                         }
@@ -116,12 +116,12 @@
                     {
                         data: 'created_at',
                         name: 'created_at',
-                        class: 'tracking-wider !text-gray-900',
+                        class: 'tracking-wider !text-xs !text-gray-900',
                     },
                     {
                         data: 'sales_status',
                         name: 'sales_status',
-                        class: 'tracking-wider !text-gray-900',
+                        class: 'tracking-wider !text-xs !text-gray-900',
                         render: function(data, type, row) {
                             const statusMap = {
                                 1: 'Lunas',
@@ -136,14 +136,14 @@
                                 const creditStatus = row.credit.customer_credit_status == 1 ?
                                     'Lunas' : 'Belum Lunas';
                                 creditInfo =
-                                    `<span class="text-[13px] text-green-700 font-medium">Status Kredit: ${creditStatus}</span>`;
+                                    `<span class="!text-xs text-green-700 font-medium">Status Kredit: ${creditStatus}</span>`;
                             }
 
                             const color = data == 0 ? 'text-red-700' : 'text-blue-700';
 
                             return `
                                 <div class="flex flex-col gap-1">
-                                    <span class="text-[13px] ${color} font-medium">Status Bayar: ${status}</span>
+                                    <span class="${color} !text-xs font-medium">Status Bayar: ${status}</span>
                                     ${creditInfo}
                                 </div>
                             `;

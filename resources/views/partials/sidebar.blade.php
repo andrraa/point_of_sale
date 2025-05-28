@@ -94,17 +94,18 @@
                     @php
                         $navActiveClass = request()->routeIs($item['routePattern'])
                             ? 'bg-blue-900 text-white'
-                            : 'hover:bg-blue-900/20 text-gray-600';
+                            : 'hover:bg-blue-900/20 text-gray-500';
                     @endphp
 
                     <li>
                         <a href="{{ $item['routeUrl'] }}">
-                            <div class="flex items-center gap-3 rounded-lg py-2 px-4 outline-none {{ $navActiveClass }}">
+                            <div
+                                class="flex items-center gap-3 rounded-lg py-2 px-4 outline-none font-medium {{ $navActiveClass }}">
                                 <div class="w-4 h-4 flex items-center justify-center">
                                     <i class="{{ $item['navIcon'] }} text-sm"></i>
                                 </div>
                                 <div class="mt-auto">
-                                    <span class="text-sm tracking-wider">{{ $item['navTitle'] }}</span>
+                                    <span class="text-sm tracking-wide">{{ $item['navTitle'] }}</span>
                                 </div>
                             </div>
                         </a>

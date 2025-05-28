@@ -54,8 +54,8 @@ class CustomerRequest extends FormRequest
     {
         $this->merge([
             'customer_name' => ucwords(strtolower($this->customer_name)),
-            'customer_credit_limit' => str_replace('.', '', $this->customer_credit_limit),
-            'customer_address' => ucwords(strtolower($this->customer_address))
+            'customer_credit_limit' => str_replace('.', '', $this->customer_credit_limit ?? 0),
+            'customer_address' => ucwords(strtolower($this->customer_address)),
         ]);
     }
 }

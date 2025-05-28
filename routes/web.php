@@ -71,6 +71,10 @@ Route::middleware('auth')->group(function () {
     // REPORT
     Route::controller(ReportController::class)->group(function () {
         Route::get('report', 'index')->name('report');
+        Route::prefix('report')->group(function () {
+            Route::post('sales', 'sales')->name('report.sales');
+            Route::post('purchase', 'purchase')->name('report.purchase');
+        });
     });
 
     // CUSTOMER

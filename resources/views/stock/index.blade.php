@@ -49,17 +49,17 @@
                     {
                         data: 'stock_code',
                         name: 'stock_code',
-                        class: 'font-bold tracking-wide !text-blue-900'
+                        class: 'font-bold tracking-wide !text-xs !text-blue-900'
                     },
                     {
                         data: 'stock_name',
                         name: 'stock_name',
-                        class: 'tracking-wider !text-gray-900 line-clamp-1'
+                        class: 'tracking-wide !text-xs !text-gray-900 line-clamp-1'
                     },
                     {
                         data: 'stock_total',
                         name: 'stock_total',
-                        class: 'font-medium tracking-wider !text-gray-900',
+                        class: 'font-medium tracking-wide !text-xs !text-gray-900',
                         render: function(data) {
                             return `${data} pcs`;
                         }
@@ -67,7 +67,7 @@
                     {
                         data: 'stock_current',
                         name: 'stock_current',
-                        class: 'font-medium tracking-wider 1text-blue-500',
+                        class: 'font-medium tracking-wide !text-xs 1text-blue-500',
                         render: function(data) {
                             return `${data} pcs`;
                         }
@@ -75,7 +75,7 @@
                     {
                         data: 'stock_in',
                         name: 'stock_in',
-                        class: 'font-medium tracking-wider !text-green-500',
+                        class: 'font-medium tracking-wide !text-xs !text-green-500',
                         render: function(data) {
                             return `${data} pcs`;
                         }
@@ -83,7 +83,7 @@
                     {
                         data: 'stock_out',
                         name: 'stock_out',
-                        class: 'font-medium tracking-wider !text-red-500',
+                        class: 'font-medium tracking-wide !text-xs !text-red-500',
                         render: function(data) {
                             return `${data} pcs`;
                         }

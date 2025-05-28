@@ -5,6 +5,7 @@
         @media print {
             body * {
                 visibility: hidden !important;
+                margin: 0;
             }
 
             #modal-container,

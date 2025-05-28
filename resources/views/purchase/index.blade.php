@@ -52,12 +52,12 @@
                     {
                         data: 'purchase_invoice',
                         name: 'purchase_invoice',
-                        class: 'font-bold tracking-wider !text-blue-900'
+                        class: 'font-bold tracking-wide !text-xs !text-blue-900'
                     },
                     {
                         data: 'supplier.supplier_name',
                         name: 'supplier.supplier_name',
-                        class: 'tracking-wider !text-gray-900',
+                        class: 'tracking-wide !text-xs !text-gray-900',
                         render: function(data, type, row) {
                             return `${row.supplier.supplier_code} - ${row.supplier.supplier_name}`;
                         }
@@ -65,7 +65,7 @@
                     {
                         data: 'region.region_name',
                         name: 'region.region_name',
-                        class: 'tracking-wider !text-gray-900',
+                        class: 'tracking-wide !text-xs !text-gray-900',
                         render: function(data, type, row) {
                             return `${row.region.region_code} - ${row.region.region_name}`;
                         }
@@ -73,12 +73,12 @@
                     {
                         data: 'total_items',
                         name: 'total_items',
-                        class: 'tracking-wider !text-gray-900',
+                        class: 'tracking-wide !text-xs !text-gray-900',
                     },
                     {
                         data: 'total_price',
                         name: 'total_price',
-                        class: 'tracking-wider !text-gray-900',
+                        class: 'tracking-wide !text-xs !text-gray-900',
                         render: function(data) {
                             return 'Rp ' + customFunction.formatNumberToRupiah(data);
                         }
@@ -86,7 +86,7 @@
                     {
                         data: 'created_at',
                         name: 'created_at',
-                        class: 'tracking-wider !text-gray-900',
+                        class: 'tracking-wide !text-xs !text-gray-900',
                     },
                     {
                         data: 'actions',
