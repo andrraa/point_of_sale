@@ -27,6 +27,7 @@ class Sale extends Model
         'sales_total_change',
         'sales_discount',
         'sales_total_discount',
+        'sales_total_price_after_discount',
         'sales_status',
         'sales_customer_total_credit'
     ];

@@ -104,6 +104,7 @@ class CashierController
             'sales_total_change' => $totalChange,
             'sales_discount' => $validated['discount'],
             'sales_total_discount' => $totalDiscount,
+            'sales_total_price_after_discount' => $totalPriceAfterDiscount,
             'sales_status' => $validated['is_credit'] ? Sale::CREDIT_STATUS : Sale::PAID_STATUS
         ];
 
