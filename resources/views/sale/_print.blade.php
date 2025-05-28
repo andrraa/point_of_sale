@@ -93,6 +93,11 @@
     <h2 class="text-[12px] tracking-wider uppercase">dicetak oleh: Admin</h2>
 </div>
 
+<div class="text-center mt-2">
+    <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($sale->sales_invoice, 'C128', 3, 70) }}" alt="barcode" />
+</div>
+
+
 <button type="button" id="print-button" onclick="window.print()"
     class="no-print w-full py-2 rounded-lg bg-blue-900 text-white text-sm hover:bg-blue-950 transition duration-200 tracking-wide mt-4 cursor-pointer font-medium">
     CETAK

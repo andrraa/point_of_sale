@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->integer('sales_discount')->default(0);
             $table->integer('sales_total_discount')->default(0);
             $table->double('sales_customer_total_credit')->default(0);
+            $table->double('sales_total_price_after_discount')->default(0);
             $table->smallInteger('sales_status')->default(1);
             $table->softDeletes();
             $table->timestamps();

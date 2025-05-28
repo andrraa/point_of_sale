@@ -123,4 +123,5 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
 ];
