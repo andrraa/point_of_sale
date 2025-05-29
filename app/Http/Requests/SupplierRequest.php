@@ -87,10 +87,10 @@ class SupplierRequest extends FormRequest
             'supplier_name' => strtoupper(strtolower($this->supplier_name)),
             'supplier_address' => strtoupper(strtolower($this->supplier_address)),
             'supplier_contact_person' => strtoupper(strtolower($this->supplier_contact_person)),
-            'supplier_last_debt' => str_replace('.', '', $this->supplier_last_debt),
-            'supplier_first_debt' => str_replace('.', '', $this->supplier_first_debt),
-            'supplier_purchase' => str_replace('.', '', $this->supplier_purchase),
-            'supplier_payment' => str_replace('.', '', $this->supplier_payment),
+            'supplier_last_debt' => str_replace('.', '', $this->supplier_last_debt ?? 0),
+            'supplier_first_debt' => str_replace('.', '', $this->supplier_first_debt ?? 0),
+            'supplier_purchase' => str_replace('.', '', $this->supplier_purchase ?? 0),
+            'supplier_payment' => str_replace('.', '', $this->supplier_payment ?? 0),
         ]);
     }
 }
