@@ -27,10 +27,10 @@ class ReportSalesRequest extends FormRequest
                 'string',
                 'in:detail,analyse'
             ],
-            'sale_category' => [
-                'required',
-                'integer'
-            ]
+            // 'sale_category' => [
+            //     'nullable',
+            //     'integer'
+            // ]
         ];
     }
 }

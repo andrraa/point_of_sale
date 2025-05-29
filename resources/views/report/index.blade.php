@@ -86,14 +86,14 @@
     </div>
 
     {{-- PEMBELIAN --}}
-    {{-- <div class="bg-white rounded-lg p-6 border border-gray-200 mb-4">
+    <div class="bg-white rounded-lg p-6 border border-gray-200 mb-4">
         <div class="border-b border-b-gray-200 pb-2 mb-2">
             <h2 class="text-blue-900 tracking-wide font-medium">Laporan Pembelian</h2>
         </div>
 
         <form method="POST" action="{{ route('report.purchase') }}">
             @csrf
-            <div class="mb-6 grid md:grid-cols-4 gap-4 items-end">
+            <div class="mb-6 grid md:grid-cols-3 gap-4 items-end">
                 <div>
                     <x-form.label :props="[
                         'for' => 'purchase_start_date',
@@ -135,11 +135,11 @@
                         'class' => 'w-full',
                     ]" :options="[
                         'detail' => 'Laporan Detail',
-                        'analyse' => 'Laporan Analisis',
+                        // 'analyse' => 'Laporan Analisis',
                     ]" />
                 </div>
 
-                <div>
+                {{-- <div>
                     <x-form.label :props="[
                         'for' => 'purchase_category',
                         'label' => 'Kategori',
@@ -151,7 +151,7 @@
                         'value' => null,
                         'class' => 'w-full',
                     ]" :options="$categories" />
-                </div>
+                </div> --}}
 
                 <div>
                     <button type="submit"
@@ -161,5 +161,5 @@
                 </div>
             </div>
         </form>
-    </div> --}}
+    </div>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ReportPurchaseRequest;
 use App\Http\Requests\ReportSalesRequest;
 use App\Models\Category;
+use App\Models\Purchase;
 use App\Models\Sale;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -25,42 +26,25 @@ class ReportController
     {
         $validated = $request->validated();
 
-        if ($validated['sale_type'] == 'detail') {
+        if ($validated['sale_type'] === 'detail') {
             $startDate = Carbon::parse($validated['sale_start_date'])->startOfDay();
             $endDate = Carbon::parse($validated['sale_end_date'])->endOfDay();
-            $categoryId = (int) $validated['sale_category'];
 
-            $reports = Sale::with([
-                'details' => function ($q) use ($categoryId) {
-                    if ($categoryId !== 0) {
-                        $q->where('sale_detail_stock_category_id', $categoryId);
-                    }
-                },
-                'customer.category'
-            ])
+            $reports = Sale::with(['details', 'customer.category'])
                 ->whereBetween('created_at', [$startDate, $endDate])
-                ->when($categoryId !== 0, function ($query) use ($categoryId) {
-                    $query->whereHas('details', function ($q) use ($categoryId) {
-                        $q->where('sale_detail_stock_category_id', $categoryId);
-                    });
-                }, function ($query) {
-                    $query->whereHas('details');
-                })
                 ->get();
 
             $reportData = [];
 
             foreach ($reports as $report) {
-                $discount = 0;
-                $subtotal = 0;
                 $stocks = [];
-
                 $totalStockPrice = 0;
                 $totalHppPrice = 0;
 
-                foreach ($report->details as $index => $detail) {
+                foreach ($report->details as $detail) {
                     $total = $detail->sale_detail_quantity * $detail->sale_detail_price;
-                    $totalHpp = $detail->sale_detail_cost_price * $detail->sale_detail_quantity;
+                    $totalHpp = $detail->sale_detail_quantity * $detail->sale_detail_cost_price;
+
                     $totalStockPrice += $total;
                     $totalHppPrice += $totalHpp;
 
@@ -71,11 +55,9 @@ class ReportController
                         'price' => $detail->sale_detail_price,
                         'total' => $total,
                         'hppPrice' => $totalHpp,
-                        'lr' => $total - $totalHpp
+                        'lr' => $total - $totalHpp,
                     ];
                 }
-
-                $totalLR = $totalStockPrice - $totalHppPrice;
 
                 $reportData[] = [
                     'invoice' => $report->sales_invoice,
@@ -87,24 +69,19 @@ class ReportController
                     'subtotalCredit' => $report->sales_customer_total_credit,
                     'customer' => [
                         'customerName' => $report->customer->customer_name,
-                        'customerCategory' => $report->customer->category->category_name
+                        'customerCategory' => $report->customer->category->category_name,
                     ],
-                    'stocks' => $stocks
+                    'stocks' => $stocks,
                 ];
             }
 
-            // return view('report._sales-detail', compact(['reportData', 'formattedStartDate', 'formattedEndDate']));
             $formattedStartDate = $startDate->format('d-M-Y');
-            $formattedEndDate = $startDate->format('d-M-Y');
+            $formattedEndDate = $endDate->format('d-M-Y');
 
-            $pdf = Pdf::loadView(
-                'report._sales-detail',
-                compact(['formattedStartDate', 'formattedEndDate', 'reportData'])
-            )
+            $pdf = Pdf::loadView('report._sales-detail', compact('formattedStartDate', 'formattedEndDate', 'reportData'))
                 ->setPaper('a4', 'landscape');
 
-            return $pdf
-                ->download("LAPORAN-PENJUALAN-{$formattedStartDate}-sd-{$formattedEndDate}.pdf");
+            return $pdf->download("LAPORAN-PENJUALAN-{$formattedStartDate}-sd-{$formattedEndDate}.pdf");
         }
 
         if ($validated['sales_type'] == 'analyse') {
@@ -119,5 +96,45 @@ class ReportController
     public function purchase(ReportPurchaseRequest $request)
     {
         $validated = $request->validated();
+
+        if ($validated['purchase_type'] == 'detail') {
+            $startDate = Carbon::parse($validated['purchase_start_date'])->startOfDay();
+            $endDate = Carbon::parse($validated['purchase_end_date'])->endOfDay();
+
+            $purchases = Purchase::with(['details', 'supplier'])
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->get();
+
+            $reportData = [];
+
+            foreach ($purchases as $purchase) {
+                $subtotal = 0;
+                $stocks = [];
+
+                foreach ($purchase->details as $detail) {
+                    $total = $detail->purchase_detail_quantity * $detail->purchase_detail_price;
+
+                    $stocks[] = [
+                        'stockCode' => $detail->purchase_detail_stock_code,
+                        'stockName' => $detail->purchase_detail_stock_name,
+                        'quantity' => $detail->purchase_detail_quantity,
+                        'price' => $detail->purchase_detail_price,
+                        'total' => $total,
+                    ];
+                }
+
+                $reportData[] = [
+                    'invoice' => $purchase->purchase_invoice,
+                    'date' => $purchase->created_at,
+                    'subtotalPrice' => $purchase->purchase_detail_total_price,
+                    'supplier' => [
+                        'supplierName' => $purchase->supplier->supplier_name,
+                    ],
+                    'stocks' => $stocks
+                ];
+            }
+
+            return view('report._purchase-detail', compact('reportData'));
+        }
     }
 }

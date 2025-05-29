@@ -27,10 +27,10 @@ class ReportPurchaseRequest extends FormRequest
                 'string',
                 'in:detail,analyse'
             ],
-            'purchase_category' => [
-                'required',
-                'integer'
-            ]
+            // 'purchase_category' => [
+            //     'required',
+            //     'integer'
+            // ]
         ];
     }
 }
