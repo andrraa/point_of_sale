@@ -31,7 +31,7 @@ class CategoryRequest extends FormRequest
                 'required',
             ],
             'category_price_level' => [
-                'required',
+                'nullable',
                 'integer',
                 'in:1,2,3'
             ]
