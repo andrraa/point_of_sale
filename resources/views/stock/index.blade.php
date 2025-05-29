@@ -13,12 +13,21 @@
     </div>
 
     <div class="bg-white rounded-lg p-4 border border-gray-200 overflow-x-auto">
+        <div class="mb-4">
+            <x-form.select :props="[
+                'id' => 'filter',
+                'name' => 'filter',
+                'value' => null,
+            ]" :options="$categories" />
+        </div>
+
         <table id="stock-table" class="w-full min-w-max">
             <thead class="text-sm tracking-wide text-left">
                 <tr>
                     <th class="p-3 bg-gray-100">#</th>
                     <th class="p-3 bg-gray-100">Kode Stok</th>
                     <th class="p-3 bg-gray-100">Nama Stok</th>
+                    <th class="p-3 bg-gray-100">Kategori</th>
                     <th class="p-3 bg-gray-100">Total Stok</th>
                     <th class="p-3 bg-gray-100">Stok Tersedia</th>
                     <th class="p-3 bg-gray-100">Stok Masuk</th>
@@ -38,10 +47,15 @@
             const dataTable = window.DataTables;
             const dataTableAction = window.DataTablesAction;
 
-            $('#stock-table').dataTable({
+            let table = $('#stock-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('stock.index') }}",
+                ajax: {
+                    url: "{{ route('stock.index') }}",
+                    data: function(d) {
+                        d.category_id = $('#filter').val()
+                    }
+                },
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
@@ -55,6 +69,11 @@
                         data: 'stock_name',
                         name: 'stock_name',
                         class: 'tracking-wide !text-xs !text-gray-900 line-clamp-1'
+                    },
+                    {
+                        data: 'category.category_name',
+                        name: 'category.category_name',
+                        class: 'tracking-wide !text-xs !text-gray-900'
                     },
                     {
                         data: 'stock_total',
@@ -101,6 +120,10 @@
                     searchable: false,
                     orderable: false
                 }]
+            });
+
+            $('#filter').on('change', function() {
+                table.ajax.reload();
             });
         });
     </script>
