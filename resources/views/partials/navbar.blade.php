@@ -10,7 +10,7 @@
 
         <div>
             <h1 class="text-sm font-medium tracking-wider text-blue-900 capitalize">
-                {{ Session::get('user')['username'] }}
+                {{ Session::get('user')['full_name'] }}
             </h1>
         </div>
     </div>

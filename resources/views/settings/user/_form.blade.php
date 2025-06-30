@@ -1,5 +1,20 @@
 <div class="mb-2">
     <x-form.label :props="[
+        'for' => 'full_name',
+        'label' => 'Nama Lengkap',
+        'required' => true,
+    ]" />
+
+    <x-form.input :props="[
+        'id' => 'full_name',
+        'name' => 'full_name',
+        'placeholder' => 'Nama lengkap',
+        'value' => old('full_name', $user->full_name ?? null),
+    ]" />
+</div>
+
+<div class="mb-2">
+    <x-form.label :props="[
         'for' => 'username',
         'label' => 'Nama Pengguna',
         'required' => true,
@@ -25,6 +40,21 @@
         'name' => 'password',
         'placeholder' => 'Kata sandi',
     ]" />
+</div>
+
+<div class="mb-6">
+    <x-form.label :props="[
+        'for' => 'user_role_id',
+        'label' => 'Akses',
+        'required' => true,
+    ]" />
+
+    <x-form.select :props="[
+        'id' => 'user_role_id',
+        'name' => 'user_role_id',
+        'value' => old('user_role_id', $user->user_role_id ?? null),
+        'class' => 'w-full',
+    ]" :options="$roles" />
 </div>
 
 <div class="mb-6">

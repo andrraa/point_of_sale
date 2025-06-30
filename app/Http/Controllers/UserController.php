@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Models\Role;
 use App\Models\User;
 use App\Services\ValidationService;
 use Hash;
@@ -21,8 +22,8 @@ class UserController
 
     public function index(): View
     {
-        $users = User::query()
-            ->select(['user_id', 'username', 'active'])
+        $users = User::with('role')
+            ->select(['user_id', 'full_name', 'username', 'user_role_id', 'active'])
             ->get();
 
         return view('settings.user.index', compact('users'));
@@ -34,7 +35,9 @@ class UserController
 
         $state = 'create';
 
-        return view('settings.user.create', compact(['validator', 'state']));
+        $roles = Role::getRoles();
+
+        return view('settings.user.create', compact(['validator', 'state', 'roles']));
     }
 
     public function store(UserRequest $request): RedirectResponse
@@ -54,12 +57,20 @@ class UserController
     {
         $validator = $this->validationService->generateValidation(UserRequest::class, '#form-edit-user');
 
-        return view('settings.user.edit', compact(['user', 'validator']));
+        $roles = Role::getRoles();
+
+        return view('settings.user.edit', compact(['user', 'validator', 'roles']));
     }
 
     public function update(UserRequest $request, User $user): RedirectResponse
     {
         $validated = $request->validated();
+
+        if (empty($validated['password'])) {
+            unset($validated['password']);
+        } else {
+            $validated['password'] = Hash::make($validated['password']);
+        }
 
         $user->update($validated)
             ? flash()->preset('update_success')

@@ -17,11 +17,17 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'full_name' => [
+                'required',
+                'string',
+                'max:255'
+            ],
             'username' => [
                 'required',
                 'string',
                 'max:50',
-                Rule::unique('tbl_users', 'username')->ignore($this->route('user')->user_id ?? null, 'user_id')
+                Rule::unique('tbl_users', 'username')
+                    ->ignore($this->route('user')->user_id ?? null, 'user_id')
             ],
             'password' => [
                 'nullable',
@@ -31,6 +37,11 @@ class UserRequest extends FormRequest
                 'required',
                 'integer',
                 'in:0,1'
+            ],
+            'user_role_id' => [
+                'required',
+                'integer',
+                'exists:tbl_roles,role_id'
             ]
         ];
     }
@@ -38,7 +49,8 @@ class UserRequest extends FormRequest
     public function prepareForValidation(): void
     {
         $this->merge([
-            'password' => request()->isMethod('post') && $this->password ?? Hash::make(Str::random(8))
+            'full_name' => ucwords(strtolower($this->full_name)),
+            'username' => strtolower($this->username)
         ]);
     }
 }

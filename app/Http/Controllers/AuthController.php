@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class AuthController
@@ -31,6 +32,8 @@ class AuthController
     // LOGIN
     public function login(SignInRequest $request): RedirectResponse
     {
+        Session::remove('user');
+
         $validated = $request->validated();
 
         $user = User::where('username', $validated['username'])->first();
@@ -43,7 +46,7 @@ class AuthController
 
         Auth::login($user);
 
-        session(['user' => $user]);
+        session(['user' => $user->load('role')]);
 
         flash()->preset('auth_success', ['username' => $user->username]);
 
@@ -56,6 +59,8 @@ class AuthController
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
+        Session::remove('user');
 
         Auth::logout();
 

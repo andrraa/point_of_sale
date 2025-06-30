@@ -26,7 +26,9 @@
                     <thead class="text-left bg-gray-100">
                         <tr>
                             <th class="p-3 !text-[13px] tracking-wider text-blue-900">#</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">Nama Lengkap</th>
                             <th class="p-3 !text-[13px] tracking-wider text-blue-900">Nama Pengguna</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">Akses</th>
                             <th class="p-3 !text-[13px] tracking-wider text-blue-900">Status</th>
                             <th class="p-3 !text-[13px] tracking-wider text-blue-900">Aksi</th>
                         </tr>
@@ -40,7 +42,9 @@
 
                             <tr class="{{ $class }} {{ $border }}">
                                 <td class="p-3 !text-[13px] tracking-wider">{{ $index + 1 }}</td>
-                                <td class="p-3 !text-[13px] tracking-wider   ">{{ $user->username }}</td>
+                                <td class="p-3 !text-[13px] tracking-wider">{{ $user->full_name }}</td>
+                                <td class="p-3 !text-[13px] tracking-wider">{{ $user->username }}</td>
+                                <td class="p-3 !text-[13px] tracking-wider">{{ $user->role->role_name }}</td>
                                 <td class="p-3 !text-[13px] tracking-wider">
                                     @php
                                         $statusTitle = $user->active == 1 ? 'Aktif' : 'Tidak Aktif';

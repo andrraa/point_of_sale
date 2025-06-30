@@ -6,82 +6,92 @@
 
         {{-- Menu --}}
         @php
-            $menus = [
-                [
-                    'group' => 'Menu Utama',
-                    'menus' => [
-                        // [
-                        //     'routeUrl' => route('dashboard'),
-                        //     'routePattern' => 'dashboard',
-                        //     'navIcon' => 'fa-solid fa-layer-group',
-                        //     'navTitle' => 'Dashboard',
-                        // ],
-                        [
-                            'routeUrl' => route('cashier'),
-                            'routePattern' => 'cashier',
-                            'navIcon' => 'fa-solid fa-laptop',
-                            'navTitle' => 'Kasir POS',
+            $user = Session::get('user');
+
+            $user->role->role_id == \App\Models\Role::ROLE_ADMIN
+                ? ($menus = [
+                    [
+                        'group' => 'Menu Utama',
+                        'menus' => [
+                            [
+                                'routeUrl' => route('cashier'),
+                                'routePattern' => 'cashier',
+                                'navIcon' => 'fa-solid fa-laptop',
+                                'navTitle' => 'Kasir POS',
+                            ],
                         ],
                     ],
-                ],
-                [
-                    'group' => 'Data Utama',
-                    'menus' => [
-                        [
-                            'routeUrl' => route('customer.index'),
-                            'routePattern' => 'customer.*',
-                            'navIcon' => 'fa-solid fa-user-tag',
-                            'navTitle' => 'Pelanggan',
-                        ],
-                        [
-                            'routeUrl' => route('supplier.index'),
-                            'routePattern' => 'supplier.*',
-                            'navIcon' => 'fa-solid fa-dolly',
-                            'navTitle' => 'Pemasok',
-                        ],
-                        [
-                            'routeUrl' => route('stock.index'),
-                            'routePattern' => 'stock.*',
-                            'navIcon' => 'fa-solid fa-boxes-stacked',
-                            'navTitle' => 'Stok Barang',
-                        ],
-                    ],
-                ],
-                [
-                    'group' => 'Akutansi & Laporan',
-                    'menus' => [
-                        [
-                            'routeUrl' => route('purchase.index'),
-                            'routePattern' => 'purchase.*',
-                            'navIcon' => 'fa-solid fa-basket-shopping',
-                            'navTitle' => 'Pembelian',
-                        ],
-                        [
-                            'routeUrl' => route('sale.index'),
-                            'routePattern' => 'sale.*',
-                            'navIcon' => 'fa-solid fa-truck-ramp-box',
-                            'navTitle' => 'Penjualan',
-                        ],
-                        [
-                            'routeUrl' => route('report'),
-                            'routePattern' => 'report',
-                            'navIcon' => 'fa-solid fa-file-lines',
-                            'navTitle' => 'Laporan',
+                    [
+                        'group' => 'Data Utama',
+                        'menus' => [
+                            [
+                                'routeUrl' => route('customer.index'),
+                                'routePattern' => 'customer.*',
+                                'navIcon' => 'fa-solid fa-user-tag',
+                                'navTitle' => 'Pelanggan',
+                            ],
+                            [
+                                'routeUrl' => route('supplier.index'),
+                                'routePattern' => 'supplier.*',
+                                'navIcon' => 'fa-solid fa-dolly',
+                                'navTitle' => 'Pemasok',
+                            ],
+                            [
+                                'routeUrl' => route('stock.index'),
+                                'routePattern' => 'stock.*',
+                                'navIcon' => 'fa-solid fa-boxes-stacked',
+                                'navTitle' => 'Stok Barang',
+                            ],
                         ],
                     ],
-                ],
-                [
-                    'group' => 'Menu Lainnya',
-                    'menus' => [
-                        [
-                            'routeUrl' => route('category.index'),
-                            'routePattern' => ['category.*', 'customer-category.*', 'region.*', 'user.*'],
-                            'navIcon' => 'fa-solid fa-gear',
-                            'navTitle' => 'Pengaturan',
+                    [
+                        'group' => 'Akutansi & Laporan',
+                        'menus' => [
+                            [
+                                'routeUrl' => route('purchase.index'),
+                                'routePattern' => 'purchase.*',
+                                'navIcon' => 'fa-solid fa-basket-shopping',
+                                'navTitle' => 'Pembelian',
+                            ],
+                            [
+                                'routeUrl' => route('sale.index'),
+                                'routePattern' => 'sale.*',
+                                'navIcon' => 'fa-solid fa-truck-ramp-box',
+                                'navTitle' => 'Penjualan',
+                            ],
+                            [
+                                'routeUrl' => route('report'),
+                                'routePattern' => 'report',
+                                'navIcon' => 'fa-solid fa-file-lines',
+                                'navTitle' => 'Laporan',
+                            ],
                         ],
                     ],
-                ],
-            ];
+                    [
+                        'group' => 'Menu Lainnya',
+                        'menus' => [
+                            [
+                                'routeUrl' => route('category.index'),
+                                'routePattern' => ['category.*', 'customer-category.*', 'region.*', 'user.*'],
+                                'navIcon' => 'fa-solid fa-gear',
+                                'navTitle' => 'Pengaturan',
+                            ],
+                        ],
+                    ],
+                ])
+                : ($menus = [
+                    [
+                        'group' => 'Menu Utama',
+                        'menus' => [
+                            [
+                                'routeUrl' => route('cashier'),
+                                'routePattern' => 'cashier',
+                                'navIcon' => 'fa-solid fa-laptop',
+                                'navTitle' => 'Kasir POS',
+                            ],
+                        ],
+                    ],
+                ]);
         @endphp
         <ul class="space-y-1">
             @foreach ($menus as $menu)
