@@ -1,4 +1,4 @@
-<aside class="bg-white border-r border-r-gray-200 w-[280px] flex flex-col justify-between py-5 px-4">
+<aside class="bg-white border-r border-r-gray-200 w-[240px] flex flex-col justify-between py-5 px-4">
     <div>
         <div class="pb-4">
             <h1 class="text-blue-900 font-bold text-[18px]">Point of Sale</h1>
@@ -86,7 +86,7 @@
         <ul class="space-y-1">
             @foreach ($menus as $menu)
                 <div class="py-1">
-                    <span class="uppercase text-[11px] font-medium tracking-wide text-gray-400">
+                    <span class="uppercase text-[10px] font-medium tracking-wide text-gray-400">
                         {{ $menu['group'] }}
                     </span>
                 </div>
@@ -100,13 +100,11 @@
                     <li>
                         <a href="{{ $item['routeUrl'] }}">
                             <div
-                                class="flex items-center gap-3 rounded-lg py-2 px-4 outline-none font-medium {{ $navActiveClass }}">
+                                class="flex items-center gap-3 rounded-lg py-2 px-3 outline-none font-medium {{ $navActiveClass }}">
                                 <div class="w-4 h-4 flex items-center justify-center">
-                                    <i class="{{ $item['navIcon'] }} text-sm"></i>
+                                    <i class="{{ $item['navIcon'] }} text-[13px]"></i>
                                 </div>
-                                <div class="mt-auto">
-                                    <span class="text-sm tracking-wide">{{ $item['navTitle'] }}</span>
-                                </div>
+                                <span class="text-[13px] tracking-wide">{{ $item['navTitle'] }}</span>
                             </div>
                         </a>
                     </li>
@@ -120,13 +118,11 @@
         @csrf
 
         <button id="logout-button"
-            class="flex items-center gap-3 rounded-lg py-2 px-4 border border-red-500 text-red-500 transition duraiton-200 hover:bg-red-500 hover:text-white hover:font-medium cursor-pointer w-full">
+            class="flex items-center gap-3 rounded-lg py-2 px-3 border border-red-500 text-red-500 transition duraiton-200 hover:bg-red-500 hover:text-white hover:font-medium cursor-pointer w-full">
             <div class="w-4 h-4 flex items-center justify-center">
-                <i class="fa-solid fa-right-from-bracket text-sm"></i>
+                <i class="fa-solid fa-right-from-bracket text-[13px]"></i>
             </div>
-            <div class="mt-auto">
-                <span class="text-sm tracking-wider">Keluar</span>
-            </div>
+            <span class="text-[13px] tracking-wider">Keluar</span>
         </button>
     </form>
 </aside>
