@@ -344,7 +344,10 @@
                         totalPrice += item.price * item.quantity
                     });
 
-                    if ((totalPayment < totalPrice) && customerId == 1) {
+                    const discountAmount = totalPrice * (discount / 100);
+                    const finalTotalPrice = totalPrice - discountAmount;
+
+                    if ((totalPayment < finalTotalPrice) && customerId != 1) {
                         Swal.fire({
                             title: 'Error',
                             text: 'Jumlah bayar kurang dari total bayar (Sisa bayar Pelanggan Umum tidak bisa secara Credit/Tempo)',

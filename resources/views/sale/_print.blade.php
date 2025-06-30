@@ -73,7 +73,7 @@
             <h2 class="text-[12px] tracking-wider uppercase">Total</h2>
         </div>
         <div class="text-[12px] tracking-wider">
-            {{ number_format($sale->sales_total_price) }}
+            {{ number_format($sale->sales_total_price - ($sale->sales_total_discount ?? 0)) }}
         </div>
     </div>
     <div class="flex items-center justify-between">

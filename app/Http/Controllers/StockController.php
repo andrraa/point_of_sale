@@ -37,6 +37,10 @@ class StockController
                     'stock_purchase_price'
                 ]);
 
+            if ($request->filled('category_id')) {
+                $stocks->where('stock_category_id', $request->category_id);
+            }
+
             return DataTables::of($stocks)
                 ->addIndexColumn()
                 ->escapeColumns()
@@ -47,7 +51,9 @@ class StockController
                 ->toJson();
         }
 
-        return view('stock.index');
+        $categories = Category::getItemCategories();
+
+        return view('stock.index', compact('categories'));
     }
 
     public function create(): View
