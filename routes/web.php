@@ -41,6 +41,8 @@ Route::middleware('auth')->group(function () {
 
         // STOCK
         Route::resource('stock', StockController::class)->except('show');
+        Route::delete('stock/reset/{stock}', [StockController::class, 'reset'])
+            ->name('stock.reset');
 
         // CATEGORY & SUB CATEGORY
         Route::controller(CategoryController::class)->group(function () {

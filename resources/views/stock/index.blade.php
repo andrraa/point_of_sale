@@ -13,7 +13,7 @@
     </div>
 
     <div class="bg-white rounded-lg border border-gray-200 mb-4 p-4">
-        <div class="w-1/2">
+        <div class="w-1/3">
             <x-form.label :props="[
                 'for' => 'filter',
                 'label' => 'Filter Kategori',

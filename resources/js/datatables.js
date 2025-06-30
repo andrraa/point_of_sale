@@ -161,9 +161,19 @@ export function actions(data, selector) {
 
     if (data.hasOwnProperty("delete")) {
         actions += `
-            <button type="button" data-url="${data.delete}" data-selector="${selector}" title="Hapus Data" class="cursor-pointer dt-delete">
+            <button type="button" data-url="${data.delete}" data-selector="${selector}" title="Hapus Data" class="cursor-pointer dt-delete" data-text="Data yang dihapus tidak dapat dipulihkan!">
                 <div class="w-6 h-6 p-2 rounded-md flex items-center justify-center shrink-0 border border-gray-200 text-red-500 hover:bg-red-500 hover:text-white">
                     <i class="fa-solid fa-trash text-xs"></i>
+                </div>
+            </button>
+        `;
+    }
+
+    if (data.hasOwnProperty("reset")) {
+        actions += `
+            <button type="button" data-url="${data.reset}" data-selector="${selector}" title="Reset Stok" class="cursor-pointer dt-delete" data-text="Apakah anda yakin ingin reset stok?">
+                <div class="w-6 h-6 p-2 rounded-md flex items-center justify-center shrink-0 border border-gray-200 text-red-500 hover:bg-red-500 hover:text-white">
+                    <i class="fa-solid fa-power-off text-xs"></i>
                 </div>
             </button>
         `;
@@ -180,10 +190,11 @@ $(document).on("click", ".dt-delete", function (e) {
     const url = button.data("url");
     const selector = button.data("selector");
     const table = $(selector).DataTable();
+    const text = button.data("text");
 
     Swal.fire({
         title: "Perhatian",
-        text: "Data yang dihapus tidak dapat dipulihkan!",
+        text: text,
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Hapus",

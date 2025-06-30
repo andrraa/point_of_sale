@@ -54,7 +54,8 @@ class StockController
                 ->escapeColumns()
                 ->addColumn('actions', fn($stock) => [
                     'edit' => route('stock.edit', $stock->stock_id),
-                    'delete' => route('stock.destroy', $stock->stock_id)
+                    'delete' => route('stock.destroy', $stock->stock_id),
+                    'reset' => route('stock.reset', $stock->stock_id)
                 ])
                 ->with([
                     'total_stock_all' => $totalStockAll,
@@ -119,5 +120,19 @@ class StockController
         $result = $stock->delete();
 
         return response()->json($result ? true : false);
+    }
+
+    public function reset(Stock $stock): JsonResponse
+    {
+        abort_unless(request()->expectsJson(), 403);
+
+        $stock->update([
+            'stock_total' => 0,
+            'stock_current' => 0,
+            'stock_in' => 0,
+            'stock_out' => 0
+        ]);
+
+        return response()->json(true);
     }
 }
