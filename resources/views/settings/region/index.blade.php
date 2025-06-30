@@ -25,10 +25,10 @@
                 <table class="w-full">
                     <thead class="text-left bg-gray-100">
                         <tr>
-                            <th class="p-3 text-sm tracking-wider text-blue-900">#</th>
-                            <th class="p-3 text-sm tracking-wider text-blue-900">Kode Wilayah</th>
-                            <th class="p-3 text-sm tracking-wider text-blue-900">Nama Wilayah</th>
-                            <th class="p-3 text-sm tracking-wider text-blue-900">Aksi</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">#</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">Kode Wilayah</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">Nama Wilayah</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
@@ -39,10 +39,10 @@
                             @endphp
 
                             <tr class="{{ $class }} {{ $border }}">
-                                <td class="p-3 text-sm tracking-wider">{{ $index + 1 }}</td>
-                                <td class="p-3 text-sm tracking-wider">{{ $region->region_code }}</td>
-                                <td class="p-3 text-sm tracking-wider">{{ $region->region_name }}</td>
-                                <td class="p-3 text-sm tracking-wider">
+                                <td class="p-3 !text-[13px] tracking-wider">{{ $index + 1 }}</td>
+                                <td class="p-3 !text-[13px] tracking-wider">{{ $region->region_code }}</td>
+                                <td class="p-3 !text-[13px] tracking-wider">{{ $region->region_name }}</td>
+                                <td class="p-3 !text-[13px] tracking-wider">
                                     <div class="flex gap-1.5">
                                         <a href="{{ route('region.edit', $region->region_id) }}"
                                             class="px-3 py-1.5 rounded-lg border text-xs border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white font-medium tracking-wide transition duration-200">

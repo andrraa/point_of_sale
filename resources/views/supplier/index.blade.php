@@ -14,7 +14,7 @@
 
     <div class="bg-white rounded-lg p-4 border border-gray-200 overflow-x-auto">
         <table id="supplier-table" class="w-full min-w-max">
-            <thead class="text-sm tracking-wide text-left">
+            <thead class="!text-[13px] tracking-wide text-left">
                 <tr>
                     <th class="p-3 bg-gray-100">#</th>
                     <th class="p-3 bg-gray-100">Kode Pemasok</th>
