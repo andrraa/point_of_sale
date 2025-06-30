@@ -128,3 +128,82 @@
         ]" />
     </div>
 </div>
+
+<div class="h-0.5 bg-gray-100 w-full mt-6 mb-6"></div>
+
+<div class="mb-4 w-fit">
+    <x-form.check :props="[
+        'id' => 'stock-edit',
+        'name' => 'stock-edit',
+    ]" />
+</div>
+
+<div class="grid grid-cols-4 gap-4 mb-6">
+    <div>
+        <x-form.label :props="[
+            'for' => 'stock_total',
+            'label' => 'Stok Total',
+            'required' => true,
+        ]" />
+
+        <x-form.input :props="[
+            'id' => 'stock_total',
+            'name' => 'stock_total',
+            'class' => 'number-input',
+            'placeholder' => 'Masukkan stok total',
+            'value' => old('stock_total', $stock->stock_total ?? 0),
+            'readonly' => true,
+        ]" />
+    </div>
+
+    <div>
+        <x-form.label :props="[
+            'for' => 'stock_current',
+            'label' => 'Stok Tersedia',
+            'required' => true,
+        ]" />
+
+        <x-form.input :props="[
+            'id' => 'stock_current',
+            'name' => 'stock_current',
+            'class' => 'number-input',
+            'placeholder' => 'Masukkan stok tersedia',
+            'value' => old('stock_current', $stock->stock_current ?? 0),
+            'readonly' => true,
+        ]" />
+    </div>
+
+    <div>
+        <x-form.label :props="[
+            'for' => 'stock_in',
+            'label' => 'Stok Masuk',
+            'required' => true,
+        ]" />
+
+        <x-form.input :props="[
+            'id' => 'stock_in',
+            'name' => 'stock_in',
+            'class' => 'number-input',
+            'placeholder' => 'Masukkan stok masuk',
+            'value' => old('stock_in', $stock->stock_in ?? 0),
+            'readonly' => true,
+        ]" />
+    </div>
+
+    <div>
+        <x-form.label :props="[
+            'for' => 'stock_out',
+            'label' => 'Stok Keluar',
+            'required' => true,
+        ]" />
+
+        <x-form.input :props="[
+            'id' => 'stock_out',
+            'name' => 'stock_out',
+            'class' => 'number-input',
+            'placeholder' => 'Masukkan stok keluar',
+            'value' => old('stock_out', $stock->stock_out ?? 0),
+            'readonly' => true,
+        ]" />
+    </div>
+</div>

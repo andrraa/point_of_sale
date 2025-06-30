@@ -30,8 +30,21 @@
 
             $('.price-input').on('input',
                 function() {
-                    this.value = customFunction.formatNumberToRupiah(this.value.replace(/[^0-9]/g, ''));
+                    this.value = customFunction.formatNumberToRupiah(this.value);
                 });
+
+            $('.number-input').on('input',
+                function() {
+                    this.value = customFunction.numberOnly(this.value);
+                });
+
+            $('#stock-edit').on('change', function() {
+                const isChecked = $(this).is(':checked');
+                const inputIds = ['stock_total', 'stock_current', 'stock_in', 'stock_out'];
+                inputIds.forEach(id => {
+                    $(`#${id}`).prop('readonly', !isChecked);
+                });
+            });
         });
     </script>
 @endpush

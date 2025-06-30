@@ -99,7 +99,9 @@ class StockController
 
         $categories = Category::getItemCategories();
 
-        return view('stock.edit', compact(['stock', 'validator', 'categories']));
+        $state = 'edit';
+
+        return view('stock.edit', compact(['stock', 'validator', 'categories', 'state']));
     }
 
     public function update(StockRequest $request, Stock $stock): RedirectResponse

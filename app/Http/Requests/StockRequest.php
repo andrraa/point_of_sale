@@ -52,7 +52,23 @@ class StockRequest extends FormRequest
             'stock_sale_price_3' => [
                 'required',
                 'string'
-            ]
+            ],
+            'stock_total' => [
+                'required',
+                'integer',
+            ],
+            'stock_current' => [
+                'required',
+                'integer',
+            ],
+            'stock_in' => [
+                'required',
+                'integer',
+            ],
+            'stock_out' => [
+                'required',
+                'integer',
+            ],
         ];
     }
 
@@ -65,6 +81,10 @@ class StockRequest extends FormRequest
             'stock_sale_price_2' => str_replace('.', '', $this->stock_sale_price_2),
             'stock_sale_price_3' => str_replace('.', '', $this->stock_sale_price_3),
             'stock_sale_price_4' => str_replace('.', '', $this->stock_sale_price_4),
+            'stock_total' => $this->stock_total ?? 0,
+            'stock_current' => $this->stock_current ?? 0,
+            'stock_in' => $this->stock_in ?? 0,
+            'stock_out' => $this->stock_out ?? 0
         ]);
     }
 }
