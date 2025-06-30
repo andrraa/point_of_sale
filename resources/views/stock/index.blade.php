@@ -21,7 +21,7 @@
                     <th class="p-3 bg-gray-100">Nama Stok</th>
                     <th class="p-3 bg-gray-100">Total Stok</th>
                     <th class="p-3 bg-gray-100">Stok Tersedia</th>
-                    <th class="p-3 bg-gray-100">Stok Masuk</th>
+                    <th class="p-3 bg-gray-100">Harga Beli</th>
                     <th class="p-3 bg-gray-100">Stok Keluar</th>
                     <th class="p-3 bg-gray-100">Aksi</th>
                 </tr>
@@ -31,12 +31,13 @@
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/datatables.js'])
+    @vite(['resources/js/datatables.js', 'resources/js/function.js'])
 
     <script type="module">
         $(document).ready(function() {
             const dataTable = window.DataTables;
             const dataTableAction = window.DataTablesAction;
+            const customFunction = window.CustomFunction;
 
             $('#stock-table').dataTable({
                 processing: true,
@@ -73,11 +74,11 @@
                         }
                     },
                     {
-                        data: 'stock_in',
-                        name: 'stock_in',
+                        data: 'stock_purchase_price',
+                        name: 'stock_purchase_price',
                         class: 'font-medium tracking-wide !text-xs !text-green-500',
                         render: function(data) {
-                            return `${data} pcs`;
+                            return `Rp ${customFunction.formatNumberToRupiah(data)}`;
                         }
                     },
                     {

@@ -33,7 +33,8 @@ class StockController
                     'stock_current',
                     'stock_in',
                     'stock_out',
-                    'stock_category_id'
+                    'stock_category_id',
+                    'stock_purchase_price'
                 ]);
 
             return DataTables::of($stocks)
