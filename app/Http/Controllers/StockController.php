@@ -41,12 +41,26 @@ class StockController
                 $stocks->where('stock_category_id', $request->category_id);
             }
 
+            $totalStockAll = (clone $stocks)->sum('stock_total');
+            $totalStockCurrent = (clone $stocks)->sum('stock_current');
+            $totalStockOut = (clone $stocks)->sum('stock_out');
+            $totalStockPurchasePrice = (new Stock)
+                ->where('stock_category_id', $request->category_id)
+                ->selectRaw('SUM(stock_purchase_price * stock_total) as total')
+                ->value('total');
+
             return DataTables::of($stocks)
                 ->addIndexColumn()
                 ->escapeColumns()
                 ->addColumn('actions', fn($stock) => [
                     'edit' => route('stock.edit', $stock->stock_id),
                     'delete' => route('stock.destroy', $stock->stock_id)
+                ])
+                ->with([
+                    'total_stock_all' => $totalStockAll,
+                    'total_stock_current' => $totalStockCurrent,
+                    'total_stock_out' => $totalStockOut,
+                    'total_stock_purchase_price' => $totalStockPurchasePrice
                 ])
                 ->toJson();
         }

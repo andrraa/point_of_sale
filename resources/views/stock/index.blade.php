@@ -5,24 +5,33 @@
 @section('navTitle', 'Daftar Stok')
 
 @section('content')
-    <div class="mb-6">
+    <div class="mb-4">
         <x-action-button :props="[
             'url' => route('stock.create'),
             'label' => 'Stok Baru',
         ]" />
     </div>
 
-    <div class="bg-white rounded-lg p-4 border border-gray-200 overflow-x-auto">
-        <div class="mb-4">
+    <div class="bg-white rounded-lg border border-gray-200 mb-4 p-4">
+        <div class="w-1/2">
+            <x-form.label :props="[
+                'for' => 'filter',
+                'label' => 'Filter Kategori',
+                'required' => true,
+            ]" />
+
             <x-form.select :props="[
                 'id' => 'filter',
                 'name' => 'filter',
                 'value' => null,
+                'class' => 'w-full',
             ]" :options="$categories" />
         </div>
+    </div>
 
+    <div class="bg-white rounded-lg p-4 border border-gray-200 overflow-x-auto">
         <table id="stock-table" class="w-full min-w-max">
-            <thead class="text-sm tracking-wide text-left">
+            <thead class="!text-[13px] !tracking-wide text-left">
                 <tr>
                     <th class="p-3 bg-gray-100">#</th>
                     <th class="p-3 bg-gray-100">Kode Stok</th>
@@ -30,11 +39,20 @@
                     <th class="p-3 bg-gray-100">Kategori</th>
                     <th class="p-3 bg-gray-100">Total Stok</th>
                     <th class="p-3 bg-gray-100">Stok Tersedia</th>
-                    <th class="p-3 bg-gray-100">Harga Beli</th>
                     <th class="p-3 bg-gray-100">Stok Keluar</th>
+                    <th class="p-3 bg-gray-100">Harga Beli</th>
                     <th class="p-3 bg-gray-100">Aksi</th>
                 </tr>
             </thead>
+            <tfoot class="!text-[13px] !tracking-wide !font-medium bg-gray-100">
+                <tr>
+                    <td colspan="4" class="p-2 !text-center">Total</td>
+                    <td id="total_stock_all" class="p-2"></td>
+                    <td id="total_stock_current" class="p-2"></td>
+                    <td id="total_stock_out" class="p-2"></td>
+                    <td colspan="2" id="total_stock_purchase_price" class="p-2"></td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 @endsection
@@ -93,19 +111,19 @@
                         }
                     },
                     {
-                        data: 'stock_purchase_price',
-                        name: 'stock_purchase_price',
-                        class: 'font-medium tracking-wide !text-xs !text-green-500',
-                        render: function(data) {
-                            return `Rp ${customFunction.formatNumberToRupiah(data)}`;
-                        }
-                    },
-                    {
                         data: 'stock_out',
                         name: 'stock_out',
                         class: 'font-medium tracking-wide !text-xs !text-red-500',
                         render: function(data) {
                             return `${data} pcs`;
+                        }
+                    },
+                    {
+                        data: 'stock_purchase_price',
+                        name: 'stock_purchase_price',
+                        class: 'font-medium tracking-wide !text-xs !text-green-500',
+                        render: function(data) {
+                            return `Rp ${customFunction.formatNumberToRupiah(data)}`;
                         }
                     },
                     {
@@ -120,7 +138,20 @@
                     target: [0, -1],
                     searchable: false,
                     orderable: false
-                }]
+                }],
+                drawCallback: function(settings) {
+                    const json = settings.json;
+
+                    if (json) {
+                        const price = json.total_stock_purchase_price;
+
+                        $('#total_stock_all').html(`${json.total_stock_all} pcs`);
+                        $('#total_stock_current').html(`${json.total_stock_current} pcs`);
+                        $('#total_stock_out').html(`${json.total_stock_out} pcs`);
+                        $('#total_stock_purchase_price').html(
+                            `Rp ${customFunction.formatNumberToRupiah(price)}`);
+                    }
+                }
             });
 
             $('#filter').on('change', function() {
