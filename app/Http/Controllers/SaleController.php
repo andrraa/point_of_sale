@@ -32,6 +32,7 @@ class SaleController
                     $actions = [];
 
                     if ($sale->sales_status != Sale::CANCEL_STATUS) {
+                        $actions['edit'] = route('sale.edit', $sale->sales_id);
                         $actions['delete'] = route('sale.destroy', $sale->sales_id);
                         $actions['print'] = $sale->sales_id;
                     }
@@ -42,6 +43,18 @@ class SaleController
         }
 
         return view('sale.index');
+    }
+
+    public function edit(Sale $sale): View
+    {
+        $sale->load(['details']);
+        
+        return view('sale.edit', compact('sale'));
+    }
+
+    public function update(SaleRequest $request, Sale $sale)
+    {
+        $validated = $request->validated();
     }
 
     public function show(Sale $sale): View

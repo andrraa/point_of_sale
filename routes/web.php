@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
 
         // SALE
         Route::resource('sale', SaleController::class)
-            ->only(['index', 'show', 'destroy']);
+            ->except(['create', 'store']);
 
         // STOCK
         Route::resource('stock', StockController::class)->except('show');
