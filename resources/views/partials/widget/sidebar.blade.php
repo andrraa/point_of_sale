@@ -25,6 +25,12 @@
                 'menuIcon' => 'fa-regular fa-user',
                 'menuTitle' => 'Pengguna',
             ],
+            [
+                'routeUrl' => route('store.index'),
+                'routePattern' => 'store.*',
+                'menuIcon' => 'fa-solid fa-store',
+                'menuTitle' => 'Informasi Toko',
+            ],
         ];
     @endphp
     <ul>

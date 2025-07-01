@@ -11,6 +11,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SaleDetailController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
@@ -101,6 +102,9 @@ Route::middleware('auth')->group(function () {
             ->group(function () {
                 Route::post('get-item', 'getItem')->name('purchase.get.item');
             });
+
+        // STORE
+        Route::resource('store', StoreController::class)->only(['index', 'store']);
     });
 
     // DASHBOARD

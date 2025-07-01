@@ -72,7 +72,13 @@
                         'menus' => [
                             [
                                 'routeUrl' => route('category.index'),
-                                'routePattern' => ['category.*', 'customer-category.*', 'region.*', 'user.*'],
+                                'routePattern' => [
+                                    'category.*',
+                                    'customer-category.*',
+                                    'region.*',
+                                    'user.*',
+                                    'store.*',
+                                ],
                                 'navIcon' => 'fa-solid fa-gear',
                                 'navTitle' => 'Pengaturan',
                             ],
