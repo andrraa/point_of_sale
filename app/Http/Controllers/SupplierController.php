@@ -32,6 +32,10 @@ class SupplierController
                     'supplier_region_id'
                 ]);
 
+            if ($request->filled('region_id')) {
+                $suppliers->where('supplier_region_id', $request->region_id);
+            }
+
             return DataTables::of($suppliers)
                 ->addIndexColumn()
                 ->escapeColumns()
@@ -42,7 +46,9 @@ class SupplierController
                 ->toJson();
         }
 
-        return view('supplier.index');
+        $regions = Region::getRegionDropdown();
+
+        return view('supplier.index', compact('regions'));
     }
 
     public function create(): View

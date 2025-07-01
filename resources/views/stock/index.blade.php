@@ -62,7 +62,6 @@
 
     <script type="module">
         $(document).ready(function() {
-            const dataTable = window.DataTables;
             const dataTableAction = window.DataTablesAction;
             const customFunction = window.CustomFunction;
 

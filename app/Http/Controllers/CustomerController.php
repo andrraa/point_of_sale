@@ -41,6 +41,10 @@ class CustomerController
                     'customer_status'
                 ]);
 
+            if ($request->filled('category_id')) {
+                $customers->where('customer_category_id', $request->category_id);
+            }
+
             return DataTables::of($customers)
                 ->addIndexColumn()
                 ->escapeColumns()
@@ -52,7 +56,9 @@ class CustomerController
                 ->toJson();
         }
 
-        return view('customer.index');
+        $categories = Category::getCustomerCategories();
+
+        return view('customer.index', compact('categories'));
     }
 
     public function create(): View

@@ -12,6 +12,23 @@
         ]" />
     </div>
 
+    <div class="bg-white rounded-lg border border-gray-200 mb-4 p-4">
+        <div class="w-1/3">
+            <x-form.label :props="[
+                'for' => 'filter',
+                'label' => 'Filter Kategori',
+                'required' => true,
+            ]" />
+
+            <x-form.select :props="[
+                'id' => 'filter',
+                'name' => 'filter',
+                'value' => null,
+                'class' => 'w-full',
+            ]" :options="$categories" />
+        </div>
+    </div>
+
     <div class="bg-white rounded-lg p-4 border border-gray-200 overflow-x-auto">
         <table id="customer-table" class="w-full min-w-max">
             <thead class="!text-[13px] tracking-wide text-left">
@@ -34,13 +51,17 @@
     <script type="module">
         $(document).ready(function() {
             const dataTableSelector = '#customer-table';
-            const dataTable = window.DataTables;
             const dataTableAction = window.DataTablesAction;
 
-            $(dataTableSelector).dataTable({
+            let table = $(dataTableSelector).DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('customer.index') }}",
+                ajax: {
+                    url: "{{ route('customer.index') }}",
+                    data: function(d) {
+                        d.category_id = $('#filter').val()
+                    }
+                },
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -95,6 +116,10 @@
                     searchable: false,
                     orderable: false
                 }]
+            });
+
+            $('#filter').on('change', function() {
+                table.ajax.reload();
             });
         });
     </script>
