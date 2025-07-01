@@ -48,13 +48,8 @@ class SaleController
     public function edit(Sale $sale): View
     {
         $sale->load(['details']);
-        
-        return view('sale.edit', compact('sale'));
-    }
 
-    public function update(SaleRequest $request, Sale $sale)
-    {
-        $validated = $request->validated();
+        return view('sale.edit', compact('sale'));
     }
 
     public function show(Sale $sale): View

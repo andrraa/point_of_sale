@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SaleDetail extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'tbl_sale_details';
 
     protected $primaryKey = 'sale_detail_id';
@@ -28,5 +31,10 @@ class SaleDetail extends Model
     public function stock(): BelongsTo
     {
         return $this->belongsTo(Stock::class, 'sale_detail_stock_id', 'stock_id');
+    }
+
+    public function sale(): BelongsTo
+    {
+        return $this->belongsTo(Sale::class, 'sale_detail_sales_id', 'sales_id');
     }
 }

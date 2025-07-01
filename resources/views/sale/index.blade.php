@@ -143,7 +143,7 @@
 
                             return `
                                 <div class="flex flex-col gap-1">
-                                    <span class="${color} !text-xs font-medium">Status Bayar: ${status}</span>
+                                    <span class="${color} !text-xs font-medium">${status}</span>
                                     ${creditInfo}
                                 </div>
                             `;

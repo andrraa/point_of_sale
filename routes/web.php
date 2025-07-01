@@ -9,6 +9,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SaleDetailController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
@@ -37,7 +38,9 @@ Route::middleware('auth')->group(function () {
 
         // SALE
         Route::resource('sale', SaleController::class)
-            ->except(['create', 'store']);
+            ->except(['create', 'store', 'update']);
+        Route::resource('sale-detail', SaleDetailController::class)
+            ->only(['update', 'destroy']);
 
         // STOCK
         Route::resource('stock', StockController::class)->except('show');
