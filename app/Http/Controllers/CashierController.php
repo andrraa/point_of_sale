@@ -8,6 +8,7 @@ use App\Models\CustomerCredit;
 use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Stock;
+use App\Models\Store;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,10 +19,14 @@ class CashierController
 {
     public function index(): View
     {
-        $customers = Customer::getCustomerDropdown();
-        $stocks = Stock::getConcatedStockDropdown();
+        // $customers = Customer::getCustomerDropdown();
+        // $stocks = Stock::getConcatedStockDropdown();
 
-        return view('cashier.index', compact(['customers', 'stocks']));
+        // return view('cashier.index', compact(['customers', 'stocks']));
+
+        $store = Store::first();
+
+        return view('cashier.v2.index', compact('store'));
     }
 
     public function getItem(Request $request): JsonResponse
