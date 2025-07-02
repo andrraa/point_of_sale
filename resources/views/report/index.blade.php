@@ -8,7 +8,7 @@
     {{-- PENJUALAN --}}
     <div class="bg-white rounded-lg p-6 border border-gray-200 mb-4">
         <div class="border-b border-b-gray-200 pb-2 mb-2">
-            <h2 class="text-blue-900 tracking-wide font-medium">Laporan Penjualan</h2>
+            <h2 class="text-blue-500 tracking-wide font-medium">Laporan Penjualan</h2>
         </div>
 
         <form method="POST" action="{{ route('report.sales') }}">
@@ -77,7 +77,7 @@
 
                 <div>
                     <button type="submit"
-                        class="w-full py-[10px] bg-blue-900 text-white tracking-wide font-medium rounded-md transition duration-200 hover:bg-blue-950">
+                        class="w-full py-[10px] bg-blue-500 text-white tracking-wide font-medium rounded-md transition duration-200 hover:bg-blue-950">
                         Download
                     </button>
                 </div>
@@ -88,7 +88,7 @@
     {{-- PEMBELIAN --}}
     <div class="bg-white rounded-lg p-6 border border-gray-200 mb-4">
         <div class="border-b border-b-gray-200 pb-2 mb-2">
-            <h2 class="text-blue-900 tracking-wide font-medium">Laporan Pembelian</h2>
+            <h2 class="text-blue-500 tracking-wide font-medium">Laporan Pembelian</h2>
         </div>
 
         <form method="POST" action="{{ route('report.purchase') }}">
@@ -155,7 +155,7 @@
 
                 <div>
                     <button type="submit"
-                        class="w-full py-[10px] bg-blue-900 text-white tracking-wide font-medium rounded-md transition duration-200 hover:bg-blue-950">
+                        class="w-full py-[10px] bg-blue-500 text-white tracking-wide font-medium rounded-md transition duration-200 hover:bg-blue-950">
                         Download
                     </button>
                 </div>

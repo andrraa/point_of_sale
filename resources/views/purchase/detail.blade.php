@@ -7,7 +7,7 @@
 @section('content')
     <div class="bg-white rounded-lg p-8 border border-gray-200">
         <div>
-            <h1 class="font-semibold text-[16px] mb-1 text-blue-900">
+            <h1 class="font-semibold text-[16px] mb-1 text-blue-500">
                 Nomor Invoice: {{ $purchase['purchase_invoice'] }}
             </h1>
             <h1 class="text-black/90 text-sm">
@@ -20,7 +20,7 @@
         <div class="flex flex-col">
             {{-- SUPPLIER --}}
             <div class="mb-4">
-                <h1 class="font-semibold text-[16px] text-blue-900 mb-1">
+                <h1 class="font-semibold text-[16px] text-blue-500 mb-1">
                     Supplier / Pemasok:
                 </h1>
                 <h1 class="text-sm text-gray-900 mb-0.5">
@@ -38,7 +38,7 @@
 
             {{-- REGION --}}
             <div class="mb-4">
-                <h1 class="font-semibold text-[16px] text-blue-900 mb-1">
+                <h1 class="font-semibold text-[16px] text-blue-500 mb-1">
                     Region / Wilayah:
                 </h1>
                 <h1 class="text-sm text-gray-900 mb-0.5">

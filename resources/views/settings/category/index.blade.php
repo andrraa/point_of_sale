@@ -10,7 +10,7 @@
 
         <main class="flex-1 h-full overflow-y-auto px-4 py-2">
             <div>
-                <h1 class="font-medium tracking-wider text-blue-900">Daftar Kategori</h1>
+                <h1 class="font-medium tracking-wider text-blue-500">Daftar Kategori</h1>
             </div>
 
             <div class="py-4">
@@ -25,10 +25,10 @@
                 <table class="w-full">
                     <thead class="text-left bg-gray-100">
                         <tr>
-                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">#</th>
-                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">Kode Kategori</th>
-                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">Nama Kategori</th>
-                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">Aksi</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-500">#</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-500">Kode Kategori</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-500">Nama Kategori</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-500">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
@@ -45,7 +45,7 @@
                                 <td class="p-3 !text-[13px] tracking-wider">
                                     <div class="flex gap-1.5">
                                         <a href="{{ route('category.edit', ['category' => $category->category_id]) }}"
-                                            class="px-3 py-1.5 rounded-lg border text-xs border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white font-medium tracking-wide transition duration-200">
+                                            class="px-3 py-1.5 rounded-lg border text-xs border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-medium tracking-wide transition duration-200">
                                             Ubah
                                         </a>
                                         <button type="button" data-id="{{ $category->category_id }}"

@@ -30,12 +30,12 @@ import DataTables from "datatables.net";
             container: "dt-processing",
         },
         paging: {
-            active: "font-medium bg-gray-50 text-blue-900",
+            active: "font-medium bg-gray-50 text-blue-500",
             notActive: "bg-white",
             button: "relative inline-flex justify-center items-center space-x-2 border px-3 py-1 -mr-px leading-6 hover:z-10 focus:z-10 active:z-10 border-gray-200 active:border-gray-200 active:shadow-none",
             first: "rounded-l-lg",
             last: "rounded-r-lg",
-            enabled: "text-gray-800 hover:text-blue-900",
+            enabled: "text-gray-800 hover:text-blue-500",
             notEnabled: "text-gray-300",
         },
         table: "dataTable min-w-full text-sm align-middle whitespace-nowrap",
@@ -142,7 +142,7 @@ export function actions(data, selector) {
     if (data.hasOwnProperty("print")) {
         actions += `
             <button type="button" data-id="${data.print}" title="Print Data" class="cursor-pointer dt-print">
-                <div class="w-6 h-6 p-2 rounded-md flex items-center justify-center shrink-0 border border-gray-200 text-blue-900 hover:bg-blue-900 hover:text-white">
+                <div class="w-6 h-6 p-2 rounded-md flex items-center justify-center shrink-0 border border-gray-200 text-blue-500 hover:bg-blue-500 hover:text-white">
                     <i class="fa-solid fa-print text-xs"></i>
                 </div>
             </button>

@@ -6,7 +6,7 @@
         </div>
     </a>
     <button type="submit"
-        class="px-4 py-2 bg-blue-900 border rounded-lg outline-none tracking-wide text-white hover:border-blue-900 hover:bg-white hover:text-blue-900 cursor-pointer font-medium">
+        class="px-4 py-2 bg-blue-500 border rounded-lg outline-none tracking-wide text-white hover:border-blue-500 hover:bg-white hover:text-blue-500 cursor-pointer font-medium">
         {{ $props['submitLabel'] ?? 'Simpan' }}
     </button>
 </div>

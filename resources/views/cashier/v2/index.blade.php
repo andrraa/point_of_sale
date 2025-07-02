@@ -14,7 +14,7 @@
 
 <body class="h-dvh bg-gray-200 flex flex-col pb-4">
     {{-- DATETIME --}}
-    <div class="h-12 w-full bg-blue-900 relative flex items-center justify-between px-4">
+    <div class="h-12 w-full bg-blue-500 relative flex items-center justify-between px-4">
         <div>
             <h1 class="font-bold uppercase text-white/80 tracking-wide">
                 {{ $store->store_name }} # Telp: {{ $store->store_phone_number }}
@@ -108,7 +108,7 @@
                 <div class="flex items-center gap-3 mb-3">
                     @foreach ($row as $button)
                         <div id="{{ $button['id'] }}"
-                            class="h-24 w-full bg-blue-900 text-white font-medium uppercase rounded-sm flex items-center justify-center cursor-pointer">
+                            class="h-24 w-full bg-blue-500 text-white font-medium uppercase rounded-sm flex items-center justify-center cursor-pointer">
                             {{ $button['label'] }}
                         </div>
                     @endforeach

@@ -1,7 +1,7 @@
 <aside class="bg-white border-r border-r-gray-200 w-[240px] flex flex-col justify-between py-5 px-4">
     <div>
         <div class="pb-4">
-            <h1 class="text-blue-900 font-bold text-[18px]">Point of Sale</h1>
+            <h1 class="text-blue-500 font-bold text-[18px]">Point of Sale</h1>
         </div>
 
         {{-- Menu --}}
@@ -102,15 +102,15 @@
         <ul class="space-y-1">
             @foreach ($menus as $menu)
                 <div class="py-1">
-                    <span class="uppercase text-[10px] font-medium tracking-wide text-gray-400">
+                    <span class="uppercase text-[10px] font-medium tracking-wide text-gray-500">
                         {{ $menu['group'] }}
                     </span>
                 </div>
                 @foreach ($menu['menus'] as $item)
                     @php
                         $navActiveClass = request()->routeIs($item['routePattern'])
-                            ? 'bg-blue-900 text-white'
-                            : 'hover:bg-blue-900/20 text-gray-500';
+                            ? 'bg-blue-500 text-white'
+                            : 'hover:bg-blue-500/20 text-gray-500';
                     @endphp
 
                     <li>

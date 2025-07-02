@@ -90,7 +90,7 @@
                     {
                         data: 'sales_invoice',
                         name: 'sales_invoice',
-                        class: 'font-bold !text-xs tracking-wider !text-blue-900'
+                        class: 'font-bold !text-xs tracking-wider !text-blue-500'
                     },
                     {
                         data: 'customer.customer_name',

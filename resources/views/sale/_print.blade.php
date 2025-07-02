@@ -99,6 +99,6 @@
 
 
 <button type="button" id="print-button" onclick="window.print()"
-    class="no-print w-full py-2 rounded-lg bg-blue-900 text-white text-sm hover:bg-blue-950 transition duration-200 tracking-wide mt-4 cursor-pointer font-medium">
+    class="no-print w-full py-2 rounded-lg bg-blue-500 text-white text-sm hover:bg-blue-950 transition duration-200 tracking-wide mt-4 cursor-pointer font-medium">
     CETAK
 </button>

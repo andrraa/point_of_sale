@@ -81,7 +81,7 @@
                     {
                         data: 'stock_code',
                         name: 'stock_code',
-                        class: 'font-bold tracking-wide !text-xs !text-blue-900'
+                        class: 'font-bold tracking-wide !text-xs !text-blue-500'
                     },
                     {
                         data: 'stock_name',

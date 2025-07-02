@@ -45,7 +45,7 @@
     <div class="grid grid-cols-2 gap-4 items-start">
         <div class="bg-white rounded-lg p-6 border border-gray-200 shadow">
             <div class="pb-2 mb-2 border-b border-b-gray-200">
-                <h1 class="font-medium tracking-wider text-blue-900">Pelanggan & Barang</h1>
+                <h1 class="font-medium tracking-wider text-blue-500">Pelanggan & Barang</h1>
             </div>
 
             <div class="mb-2">
@@ -85,7 +85,7 @@
                 ]" />
 
                 <button type="button" id="chart-button"
-                    class=" rounded-md border border-blue-900 text-blue-900 transition duration-200 font-medium tracking-wide cursor-pointer hover:bg-blue-900 hover:text-white active:scale-95 px-4">
+                    class=" rounded-md border border-blue-500 text-blue-500 transition duration-200 font-medium tracking-wide cursor-pointer hover:bg-blue-500 hover:text-white active:scale-95 px-4">
                     Keranjang
                 </button>
             </div>
@@ -94,7 +94,7 @@
         {{-- PAYMENT --}}
         <div class="bg-white rounded-lg p-6 border border-gray-200 shadow">
             <div class="pb-2 mb-4 border-b border-b-gray-200">
-                <h1 class="font-medium tracking-wider text-blue-900">Keranjang Belanja</h1>
+                <h1 class="font-medium tracking-wider text-blue-500">Keranjang Belanja</h1>
             </div>
 
             {{-- ITEM --}}
@@ -198,7 +198,7 @@
 
             {{-- CHECKOUT BUTTON --}}
             <button type="button" id="checkout-button"
-                class="px-4 py-2 w-full font-medium tracking-wide bg-blue-900 hover:bg-blue-950 rounded-md text-white transition duration-200 cursor-pointer active:scale-95">
+                class="px-4 py-2 w-full font-medium tracking-wide bg-blue-500 hover:bg-blue-950 rounded-md text-white transition duration-200 cursor-pointer active:scale-95">
                 Proses Pembayaran
             </button>
         </div>
@@ -544,7 +544,7 @@
                                 <h1 class="text-sm tracking-wider font-semibold">
                                 ${item.stockName}
                                 </h1>
-                                <h2 class="text-xs tracking-wider font-semibold text-gray-400">
+                                <h2 class="text-xs tracking-wider font-semibold text-gray-500">
                                     Rp ${customFunction.formatNumberToRupiah(item.price)}
                                 </h2>
                             </div>

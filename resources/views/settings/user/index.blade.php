@@ -10,7 +10,7 @@
 
         <main class="flex-1 h-full overflow-y-auto px-4 py-2">
             <div>
-                <h1 class="font-medium tracking-wider text-blue-900">Daftar Pengguna</h1>
+                <h1 class="font-medium tracking-wider text-blue-500">Daftar Pengguna</h1>
             </div>
 
             <div class="py-4">
@@ -25,12 +25,12 @@
                 <table class="w-full">
                     <thead class="text-left bg-gray-100">
                         <tr>
-                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">#</th>
-                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">Nama Lengkap</th>
-                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">Nama Pengguna</th>
-                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">Akses</th>
-                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">Status</th>
-                            <th class="p-3 !text-[13px] tracking-wider text-blue-900">Aksi</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-500">#</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-500">Nama Lengkap</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-500">Nama Pengguna</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-500">Akses</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-500">Status</th>
+                            <th class="p-3 !text-[13px] tracking-wider text-blue-500">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
@@ -48,7 +48,7 @@
                                 <td class="p-3 !text-[13px] tracking-wider">
                                     @php
                                         $statusTitle = $user->active == 1 ? 'Aktif' : 'Tidak Aktif';
-                                        $statusClass = $user->active == 1 ? 'bg-blue-900' : 'bg-red-900';
+                                        $statusClass = $user->active == 1 ? 'bg-blue-500' : 'bg-red-900';
                                     @endphp
 
                                     <span
@@ -59,7 +59,7 @@
                                 <td class="p-3 !text-[13px] tracking-wider">
                                     <div class="flex gap-1.5">
                                         <a href="{{ route('user.edit', $user->user_id) }}"
-                                            class="px-3 py-1.5 rounded-lg border text-xs border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white font-medium tracking-wide transition duration-200">
+                                            class="px-3 py-1.5 rounded-lg border text-xs border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-medium tracking-wide transition duration-200">
                                             Ubah
                                         </a>
                                         <button type="button" data-id="{{ $user->user_id }}"

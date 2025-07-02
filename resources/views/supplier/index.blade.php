@@ -68,7 +68,7 @@
                     {
                         data: 'supplier_code',
                         name: 'supplier_code',
-                        class: 'font-semibold tracking-wide !text-xs !text-blue-900'
+                        class: 'font-semibold tracking-wide !text-xs !text-blue-500'
                     },
                     {
                         data: 'supplier_name',

@@ -37,8 +37,8 @@
         @foreach ($menuItems as $menu)
             @php
                 $navActiveClass = request()->routeIs($menu['routePattern'])
-                    ? 'text-blue-900 font-bold'
-                    : 'text-gray-400 hover:bg-blue-900/5';
+                    ? 'text-blue-500 font-bold'
+                    : 'text-gray-500 hover:bg-blue-500/5';
             @endphp
             <li>
                 <a href="{{ $menu['routeUrl'] }}">

@@ -10,7 +10,7 @@
 
         <main class="flex-1 h-full overflow-y-auto px-4 py-2">
             <div class="mb-4">
-                <h1 class="font-medium tracking-wider text-blue-900">Informasi Toko</h1>
+                <h1 class="font-medium tracking-wider text-blue-500">Informasi Toko</h1>
             </div>
 
             <div class="bg-white rounded-lg border border-gray-200 p-6">

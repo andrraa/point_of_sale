@@ -8,7 +8,7 @@
     <div class="bg-white rounded-lg px-4 py-6 border border-gray-200">
         {{-- CUSTOMER --}}
         <div class="mb-2 pb-2 border-b border-b-gray-200">
-            <h2 class="text-sm tracking-wide text-blue-900 font-medium text-[15px]">Data Pelanggan</h2>
+            <h2 class="text-sm tracking-wide text-blue-500 font-medium text-[15px]">Data Pelanggan</h2>
         </div>
 
         <table class="w-full mb-4">
@@ -46,7 +46,7 @@
 
         {{-- CREDIT --}}
         <div class="mb-4 pb-2 border-b border-b-gray-200">
-            <h2 class="text-sm tracking-wide text-blue-900 font-medium text-[15px]">Riwayat Credit / Hutang</h2>
+            <h2 class="text-sm tracking-wide text-blue-500 font-medium text-[15px]">Riwayat Credit / Hutang</h2>
         </div>
 
         <table class="w-full mb-6">
@@ -66,7 +66,7 @@
                         <td class="p-2 text-sm text-gray-900 text-left">
                             {{ $index + 1 }}
                         </td>
-                        <td class="p-2 text-sm text-left font-medium text-blue-900">
+                        <td class="p-2 text-sm text-left font-medium text-blue-500">
                             {{ $credit->customer_credit_invoice }}
                         </td>
                         <td class="p-2 text-sm text-gray-900 font-medium text-left">
@@ -75,7 +75,7 @@
                         <td class="p-2 text-sm text-gray-900 text-left">
                             @if ($credit->customer_credit_status != \App\Models\CustomerCredit::UNPAID_STATUS)
                                 <span
-                                    class="text-xs tracking-wider font-bold border-2 boder-md px-2 py-1 rounded-md bg-blue-900 text-white">
+                                    class="text-xs tracking-wider font-bold border-2 boder-md px-2 py-1 rounded-md bg-blue-500 text-white">
                                     LUNAS
                                 </span>
                             @else

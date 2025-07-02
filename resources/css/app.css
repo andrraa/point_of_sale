@@ -1,6 +1,6 @@
-@import 'tailwindcss';
-@import '@fortawesome/fontawesome-free/css/all.min.css';
-@import 'select2/dist/css/select2.min.css';
+@import "tailwindcss";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+@import "select2/dist/css/select2.min.css";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -8,10 +8,10 @@
 @source '../**/*.js';
 
 @theme {
-    --color-ufo-green: #34C759;
-    --color-azure: #007AFF;
-    --color-vivid-gamboge: #FF9500;
-    --color-coral-red: #FF3B30;
+    --color-ufo-green: #34c759;
+    --color-azure: #007aff;
+    --color-vivid-gamboge: #ff9500;
+    --color-coral-red: #ff3b30;
 }
 
 /* VALIDATION STYLE */
@@ -28,7 +28,9 @@
     @apply p-0 text-sm;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__arrow {
+.select2-container--default
+    .select2-selection--single
+    .select2-selection__arrow {
     @apply mt-[8px] mr-[10px];
 }
 
@@ -48,8 +50,9 @@
     @apply rounded-b-lg;
 }
 
-.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
-    @apply bg-blue-900 font-semibold;
+.select2-container--default
+    .select2-results__option--highlighted.select2-results__option--selectable {
+    @apply bg-blue-500 font-semibold;
 }
 
 /* DATATABLE */

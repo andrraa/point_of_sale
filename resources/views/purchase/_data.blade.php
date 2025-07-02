@@ -1,5 +1,5 @@
 <tr class="border-b border-b-gray-200">
-    <td class="text-sm p-2 font-semibold text-blue-900">
+    <td class="text-sm p-2 font-semibold text-blue-500">
         {{ $data['code'] }}
         <input type="hidden" name="purchase_items[{{ $index }}][id]" value="{{ $data['id'] }}">
         <input type="hidden" name="purchase_items[{{ $index }}][code]" value="{{ $data['code'] }}">

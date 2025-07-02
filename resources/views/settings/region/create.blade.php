@@ -10,7 +10,7 @@
 
         <main class="flex-1 h-full overflow-y-auto p-2">
             <div class="mb-4">
-                <h1 class="font-medium tracking-wider text-blue-900">Wilayah Baru</h1>
+                <h1 class="font-medium tracking-wider text-blue-500">Wilayah Baru</h1>
             </div>
 
             <div class="bg-white rounded-lg p-6 border border-gray-200">
