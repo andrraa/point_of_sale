@@ -183,11 +183,10 @@
 
             $(document).on('input', '.quantity-input', function() {
                 const code = $(this).data('code');
-                const newQty = parseInt($(this).val());
-                const item = cart.find(p => p.code === code);
-
+                const item = cart.find(p => p.code == code);
                 if (!item) return;
 
+                const newQty = parseInt($(this).val());
                 if (newQty > item.max_quantity) {
                     $(this).val(item.max_quantity);
                     item.quantity = item.max_quantity;
@@ -198,20 +197,18 @@
                     item.quantity = newQty;
                 }
 
-                const $row = $(this).closest('tr');
                 const subtotal = item.price * item.quantity * (1 - item.discount / 100);
-                $row.find('.total-cell').text(subtotal.toLocaleString());
+                $(this).closest('tr').find('.total-cell').text(subtotal.toLocaleString());
 
                 calculatePrice();
             });
 
             $(document).on('input', '.discount-input', function() {
                 const code = $(this).data('code');
-                const newDiscount = parseInt($(this).val());
-                const item = cart.find(p => p.code === code);
-
+                const item = cart.find(p => p.code == code);
                 if (!item) return;
 
+                const newDiscount = parseInt($(this).val());
                 if (newDiscount > 100) {
                     $(this).val(100);
                     item.discount = 100;
@@ -222,9 +219,8 @@
                     item.discount = newDiscount;
                 }
 
-                const $row = $(this).closest('tr');
                 const subtotal = item.price * item.quantity * (1 - item.discount / 100);
-                $row.find('.total-cell').text(subtotal.toLocaleString());
+                $(this).closest('tr').find('.total-cell').text(subtotal.toLocaleString());
 
                 calculatePrice();
             });
@@ -242,8 +238,6 @@
                             const item = response.data;
                             const existItem = cart.find(p => p.code === item.code);
 
-                            console.log(cart);
-
                             if (existItem) {
                                 existItem.quantity += item.quantity;
 
@@ -258,26 +252,26 @@
                                 $row.find('.quantity-input').val(existItem.quantity);
                             } else {
                                 $('#product-table tbody').append(`
-                                <tr>
-                                    <td class="p-2 tracking-wide">${item.code}</td>
-                                    <td class="p-2 tracking-wide">${item.name}</td>
-                                    <td class="p-2 tracking-wide">
-                                        <input type="number" class="quantity-input w-16 text-right p-1 rounded-sm" 
-                                            data-code="${item.code}" min="1" max="${item.max_quantity}" value="${item.quantity}">
-                                    </td>
-                                    <td class="p-2 tracking-wide">${item.price.toLocaleString()}</td>
-                                    <td class="p-2 tracking-wide">
-                                        <input type="number" class="discount-input w-16 text-right p-1 rounded-sm" 
-                                            data-code="${item.code}" min="0" max="100" value="${item.discount}">
-                                    </td>
-                                    <td class="p-2 tracking-wide total-cell">${(item.price * item.quantity).toLocaleString()}</td>
-                                    <td class="p-2">
-                                        <button class="delete-product cursor-pointer">
-                                            <i class="fa-solid fa-times text-red-500"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            `);
+                                    <tr>
+                                        <td class="p-2 tracking-wide">${item.code}</td>
+                                        <td class="p-2 tracking-wide">${item.name}</td>
+                                        <td class="p-2 tracking-wide">
+                                            <input type="number" class="quantity-input w-16 text-right p-1 rounded-sm" 
+                                                data-code="${item.code}" min="1" max="${item.max_quantity}" value="${item.quantity}">
+                                        </td>
+                                        <td class="p-2 tracking-wide">${item.price.toLocaleString()}</td>
+                                        <td class="p-2 tracking-wide">
+                                            <input type="number" class="discount-input w-16 text-right p-1 rounded-sm" 
+                                                data-code="${item.code}" min="0" max="100" value="${item.discount}">
+                                        </td>
+                                        <td class="p-2 tracking-wide total-cell">${(item.price * item.quantity).toLocaleString()}</td>
+                                        <td class="p-2">
+                                            <button class="delete-product cursor-pointer">
+                                                <i class="fa-solid fa-times text-red-500"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `);
 
                                 cart.push(response.data);
                             }
