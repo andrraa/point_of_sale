@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class DashboardController
 {
-    public function __invoke(): RedirectResponse
+    public function __invoke(): View
     {
-        return redirect()->route('cashier');
+        return view('dashboard');
     }
 }

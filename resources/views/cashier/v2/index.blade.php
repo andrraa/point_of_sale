@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Kasir - Point of Sale</title>
+
     @vite('resources/css/app.css')
 </head>
 
-<body class="h-dvh bg-gray-200 flex flex-col">
+<body class="h-dvh bg-gray-200 flex flex-col pb-4">
     {{-- DATETIME --}}
     <div class="h-12 w-full bg-blue-900 relative flex items-center justify-between px-4">
         <div>
@@ -24,17 +27,9 @@
     </div>
 
     {{-- TOTAL AND LOGO --}}
-    <div class="h-32 w-full flex gap-2 mt-2 px-2">
-        {{-- LOGO --}}
-        <div class="w-1/7 h-full rounded-sm flex items-center justify-center border border-gray-400 bg-black/90">
-            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 16 16">
-                <path class="fill-white/80"
-                    d="M12.5 2A2.5 2.5 0 0 1 15 4.5v10a.5.5 0 0 1-.686.464l-2.31-.926l-2.31.926a.5.5 0 0 1-.28.027l-.092-.027l-2.31-.926l-2.31.926a.5.5 0 0 1-.678-.378l-.007-.086V7.36l-.985-.328l-2.33.932a.5.5 0 0 1-.678-.378L.017 7.5v-3a2.5 2.5 0 0 1 2.5-2.5h10zm0 1h-8l.019.024c.303.413.482.923.482 1.48v9.26l1.81-.725a.5.5 0 0 1 .28-.027l.091.027l2.31.925l2.32-.925a.5.5 0 0 1 .28-.027l.092.027l1.81.725v-9.26c0-.78-.595-1.42-1.36-1.49l-.144-.007zm-3 6a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1zm3-2a.5.5 0 0 1 0 1h-6a.5.5 0 0 1 0-1zm-10-4l-.144.007a1.503 1.503 0 0 0-1.36 1.49v2.26l1.81-.725a.5.5 0 0 1 .258-.03l.086.02l.842.28v-1.81c0-.78-.595-1.42-1.36-1.49l-.144-.007zm10 2a.5.5 0 0 1 0 1h-6a.5.5 0 0 1 0-1z" />
-            </svg>
-        </div>
-
+    <div class="h-32 w-full mt-2 px-4">
         {{-- TOTAL PRICE --}}
-        <div class="w-full h-full bg-black/90 rounded-sm flex items-center justify-between px-8">
+        <div class="h-full bg-black/90 rounded-sm flex items-center justify-between px-8">
             <div>
                 <span class="text-white/80 text-2xl font-bold tracking-wide">
                     TOTAL :
@@ -42,106 +37,104 @@
             </div>
 
             <div>
-                <span class="text-orange-300 text-[50px] font-bold tracking-wide">
-                    1.750.000
+                <span id="total-price" class="text-orange-300 text-[50px] font-bold tracking-wide">
                 </span>
             </div>
         </div>
     </div>
 
     {{-- MAIN --}}
-    <div class="h-[calc(100%-200px)] mt-2 px-2 flex gap-4 overflow-hidden">
-        <div class="h-full w-2/3">
-            <div class="flex items-center gap-2">
-                <label for="stock_code" class="font-bold">KODE #</label>
-                <input type="text" id="stock_code" name="stock_name"
-                    class="bg-blue-900 px-2 py-1 focus:outline-blue-900 font-medium rounded-sm text-sm tracking-wider text-white w-[300px]"
-                    autofocus placeholder="Pindai Kode Produk">
+    <div class="h-[calc(100%-200px)] mt-4 px-4 flex gap-4 overflow-hidden">
+        <div class="h-full flex-grow min-w-[400px] max-w-[calc(100%-400px)]">
+            <div class="flex items-center gap-4 bg-white/80 p-2 rounded-sm">
+
+                <div class="w-1/3 flex items-center gap-2">
+                    <label for="stock_code" class="font-medium uppercase text-sm">Kode</label>
+
+                    <x-form.input :props="[
+                        'id' => 'stock_code',
+                        'name' => 'stock_code',
+                        'value' => null,
+                        'placeholder' => 'Scan / Masukkan Kode Produk',
+                    ]" />
+                </div>
+
+                <div class="flex items-center gap-2 w-1/3">
+                    <label for="stock_code" class="font-medium uppercase text-sm">Pelanggan</label>
+
+                    <x-form.select :props="[
+                        'id' => 'cart_customer',
+                        'name' => 'cart_customer',
+                        'class' => 'w-full',
+                        'value' => null,
+                    ]" :options="$customers" />
+                </div>
             </div>
 
-            <div class="mt-[10px] bg-white shadow-lg h-[470px] overflow-y-auto rounded-sm">
-                <table id="product-table" class="w-full table">
+            <div class="mt-4 bg-white shadow-lg h-full overflow-y-auto rounded-sm">
+                <table id="product-table" class="min-w-full table">
                     <thead
                         class="text-[13px] text-left border-t border-b border-t-gray-300 border-b-gray-300 bg-gray-100">
                         <tr>
-                            <th class="p-1 w-[100px] uppercase tracking-wide">Kode</th>
-                            <th class="p-1 uppercase tracking-wide">NAMA PRODUK</th>
-                            <th class="p-1 w-[90px] uppercase tracking-wide">JUMLAH</th>
-                            <th class="p-1 w-[90px] uppercase tracking-wide">HARGA</th>
-                            <th class="p-1 w-[90px] uppercase tracking-wide">DISKON</th>
-                            <th class="p-1 w-[90px] uppercase tracking-wide">TOTAL</th>
-                            <th class="p-1 w-[30px]"></th>
+                            <th class="p-2 w-[100px] uppercase tracking-wide">Kode</th>
+                            <th class="p-2 uppercase tracking-wide">NAMA PRODUK</th>
+                            <th class="p-2 w-[90px] uppercase tracking-wide">JUMLAH</th>
+                            <th class="p-2 w-[90px] uppercase tracking-wide">HARGA</th>
+                            <th class="p-2 w-[90px] uppercase tracking-wide">DISKON %</th>
+                            <th class="p-2 w-[90px] uppercase tracking-wide">TOTAL</th>
+                            <th class="p-2 w-[50px]"></th>
                         </tr>
                     </thead>
                     <tbody class="text-[13px] text-left">
-                        @for ($i = 0; $i < 10; $i++)
-                            <tr class="border-b border-b-gray-300">
-                                <td class="p-1 tracking-wide">100025</td>
-                                <td class="p-1 tracking-wide">BAJU SETELAN ANAK KECIL PANJANG</td>
-                                <td class="p-1 tracking-wide">2 pcs</td>
-                                <td class="p-1 tracking-wide">30.000</td>
-                                <td class="p-1 tracking-wide">0</td>
-                                <td class="p-1 tracking-wide">60.000</td>
-                                <td class="p-1">
-                                    <button class="delete-product cursor-pointer">
-                                        <i class="fa-solid fa-times text-red-500"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        @endfor
                     </tbody>
                 </table>
             </div>
         </div>
 
         {{-- ACTION BUTTON --}}
-        <div class="max-h-full w-full max-w-1/3 mt-10">
-            <div class="flex items-center gap-3 mb-3">
-                <div id="fullscreen-button"
-                    class="h-24 w-full bg-blue-900 text-white font-medium uppercase rounded-lg flex items-center justify-center cursor-pointer">
-                    Fullscreen (F1)
-                </div>
+        @php
+            $buttons = [
+                ['id' => 'fullscreen-button', 'label' => 'Fullscreen (F1)'],
+                ['id' => 'scan-button', 'label' => 'Pindai (F2)'],
+                ['id' => 'calculate-button', 'label' => 'Hitung (F3)'],
+                ['id' => 'discount-button', 'label' => 'Diskon (F4)'],
+                ['id' => 'reset-button', 'label' => 'Reset (F5)'],
+                ['id' => 'pay-button', 'label' => 'Bayar (F6)'],
+            ];
+        @endphp
 
-                <div id="scan-button"
-                    class="h-24 w-full bg-blue-900 text-white font-medium uppercase rounded-lg flex items-center justify-center cursor-pointer">
-                    Pindai (F2)
+        <div class="max-h-full w-full max-w-1/3">
+            @foreach (array_chunk($buttons, 2) as $row)
+                <div class="flex items-center gap-3 mb-3">
+                    @foreach ($row as $button)
+                        <div id="{{ $button['id'] }}"
+                            class="h-24 w-full bg-blue-900 text-white font-medium uppercase rounded-sm flex items-center justify-center cursor-pointer">
+                            {{ $button['label'] }}
+                        </div>
+                    @endforeach
                 </div>
-            </div>
-
-            <div class="flex items-center gap-3 mb-3">
-                <div id="calculate-button"
-                    class="h-24 w-full bg-blue-900 text-white font-medium uppercase rounded-lg flex items-center justify-center cursor-pointer">
-                    Hitung (F6)
-                </div>
-
-                <div id="discount-button"
-                    class="h-24 w-full bg-blue-900 text-white font-medium uppercase rounded-lg flex items-center justify-center cursor-pointer">
-                    Diskon (F7)
-                </div>
-            </div>
-
-            <div class="flex items-center gap-3 mb-3">
-                <div id="reset-button"
-                    class="h-24 w-full bg-blue-900 text-white font-medium uppercase rounded-lg flex items-center justify-center cursor-pointer">
-                    Reset (F8)
-                </div>
-
-                <div id="pay-button"
-                    class="h-24 w-full bg-blue-900 text-white font-medium uppercase rounded-lg flex items-center justify-center cursor-pointer">
-                    Bayar (F9)
-                </div>
-            </div>
+            @endforeach
 
             <div class="flex items-center gap-3">
-                <div id="reset-button"
-                    class="h-24 w-full bg-blue-500 text-white font-medium uppercase rounded-lg flex items-center justify-center cursor-pointer">
-                    Admin
-                </div>
+                @php
+                    $user = Auth::user();
+                    $isAdmin = $user->user_role_id == \App\Models\Role::ROLE_ADMIN;
+                @endphp
 
-                <div id="pay-button"
-                    class="h-24 w-full bg-red-500 text-white font-medium uppercase rounded-lg flex items-center justify-center cursor-pointer">
-                    Keluar
-                </div>
+                @if ($isAdmin)
+                    <a href="{{ route('dashboard') }}"
+                        class="h-24 w-full bg-blue-500 text-white font-medium uppercase rounded-sm flex items-center justify-center cursor-pointer">
+                        Admin
+                    </a>
+                @endif
+
+                <form action="{{ route('logout') }}" method="POST" class="w-full">
+                    @csrf
+                    <button type="submit"
+                        class="h-24 w-full bg-red-500 text-white font-medium uppercase rounded-sm flex items-center justify-center cursor-pointer">
+                        Keluar
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -150,6 +143,189 @@
 
     <script type="module">
         $(document).ready(function() {
+            // SELETCT2
+            $('.select2').select2({
+                placeholder: 'Pilih salah satu opsi',
+            });
+
+            // AJAX SETUP
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            // START CART
+            let cart = [];
+            let total = 0;
+
+            $('#stock_code').on('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+
+                    const code = $(this).val().trim();
+                    const customerId = $('#cart_customer').val();
+
+                    if (code !== '') {
+                        searchProduct(code, customerId);
+                    }
+                }
+            });
+
+            $('#cart_customer').on('change', function() {
+                resetAll();
+                focusStockCode();
+            });
+
+            $(document).on('click', '.delete-product', function() {
+                deleteRow(this);
+            });
+
+            $(document).on('input', '.quantity-input', function() {
+                const code = $(this).data('code');
+                const newQty = parseInt($(this).val());
+                const item = cart.find(p => p.code === code);
+
+                if (!item) return;
+
+                if (newQty > item.max_quantity) {
+                    $(this).val(item.max_quantity);
+                    item.quantity = item.max_quantity;
+                } else if (newQty < 1) {
+                    $(this).val(1);
+                    item.quantity = 1;
+                } else {
+                    item.quantity = newQty;
+                }
+
+                const $row = $(this).closest('tr');
+                const subtotal = item.price * item.quantity * (1 - item.discount / 100);
+                $row.find('.total-cell').text(subtotal.toLocaleString());
+
+                calculatePrice();
+            });
+
+            $(document).on('input', '.discount-input', function() {
+                const code = $(this).data('code');
+                const newDiscount = parseInt($(this).val());
+                const item = cart.find(p => p.code === code);
+
+                if (!item) return;
+
+                if (newDiscount > 100) {
+                    $(this).val(100);
+                    item.discount = 100;
+                } else if (newDiscount < 0) {
+                    $(this).val(0);
+                    item.discount = 0;
+                } else {
+                    item.discount = newDiscount;
+                }
+
+                const $row = $(this).closest('tr');
+                const subtotal = item.price * item.quantity * (1 - item.discount / 100);
+                $row.find('.total-cell').text(subtotal.toLocaleString());
+
+                calculatePrice();
+            });
+
+            function searchProduct(code, customerId) {
+                $.ajax({
+                    url: '{{ route('cashier.get-item') }}',
+                    type: 'POST',
+                    data: {
+                        code: code,
+                        customer: customerId
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            const item = response.data;
+                            const existItem = cart.find(p => p.code === item.code);
+
+                            console.log(cart);
+
+                            if (existItem) {
+                                existItem.quantity += item.quantity;
+
+                                if (existItem.quantity > item.max_quantity) {
+                                    existItem.quantity = item.max_quantity;
+                                }
+
+                                const $row = $('#product-table tbody tr').filter(function() {
+                                    return $(this).find('td').eq(0).text().trim() === item.code;
+                                });
+
+                                $row.find('.quantity-input').val(existItem.quantity);
+                            } else {
+                                $('#product-table tbody').append(`
+                                <tr>
+                                    <td class="p-2 tracking-wide">${item.code}</td>
+                                    <td class="p-2 tracking-wide">${item.name}</td>
+                                    <td class="p-2 tracking-wide">
+                                        <input type="number" class="quantity-input w-16 text-right p-1 rounded-sm" 
+                                            data-code="${item.code}" min="1" max="${item.max_quantity}" value="${item.quantity}">
+                                    </td>
+                                    <td class="p-2 tracking-wide">${item.price.toLocaleString()}</td>
+                                    <td class="p-2 tracking-wide">
+                                        <input type="number" class="discount-input w-16 text-right p-1 rounded-sm" 
+                                            data-code="${item.code}" min="0" max="100" value="${item.discount}">
+                                    </td>
+                                    <td class="p-2 tracking-wide total-cell">${(item.price * item.quantity).toLocaleString()}</td>
+                                    <td class="p-2">
+                                        <button class="delete-product cursor-pointer">
+                                            <i class="fa-solid fa-times text-red-500"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            `);
+
+                                cart.push(response.data);
+                            }
+                        }
+
+                        calculatePrice();
+                        focusStockCode();
+                    },
+                    error: function(xhr) {
+                        alert('Terjadi kesalahan server!');
+                    }
+                });
+            }
+
+            function calculatePrice() {
+                total = cart.reduce((sum, item) => {
+                    const discountFactor = (100 - item.discount) / 100;
+                    const effectivePrice = item.price * discountFactor;
+
+                    const subtotal = effectivePrice * item.quantity;
+                    return sum + subtotal;
+                }, 0);
+
+                $('#total-price').text(total.toLocaleString());
+            }
+
+            function resetAll() {
+                cart = [];
+                $('#product-table tbody').empty();
+                calculatePrice();
+                focusStockCode();
+            }
+
+            function deleteRow(button) {
+                const $row = $(button).closest('tr');
+
+                const kodeProduk = $row.find('td').eq(0).text().trim();
+
+                $row.remove();
+
+                cart = cart.filter(item => item.code !== kodeProduk);
+
+                calculatePrice();
+            }
+
+            calculatePrice();
+            // END CART
+
             // START DATETIME NAVBAR
             function updateDateTime() {
                 const now = new Date();
@@ -179,16 +355,26 @@
             }
 
             setInterval(updateDateTime, 1000);
+
             updateDateTime();
             // END DATETIME NAVBAR
 
-            // FOCUS TO STOCK CODE
+            // START FOCUS TO STOCK CODE
+            $('#stock_code').on('blur', function() {
+                setTimeout(function() {
+                    focusStockCode();
+                }, 10000);
+            });
+
             function focusStockCode() {
-                $('#stock_code').focus();
+                $('#stock_code').val('').focus();
             }
 
-            // BUTTON FULLSCREEN
-            $('#fullscreen-button').on('click', function() {
+            focusStockCode();
+            // END FOCUS TO STOCK CODE
+
+            // START FULLSCREEN
+            function toggleFullscreen() {
                 const el = document.documentElement;
 
                 if (!document.fullscreenElement) {
@@ -210,6 +396,39 @@
                 }
 
                 focusStockCode();
+            }
+
+            $('#fullscreen-button').on('click', function() {
+                toggleFullscreen();
+                focusStockCode();
+            });
+            // END FULLSCREEN
+
+            // LISTENER KEYDOWN (F ROW)
+            $(document).on('keydown', function(e) {
+                if (e.which === 112) {
+                    // F1
+                    e.preventDefault();
+                    toggleFullscreen();
+                } else if (e.which === 113) {
+                    // F2
+                    e.preventDefault();
+                    focusStockCode();
+                } else if (e.which === 114) {
+                    // F3
+                    e.preventDefault();
+                    calculatePrice();
+                } else if (e.which === 115) {
+                    // F4
+                    e.preventDefault();
+                } else if (e.which === 116) {
+                    // F5
+                    e.preventDefault();
+                    resetAll();
+                } else if (e.which === 117) {
+                    // F6
+                    e.preventDefault();
+                }
             });
         });
     </script>
