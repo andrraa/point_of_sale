@@ -47,7 +47,6 @@
     <div class="h-[calc(100%-200px)] mt-4 px-4 flex gap-4 overflow-hidden">
         <div class="h-full flex-grow min-w-[400px] max-w-[calc(100%-400px)]">
             <div class="flex items-center gap-4 bg-white/80 p-2 rounded-sm">
-
                 <div class="w-1/3 flex items-center gap-2">
                     <label for="stock_code" class="font-medium uppercase text-sm">Kode</label>
 
@@ -68,6 +67,11 @@
                         'class' => 'w-full',
                         'value' => null,
                     ]" :options="$customers" />
+                </div>
+
+                <div class="w-1/3 bg-black py-2.5 px-3 flex items-center justify-between rounded-md">
+                    <span class="text-sm uppercase text-white/80 font-bold">Hutang :</span>
+                    <span id="total-debt" class="text-orange-300 font-bold">0</span>
                 </div>
             </div>
 
@@ -97,7 +101,7 @@
                 ['id' => 'fullscreen-button', 'label' => 'Fullscreen (F1)'],
                 ['id' => 'scan-button', 'label' => 'Pindai (F2)'],
                 ['id' => 'calculate-button', 'label' => 'Hitung (F3)'],
-                ['id' => 'discount-button', 'label' => 'Diskon (F4)'],
+                ['id' => 'discount-button', 'label' => 'Cek Hutang (F4)'],
                 ['id' => 'reset-button', 'label' => 'Reset (F5)'],
                 ['id' => 'pay-button', 'label' => 'Bayar (F6)'],
             ];
@@ -139,10 +143,20 @@
         </div>
     </div>
 
-    @vite('resources/js/app.js')
+    {{-- PAY MODAL --}}
+    @include('cashier.v2.modal')
+
+    @vite(['resources/js/app.js', 'resources/js/function.js'])
 
     <script type="module">
         $(document).ready(function() {
+            const customFunction = window.CustomFunction;
+
+            $('.price-input').on('input',
+                function() {
+                    this.value = customFunction.formatNumberToRupiah(this.value);
+                });
+
             // SELETCT2
             $('.select2').select2({
                 placeholder: 'Pilih salah satu opsi',
@@ -157,7 +171,9 @@
 
             // START CART
             let cart = [];
+            let debt = 0;
             let total = 0;
+            let change = 0;
 
             $('#stock_code').on('keydown', function(e) {
                 if (e.key === 'Enter') {
@@ -256,12 +272,12 @@
                                         <td class="p-2 tracking-wide">${item.code}</td>
                                         <td class="p-2 tracking-wide">${item.name}</td>
                                         <td class="p-2 tracking-wide">
-                                            <input type="number" class="quantity-input w-16 text-right p-1 rounded-sm" 
+                                            <input type="number" class="quantity-input w-16 text-right p-1 rounded-sm border border-gray-200" 
                                                 data-code="${item.code}" min="1" max="${item.max_quantity}" value="${item.quantity}">
                                         </td>
                                         <td class="p-2 tracking-wide">${item.price.toLocaleString()}</td>
                                         <td class="p-2 tracking-wide">
-                                            <input type="number" class="discount-input w-16 text-right p-1 rounded-sm" 
+                                            <input type="number" class="discount-input w-16 text-right p-1 rounded-sm border border-gray-200" 
                                                 data-code="${item.code}" min="0" max="100" value="${item.discount}">
                                         </td>
                                         <td class="p-2 tracking-wide total-cell">${(item.price * item.quantity).toLocaleString()}</td>
@@ -275,13 +291,15 @@
 
                                 cart.push(response.data);
                             }
+                        } else {
+                            errorAlert(response.message);
                         }
 
                         calculatePrice();
                         focusStockCode();
                     },
                     error: function(xhr) {
-                        alert('Terjadi kesalahan server!');
+                        errorAlert('Server error!.');
                     }
                 });
             }
@@ -315,6 +333,8 @@
                 cart = cart.filter(item => item.code !== kodeProduk);
 
                 calculatePrice();
+
+                focusStockCode();
             }
 
             calculatePrice();
@@ -355,9 +375,11 @@
 
             // START FOCUS TO STOCK CODE
             $('#stock_code').on('blur', function() {
-                setTimeout(function() {
-                    focusStockCode();
-                }, 10000);
+                if ($('#modal-pay').hasClass('hidden')) {
+                    setTimeout(function() {
+                        focusStockCode();
+                    }, 10000);
+                }
             });
 
             function focusStockCode() {
@@ -398,6 +420,82 @@
             });
             // END FULLSCREEN
 
+            // START CEK HUTANG
+            function checkDebt() {
+                const customerId = $('#cart_customer').val();
+            }
+            // END CEK HUTANG
+
+            // START PAYMENT
+            function payment() {
+                if (cart.length === 0) {
+                    errorAlert('Keranjang kosong!');
+                    return
+                }
+
+                $('#modal-customer-name').val($('#cart_customer option:selected').text().trim());
+                $('#modal-customer-debt').val('Rp ' + debt.toLocaleString());
+                $('#modal-customer-total').val('Rp ' + total.toLocaleString());
+                $('#modal-customer-change').val('Rp ' + change.toLocaleString());
+
+                $('#modal-pay').removeClass('hidden').addClass('flex');
+
+                $('#modal-customer-pay').val('').focus();
+            }
+
+            function confirmPayment() {
+
+            }
+
+            $('.modal-pay-cancel').on('click', function() {
+                $('#modal-pay').removeClass('flex').addClass('hidden');
+                focusStockCode();
+            });
+
+            $('#modal-customer-pay').on('blur', function() {
+                if ($('#modal-pay').hasClass('flex')) {
+                    $('#modal-customer-pay').focus();
+                }
+            });
+
+            $('#modal-customer-pay').on('input', function() {
+                var payInput = $(this).val();
+
+                var payAmount = parseFloat(payInput.replace(/\./g, '').replace(',', '.') || 0);
+
+                var payChange = payAmount - total;
+
+                if (isNaN(payChange)) payChange = 0;
+
+                $('#modal-customer-change').val('Rp ' + payChange.toLocaleString());
+            });
+
+            $('#modal-pay-confirm').on('click', function() {
+                var payInput = $('#modal-customer-pay').val();
+                var payAmount = parseFloat(payInput.replace(/\./g, '').replace(',', '.') || 0);
+
+                var customerId = parseInt($('#cart_customer').val());
+
+                if (payAmount < total) {
+                    var debt = total - payAmount;
+
+                    if (customerId !== 1) {
+                        Swal.fire({
+                            title: 'Pembayaran Kurang',
+                            text: `Kurang Rp ${debt.toLocaleString()}. Akan dijadikan hutang.`,
+                            icon: 'warning',
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Pembayaran Kurang',
+                            text: `Kurang Rp ${debt.toLocaleString()}`,
+                            icon: 'warning',
+                        });
+                    }
+                }
+            });
+            // END PAYMENT
+
             // LISTENER KEYDOWN (F ROW)
             $(document).on('keydown', function(e) {
                 if (e.which === 112) {
@@ -415,6 +513,7 @@
                 } else if (e.which === 115) {
                     // F4
                     e.preventDefault();
+                    checkDebt();
                 } else if (e.which === 116) {
                     // F5
                     e.preventDefault();
@@ -422,8 +521,21 @@
                 } else if (e.which === 117) {
                     // F6
                     e.preventDefault();
+                    payment();
                 }
             });
+            // END LISTENER (F ROW)
+
+            function errorAlert(message) {
+                Swal.fire({
+                    title: 'Error',
+                    text: message,
+                    icon: 'error',
+                    timer: 1000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+            }
         });
     </script>
 </body>

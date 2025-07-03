@@ -20,9 +20,9 @@ class CashierController
     public function index(): View
     {
         // $stocks = Stock::getConcatedStockDropdown();
-        
+
         // return view('cashier.index', compact(['customers', 'stocks']));
-        
+
         $store = Store::first();
         $customers = Customer::getCustomerDropdown();
 
@@ -71,7 +71,14 @@ class CashierController
         $stock = Stock::firstWhere('stock_code', $stockCode);
         $customer = Customer::with('category')->where('customer_id', $customerId)->first();
 
-        if($stock->stock_current < 1) {
+        if (!$stock) {
+            return response()->json([
+                'success' => false,
+                'message' => "Stock tidak ditemukan"
+            ]);
+        }
+
+        if ($stock->stock_current < 1) {
             return response()->json([
                 'success' => false,
                 'message' => "Stock tidak mencukupi untuk barang $stock->stock_name"
@@ -100,7 +107,7 @@ class CashierController
         ]);
     }
 
-    public function getCredit(Request $request): View
+    public function getCredit(Request $request): JsonResponse
     {
         $customerId = $request->input('customerId');
 
@@ -112,7 +119,14 @@ class CashierController
             ->where('customer_id', $customerId)
             ->first();
 
-        return view('cashier._credit', compact('customer'));
+        $totalDebt = 0;
+        if ($customer && $customer->credits) {
+            $totalDebt = $customer->credits->sum('customer_credit');
+        }
+
+        return response()->json([
+            'debt' => $totalDebt
+        ]);
     }
 
     public function checkout(CheckoutRequest $request): JsonResponse

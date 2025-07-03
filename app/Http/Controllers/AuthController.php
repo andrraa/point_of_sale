@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SignInRequest;
+use App\Models\Role;
 use App\Models\User;
 use App\Services\ValidationService;
 use Illuminate\Http\RedirectResponse;
@@ -50,7 +51,9 @@ class AuthController
 
         flash()->preset('auth_success', ['username' => $user->username]);
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return $user->user_role_id == Role::ROLE_ADMIN
+            ? redirect()->route('dashboard')
+            : redirect()->route('cashier');
     }
 
     // LOGOUT

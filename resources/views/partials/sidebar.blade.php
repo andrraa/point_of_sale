@@ -14,6 +14,12 @@
                         'group' => 'Menu Utama',
                         'menus' => [
                             [
+                                'routeUrl' => route('dashboard'),
+                                'routePattern' => 'dashboard',
+                                'navIcon' => 'fa-solid fa-layer-group',
+                                'navTitle' => 'Dashboard',
+                            ],
+                            [
                                 'routeUrl' => route('cashier'),
                                 'routePattern' => 'cashier',
                                 'navIcon' => 'fa-solid fa-laptop',
