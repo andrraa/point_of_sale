@@ -48,6 +48,46 @@ class SaleDetailController
             ]);
         }
 
+        $saleId = $saleDetail->sale_detail_sales_id;
+
+        $saleDetails = SaleDetail::where('sale_detail_sales_id', $saleId)->get();
+
+        $totalGross = 0;
+        $totalPrice = 0;
+
+        foreach ($saleDetails as $detail) {
+            $quantity = $detail->sale_detail_quantity;
+            $price = floatval($detail->sale_detail_price);
+            $discount = intval($detail->sale_detail_discount);
+
+            $subtotal = $price * $quantity;
+            $discountAmount = $subtotal * ($discount / 100);
+
+            $totalGross += $subtotal;
+            $totalPrice += $subtotal - $discountAmount;
+        }
+
+        $sale = Sale::findOrFail($saleId);
+
+        $totalChange = 0;
+        $totalDebt = 0;
+
+        if ($sale->sales_total_payment >= $totalPrice) {
+            $totalChange = $sale->sales_total_payment - $totalPrice;
+        } else {
+            $totalDebt = $totalPrice - $sale->sales_total_payment;
+        }
+
+        $paymentType = $totalDebt > 0 ? 'credit' : 'cash';
+
+        $sale->update([
+            'sales_total_price' => $totalPrice,
+            'sales_total_gross' => $totalGross,
+            'sales_total_change' => $totalChange,
+            'sales_payment_type' => $paymentType,
+            'sales_status' => $totalDebt > 0 ? Sale::CREDIT_STATUS : Sale::PAID_STATUS,
+        ]);
+
         DB::commit();
 
         return response()->json(true);

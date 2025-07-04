@@ -146,16 +146,19 @@ class CashierController
         $invoice = $this->generateInvoice();
 
         $totalGross = 0;
-        $totalPrice = collect($validated['items'])->sum(function ($item) {
+        $totalPrice = collect($validated['items'])->sum(function ($item) use (&$totalGross) {
             $price = floatval($item['price']);
             $quantity = intval($item['quantity']);
             $discount = intval($item['discount']);
 
-            $totalGross = $price * $quantity;
-            $discountAmount = $totalGross * ($discount / 100);
+            $subtotal = $price * $quantity;
+            $discountAmount = $subtotal * ($discount / 100);
 
-            return $totalGross - $discountAmount;
+            $totalGross += $subtotal;
+
+            return $subtotal - $discountAmount;
         });
+
 
         $totalChange = 0;
         $totalDebt = 0;
