@@ -23,13 +23,9 @@ class Sale extends Model
         'sales_customer_id',
         'sales_payment_type',
         'sales_total_price',
+        'sales_total_gross',
         'sales_total_payment',
         'sales_total_change',
-        'sales_discount',
-        'sales_total_discount',
-        'sales_total_price_after_discount',
-        'sales_status',
-        'sales_customer_total_credit',
     ];
 
     public function getCreatedAtAttribute($value): string

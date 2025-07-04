@@ -136,43 +136,47 @@ class CashierController
         DB::beginTransaction();
 
         // GET THE STOCK
-        $stockIds = collect($validated['items'])->pluck('stockId');
-        $stocks = Stock::with('category')->whereIn('stock_id', $stockIds)->get()->keyBy('stock_id');
+        $stockIds = collect($validated['items'])->pluck('id');
+        $stocks = Stock::with('category')
+            ->whereIn('stock_id', $stockIds)
+            ->get()
+            ->keyBy('stock_id');
 
         // SAVE TO SALES
         $invoice = $this->generateInvoice();
+
+        $totalGross = 0;
         $totalPrice = collect($validated['items'])->sum(function ($item) {
-            return intval($item['price']) * intval($item['quantity']);
+            $price = floatval($item['price']);
+            $quantity = intval($item['quantity']);
+            $discount = intval($item['discount']);
+
+            $totalGross = $price * $quantity;
+            $discountAmount = $totalGross * ($discount / 100);
+
+            return $totalGross - $discountAmount;
         });
-        $totalDiscount = ($totalPrice * $validated['discount']) / 100;
-        $totalPriceAfterDiscount = $totalPrice - $totalDiscount;
-        $totalChange = $validated['total_payment'] - $totalPriceAfterDiscount;
+
+        $totalChange = 0;
+        $totalDebt = 0;
+
+        if ($validated['customerPay'] >= $totalPrice) {
+            $totalChange = $validated['customerPay'] - $totalPrice;
+        } else if ($validated['customerPay'] < $totalPrice) {
+            $totalDebt = $totalPrice - $validated['customerPay'];
+        }
+
+        $paymentType = $totalDebt > 0 ? 'credit' : 'cash';
 
         $salesData = [
             'sales_invoice' => $invoice,
-            'sales_customer_id' => $validated['customer_id'],
-            'sales_payment_type' => $validated['payment_type'],
+            'sales_customer_id' => $validated['customerId'],
+            'sales_payment_type' => $paymentType,
             'sales_total_price' => $totalPrice,
-            'sales_total_payment' => $validated['total_payment'],
+            'sales_total_gross' => $totalGross,
+            'sales_total_payment' => $validated['customerPay'],
             'sales_total_change' => $totalChange,
-            'sales_discount' => $validated['discount'],
-            'sales_total_discount' => $totalDiscount,
-            'sales_total_price_after_discount' => $totalPriceAfterDiscount,
-            'sales_status' => $validated['is_credit'] ? Sale::CREDIT_STATUS : Sale::PAID_STATUS
         ];
-
-        // IF CUSTOMER WANT TO CREDIT (HUTANG)
-        $creditAmount = 0;
-
-        if ($validated['is_credit'] && $validated['customer_id'] !== 1) {
-            $creditAmount = $totalPriceAfterDiscount - $validated['total_payment'];
-
-            if ($creditAmount < 0) {
-                $creditAmount = 0;
-            }
-
-            $salesData['sales_customer_total_credit'] = $creditAmount;
-        }
 
         $salesResult = Sale::create($salesData);
 
@@ -185,14 +189,14 @@ class CashierController
         }
 
         // INSERT TO TABLE CUSTOMER CREDIT
-        if ($creditAmount > 0 && $validated['is_credit']) {
+        if ($totalDebt > 0) {
             $creditData = [
                 'customer_credit_sales_id' => $salesResult->sales_id,
-                'customer_credit_customer_id' => $validated['customer_id'],
+                'customer_credit_customer_id' => $validated['customerId'],
                 'customer_credit_invoice' => $invoice,
-                'customer_credit_total_purchase' => $totalPriceAfterDiscount,
-                'customer_credit_total_payment' => $validated['total_payment'],
-                'customer_credit' => $creditAmount,
+                'customer_credit_total_purchase' => $totalPrice,
+                'customer_credit_total_payment' => $validated['customerPay'],
+                'customer_credit' => $totalDebt,
                 'customer_credit_status' => CustomerCredit::UNPAID_STATUS
             ];
 
@@ -212,7 +216,7 @@ class CashierController
         $saleDetails = [];
 
         foreach ($validated['items'] as $item) {
-            $stockData = $stocks[$item['stockId']];
+            $stockData = $stocks[$item['id']];
 
             $saleDetails[] = [
                 'sale_detail_sales_id' => $salesId,
@@ -223,9 +227,12 @@ class CashierController
                 'sale_detail_stock_category_name' => $stockData->category->category_name,
                 'sale_detail_stock_unit' => $stockData->stock_unit,
                 'sale_detail_cost_price' => $stockData->stock_purchase_price,
-                'sale_detail_price' => $item['price'],
+                'sale_detail_price' => floatval($item['price']) * (1 - $item['discount'] / 100),
                 'sale_detail_quantity' => $item['quantity'],
                 'sale_detail_total_price' => $item['quantity'] * $item['price'],
+                'sale_detail_discount' => intval($item['discount']),
+                'sale_detail_discount_amount' =>
+                    floatval($item['price']) * intval($item['quantity']) * ($item['discount'] / 100),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ];
@@ -243,7 +250,7 @@ class CashierController
 
         // UPDATE STOCK
         foreach ($validated['items'] as $item) {
-            $stock = $stocks[$item['stockId']];
+            $stock = $stocks[$item['id']];
             $stock->stock_current -= $item['quantity'];
             $stock->stock_out += $item['quantity'];
             $stock->save();

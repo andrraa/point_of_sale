@@ -239,6 +239,8 @@
                 $(this).closest('tr').find('.total-cell').text(subtotal.toLocaleString());
 
                 calculatePrice();
+
+                console.log(cart);
             });
 
             function searchProduct(code, customerId) {
@@ -423,6 +425,29 @@
             // START CEK HUTANG
             function checkDebt() {
                 const customerId = $('#cart_customer').val();
+
+                if (customerId == 1) {
+                    successAlert('Pelanggan Umum tidak memiliki Hutang!.');
+                    return;
+                }
+
+                $.ajax({
+                    url: "{{ route('cashier.get-credit') }}",
+                    type: "POST",
+                    data: {
+                        customerId: customerId
+                    },
+                    success: function(response) {
+                        const message = response.debt == 0 ?
+                            'tidak memiliki hutang.' :
+                            `Memiliki hutang ${response.debt}`;
+
+                        successAlert(`Pelanggan ${message}`);
+                    },
+                    error: function(xhr) {
+                        errorAlert('Terjadi kesalahan server!.');
+                    }
+                });
             }
             // END CEK HUTANG
 
@@ -438,17 +463,21 @@
                 $('#modal-customer-total').val('Rp ' + total.toLocaleString());
                 $('#modal-customer-change').val('Rp ' + change.toLocaleString());
 
-                $('#modal-pay').removeClass('hidden').addClass('flex');
+                openModal();
 
                 $('#modal-customer-pay').val('').focus();
             }
 
-            function confirmPayment() {
+            function openModal() {
+                $('#modal-pay').removeClass('hidden').addClass('flex');
+            }
 
+            function closeModal() {
+                $('#modal-pay').removeClass('flex').addClass('hidden');
             }
 
             $('.modal-pay-cancel').on('click', function() {
-                $('#modal-pay').removeClass('flex').addClass('hidden');
+                closeModal();
                 focusStockCode();
             });
 
@@ -474,26 +503,57 @@
                 var payInput = $('#modal-customer-pay').val();
                 var payAmount = parseFloat(payInput.replace(/\./g, '').replace(',', '.') || 0);
 
+                if (!payInput) {
+                    errorAlert('Jumlah uang tidak boleh kosong.');
+                    return;
+                }
+
                 var customerId = parseInt($('#cart_customer').val());
 
                 if (payAmount < total) {
-                    var debt = total - payAmount;
+                    var tmpDebt = total - payAmount;
 
                     if (customerId !== 1) {
                         Swal.fire({
                             title: 'Pembayaran Kurang',
-                            text: `Kurang Rp ${debt.toLocaleString()}. Akan dijadikan hutang.`,
+                            text: `Kurang Rp ${tmpDebt.toLocaleString()}. Akan dijadikan hutang.`,
                             icon: 'warning',
+                            showCancelButton: true,
+                            cancelButtonText: 'Batal'
+                        }).then((res) => {
+                            if (res.isConfirmed) {
+                                submitPayment(customerId, payAmount, cart);
+                            }
                         });
                     } else {
-                        Swal.fire({
-                            title: 'Pembayaran Kurang',
-                            text: `Kurang Rp ${debt.toLocaleString()}`,
-                            icon: 'warning',
-                        });
+                        errorAlert(`Jumlah uang pembayaran kurang Rp ${tmpDebt.toLocaleString()}.`);
                     }
+                } else {
+                    submitPayment(customerId, payAmount, cart);
                 }
             });
+
+            function submitPayment(customerId, customerPay, items) {
+                $.ajax({
+                    url: "{{ route('cashier.checkout') }}",
+                    type: "POST",
+                    data: {
+                        customerId: customerId,
+                        customerPay: customerPay,
+                        items: items,
+                    },
+                    success: function(response) {
+                        closeModal();
+                        successAlert('Pembayaran berhasil!.');
+                        setTimeout(function() {
+                            resetAll();
+                        }, 1000);
+                    },
+                    error: function(xhr) {
+                        errorAlert('Terjadi kesalahan server.');
+                    }
+                });
+            }
             // END PAYMENT
 
             // LISTENER KEYDOWN (F ROW)
@@ -527,10 +587,18 @@
             // END LISTENER (F ROW)
 
             function errorAlert(message) {
+                customAlert(message, 'error');
+            }
+
+            function successAlert(message) {
+                customAlert(message, 'success');
+            }
+
+            function customAlert(message, icon) {
                 Swal.fire({
-                    title: 'Error',
+                    title: icon === 'error' ? 'Error' : 'Sukses',
                     text: message,
-                    icon: 'error',
+                    icon: icon,
                     timer: 1000,
                     timerProgressBar: true,
                     showConfirmButton: false

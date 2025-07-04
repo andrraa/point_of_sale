@@ -25,7 +25,9 @@ class SaleDetail extends Model
         'sale_detail_cost_price',
         'sale_detail_price',
         'sale_detail_quantity',
-        'sale_detail_total_price'
+        'sale_detail_total_price',
+        'sale_detail_discount',
+        'sale_detail_discount_amount'
     ];
 
     public function stock(): BelongsTo

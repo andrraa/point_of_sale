@@ -14,21 +14,12 @@ class CheckoutRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'customer_id' => [
+            'customerId' => [
                 'required',
                 'integer',
                 'exists:tbl_customers,customer_id'
             ],
-            'payment_type' => [
-                'required',
-                'string',
-                'in:credit,cash'
-            ],
-            'total_payment' => [
-                'required',
-                'numeric'
-            ],
-            'discount' => [
+            'customerPay' => [
                 'required',
                 'numeric'
             ],
@@ -36,11 +27,6 @@ class CheckoutRequest extends FormRequest
                 'required',
                 'array'
             ],
-            'is_credit' => [
-                'required',
-                'integer',
-                'in:0,1'
-            ]
         ];
     }
 }

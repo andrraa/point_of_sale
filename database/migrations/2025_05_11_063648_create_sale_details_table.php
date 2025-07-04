@@ -19,7 +19,9 @@ return new class extends Migration {
             $table->double('sale_detail_cost_price');
             $table->double('sale_detail_price');
             $table->integer('sale_detail_quantity');
-            $table->integer('sale_detail_total_price');
+            $table->double('sale_detail_total_price');
+            $table->double('sale_detail_discount');
+            $table->double('sale_detail_discount_amount');
             $table->softDeletes();
             $table->timestamps();
         });
