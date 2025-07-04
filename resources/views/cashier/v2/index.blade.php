@@ -239,8 +239,6 @@
                 $(this).closest('tr').find('.total-cell').text(subtotal.toLocaleString());
 
                 calculatePrice();
-
-                console.log(cart);
             });
 
             function searchProduct(code, customerId) {
@@ -320,7 +318,9 @@
 
             function resetAll() {
                 cart = [];
+                debt = 0;
                 $('#product-table tbody').empty();
+                $('#total-debt').text('0');
                 calculatePrice();
                 focusStockCode();
             }
@@ -441,6 +441,14 @@
                         const message = response.debt == 0 ?
                             'tidak memiliki hutang.' :
                             `Memiliki hutang ${response.debt}`;
+
+                        if (response.debt > 0) {
+                            debt = response.debt;
+                        }
+
+                        console.log(debt);
+
+                        $('#total-debt').text(debt.toLocaleString());
 
                         successAlert(`Pelanggan ${message}`);
                     },
