@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->double('sales_total_gross');
             $table->double('sales_total_payment');
             $table->double('sales_total_change')->default(0);
+            $table->smallInteger('sales_status');
             $table->softDeletes();
             $table->timestamps();
         });

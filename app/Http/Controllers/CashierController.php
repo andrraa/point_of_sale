@@ -176,6 +176,7 @@ class CashierController
             'sales_total_gross' => $totalGross,
             'sales_total_payment' => $validated['customerPay'],
             'sales_total_change' => $totalChange,
+            'sales_status' => $totalDebt > 0 ? Sale::CREDIT_STATUS : sale::PAID_STATUS
         ];
 
         $salesResult = Sale::create($salesData);
@@ -197,7 +198,7 @@ class CashierController
                 'customer_credit_total_purchase' => $totalPrice,
                 'customer_credit_total_payment' => $validated['customerPay'],
                 'customer_credit' => $totalDebt,
-                'customer_credit_status' => CustomerCredit::UNPAID_STATUS
+                'customer_credit_status' => CustomerCredit::UNPAID_STATUS,
             ];
 
             $customerCredit = CustomerCredit::create($creditData);

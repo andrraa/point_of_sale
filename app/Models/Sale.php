@@ -26,6 +26,7 @@ class Sale extends Model
         'sales_total_gross',
         'sales_total_payment',
         'sales_total_change',
+        'sales_status'
     ];
 
     public function getCreatedAtAttribute($value): string
