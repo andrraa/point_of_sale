@@ -113,7 +113,6 @@ class CashierController
             return $subtotal - $discountAmount;
         });
 
-
         $totalChange = 0;
         $totalDebt = 0;
 
@@ -209,6 +208,7 @@ class CashierController
         // UPDATE STOCK
         foreach ($validated['items'] as $item) {
             $stock = $stocks[$item['id']];
+            $stock->stock_total -= $item['quantity'];
             $stock->stock_out += $item['quantity'];
             $stock->save();
         }

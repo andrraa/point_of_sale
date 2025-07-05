@@ -202,16 +202,12 @@
                 const item = cart.find(p => p.code == code);
                 if (!item) return;
 
-                const newQty = parseInt($(this).val());
-                if (newQty > item.max_quantity) {
-                    $(this).val(item.max_quantity);
-                    item.quantity = item.max_quantity;
-                } else if (newQty < 1) {
-                    $(this).val(1);
-                    item.quantity = 1;
-                } else {
-                    item.quantity = newQty;
+                let newQty = parseInt($(this).val());
+                if (isNaN(newQty) || newQty < 1) {
+                    newQty = 1;
                 }
+
+                item.quantity = newQty;
 
                 const subtotal = item.price * item.quantity * (1 - item.discount / 100);
                 $(this).closest('tr').find('.total-cell').text(subtotal.toLocaleString());

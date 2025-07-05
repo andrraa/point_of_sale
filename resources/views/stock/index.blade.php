@@ -5,11 +5,23 @@
 @section('navTitle', 'Daftar Stok')
 
 @section('content')
-    <div class="mb-4">
+    <div class="mb-4 flex items-center gap-2">
         <x-action-button :props="[
             'url' => route('stock.create'),
             'label' => 'Stok Baru',
         ]" />
+
+        <a href="">
+            <div class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium tracking-wide">
+                <i class="fa-solid fa-plus-minus text-xs mr-2"></i>
+                Ambil Stok
+            </div>
+        </a>
+
+        <button class="px-4 py-2 rounded-lg bg-green-500 text-white text-sm font-medium tracking-wide">
+            <i class="fa-solid fa-file text-xs mr-2"></i>
+            Laporan Stok
+        </button>
     </div>
 
     <div class="bg-white rounded-lg border border-gray-200 mb-4 p-4">
