@@ -38,7 +38,6 @@
                     <th class="p-3 bg-gray-100">Nama Stok</th>
                     <th class="p-3 bg-gray-100">Kategori</th>
                     <th class="p-3 bg-gray-100">Total Stok</th>
-                    <th class="p-3 bg-gray-100">Stok Tersedia</th>
                     <th class="p-3 bg-gray-100">Stok Keluar</th>
                     <th class="p-3 bg-gray-100">Harga Beli</th>
                     <th class="p-3 bg-gray-100">Aksi</th>
@@ -48,7 +47,6 @@
                 <tr>
                     <td colspan="4" class="p-2 !text-center">Total</td>
                     <td id="total_stock_all" class="p-2"></td>
-                    <td id="total_stock_current" class="p-2"></td>
                     <td id="total_stock_out" class="p-2"></td>
                     <td colspan="2" id="total_stock_purchase_price" class="p-2"></td>
                 </tr>
@@ -102,14 +100,6 @@
                         }
                     },
                     {
-                        data: 'stock_current',
-                        name: 'stock_current',
-                        class: 'font-medium tracking-wide !text-xs 1text-blue-500',
-                        render: function(data) {
-                            return `${data} pcs`;
-                        }
-                    },
-                    {
                         data: 'stock_out',
                         name: 'stock_out',
                         class: 'font-medium tracking-wide !text-xs !text-red-500',
@@ -145,7 +135,6 @@
                         const price = json.total_stock_purchase_price;
 
                         $('#total_stock_all').html(`${json.total_stock_all} pcs`);
-                        $('#total_stock_current').html(`${json.total_stock_current} pcs`);
                         $('#total_stock_out').html(`${json.total_stock_out} pcs`);
                         $('#total_stock_purchase_price').html(
                             `Rp ${customFunction.formatNumberToRupiah(price)}`);

@@ -29,20 +29,13 @@ class SaleDetailController
             $difference = $oldQuantity - $newQuantity;
 
             $stock->update([
-                'stock_current' => $stock->stock_current + $difference,
                 'stock_in' => $stock->stock_in + $difference,
                 'stock_out' => $stock->stock_out - $difference
             ]);
         } elseif ($newQuantity > $oldQuantity) {
             $difference = $newQuantity - $oldQuantity;
 
-            if ($stock->stock_current < $difference) {
-                DB::rollBack();
-                return response()->json(false);
-            }
-
             $stock->update([
-                'stock_current' => $stock->stock_current - $difference,
                 'stock_out' => $stock->stock_out + $difference,
                 'stock_in' => $stock->stock_in - $difference
             ]);
@@ -100,7 +93,6 @@ class SaleDetailController
         $stock = Stock::firstWhere('stock_id', $saleDetail->sale_detail_stock_id);
 
         $stock->update([
-            'stock_current' => $stock->stock_current + $saleDetail->sale_detail_quantity,
             'stock_out' => $stock->stock_out - $saleDetail->sale_detail_quantity,
             'stock_in' => $stock->stock_in + $saleDetail->sale_detail_quantity
         ]);

@@ -135,7 +135,6 @@ class PurchaseController
             if ($stock) {
                 $stock->update([
                     'stock_total' => $stock->stock_total += $item['quantity'],
-                    'stock_current' => $stock->stock_current += $item['quantity'],
                     'stock_in' => $stock->stock_in += $item['quantity']
                 ]);
             }

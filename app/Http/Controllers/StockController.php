@@ -30,7 +30,6 @@ class StockController
                     'stock_code',
                     'stock_name',
                     'stock_total',
-                    'stock_current',
                     'stock_in',
                     'stock_out',
                     'stock_category_id',
@@ -42,7 +41,6 @@ class StockController
             }
 
             $totalStockAll = (clone $stocks)->sum('stock_total');
-            $totalStockCurrent = (clone $stocks)->sum('stock_current');
             $totalStockOut = (clone $stocks)->sum('stock_out');
             $totalStockPurchasePrice = (new Stock)
                 ->where('stock_category_id', $request->category_id)
@@ -59,7 +57,6 @@ class StockController
                 ])
                 ->with([
                     'total_stock_all' => $totalStockAll,
-                    'total_stock_current' => $totalStockCurrent,
                     'total_stock_out' => $totalStockOut,
                     'total_stock_purchase_price' => $totalStockPurchasePrice
                 ])
@@ -130,7 +127,6 @@ class StockController
 
         $stock->update([
             'stock_total' => 0,
-            'stock_current' => 0,
             'stock_in' => 0,
             'stock_out' => 0
         ]);

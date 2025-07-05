@@ -23,7 +23,6 @@ class Stock extends Model
         'stock_sale_price_2',
         'stock_sale_price_3',
         'stock_total',
-        'stock_current',
         'stock_in',
         'stock_out'
     ];
@@ -40,9 +39,9 @@ class Stock extends Model
         return self::query()
             ->select([
                 'stock_id',
-                DB::raw("CONCAT(stock_name, ' (Stock: ', stock_current, ')') as stock_label")
+                DB::raw("CONCAT(stock_name, ' (Stock: ', stock_total, ')') as stock_label")
             ])
-            ->where('stock_current', '>', 0)
+            ->where('stock_total', '>', 0)
             ->pluck('stock_label', 'stock_id');
     }
 

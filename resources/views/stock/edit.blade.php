@@ -44,10 +44,7 @@
 
             $('#stock-edit').on('change', function() {
                 const isChecked = $(this).is(':checked');
-                const inputIds = ['stock_total', 'stock_current', 'stock_in', 'stock_out'];
-                inputIds.forEach(id => {
-                    $(`#${id}`).prop('readonly', !isChecked);
-                });
+                $(`#stock_total`).prop('readonly', !isChecked);
             });
         });
     </script>

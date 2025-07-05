@@ -18,7 +18,6 @@ return new class extends Migration {
             $table->double('stock_sale_price_2');
             $table->double('stock_sale_price_3');
             $table->integer('stock_total')->default(0);
-            $table->integer('stock_current')->default(0);
             $table->integer('stock_in')->default(0);
             $table->integer('stock_out')->default(0);
             $table->softDeletes();

@@ -158,23 +158,6 @@
 
     <div>
         <x-form.label :props="[
-            'for' => 'stock_current',
-            'label' => 'Stok Tersedia',
-            'required' => true,
-        ]" />
-
-        <x-form.input :props="[
-            'id' => 'stock_current',
-            'name' => 'stock_current',
-            'class' => 'number-input',
-            'placeholder' => 'Masukkan stok tersedia',
-            'value' => old('stock_current', $stock->stock_current ?? 0),
-            'readonly' => true,
-        ]" />
-    </div>
-
-    <div>
-        <x-form.label :props="[
             'for' => 'stock_in',
             'label' => 'Stok Masuk',
             'required' => true,

@@ -70,11 +70,9 @@ class SaleController
         foreach ($sale->details as $detail) {
             $stock = $detail->stock;
 
-            $stockCurrent = $stock->stock_current + $detail->sale_detail_quantity;
             $stockOut = $stock->stock_out - $detail->sale_detail_quantity;
 
             $stock->update([
-                'stock_current' => $stockCurrent,
                 'stock_out' => $stockOut
             ]);
         }
