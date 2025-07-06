@@ -8,10 +8,12 @@ use App\Models\CustomerCredit;
 use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Stock;
+use App\Models\StockLog;
 use App\Models\Store;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -86,6 +88,7 @@ class CashierController
     public function checkout(CheckoutRequest $request): JsonResponse
     {
         $validated = $request->validated();
+        $user = Auth::user();
 
         DB::beginTransaction();
 
@@ -189,7 +192,7 @@ class CashierController
                 'sale_detail_total_price' => $item['quantity'] * $item['price'],
                 'sale_detail_discount' => intval($item['discount']),
                 'sale_detail_discount_amount' =>
-                    floatval($item['price']) * intval($item['quantity']) * ($item['discount'] / 100),
+                floatval($item['price']) * intval($item['quantity']) * ($item['discount'] / 100),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ];
@@ -212,6 +215,21 @@ class CashierController
             $stock->stock_out += $item['quantity'];
             $stock->save();
         }
+
+        // INSERT STOCK LOG
+        $stockLogs = [];
+        foreach ($validated['items'] as $item) {
+            $stockLogs[] = [
+                'stock_log_stock_id' => $item['id'],
+                'stock_log_quantity' => $item['quantity'],
+                'stock_log_description' => 'Penjualan Kasir',
+                'stock_log_status' => StockLog::OUT_STATUS,
+                'stock_log_user_id' => $user->user_id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ];
+        }
+        StockLog::insert($stockLogs);
 
         DB::commit();
 

@@ -169,6 +169,16 @@ export function actions(data, selector) {
         `;
     }
 
+    if (data.hasOwnProperty("log")) {
+        actions += `
+            <a href="${data.log}" title="Lihat Log Data">
+                <div class="w-6 h-6 p-2 rounded-md flex items-center justify-center shrink-0 border border-gray-200 text-indigo-500 hover:bg-indigo-500 hover:text-white">
+                    <i class="fa-solid fa-clock-rotate-left text-xs"></i>
+                </div>
+            </a>
+        `;
+    }
+
     if (data.hasOwnProperty("reset")) {
         actions += `
             <button type="button" data-url="${data.reset}" data-selector="${selector}" title="Reset Stok" class="cursor-pointer dt-delete" data-text="Apakah anda yakin ingin reset stok?">

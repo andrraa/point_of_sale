@@ -11,6 +11,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SaleDetailController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\StockLogController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
@@ -47,6 +48,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('stock', StockController::class)->except('show');
         Route::delete('stock/reset/{stock}', [StockController::class, 'reset'])
             ->name('stock.reset');
+        Route::get('stock/log/{stock}', [StockLogController::class, 'index'])->name('stock.log');
 
         // CATEGORY & SUB CATEGORY
         Route::controller(CategoryController::class)->group(function () {

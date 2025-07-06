@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -48,5 +49,10 @@ class Stock extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'stock_category_id', 'category_id');
+    }
+
+    public function logs(): HasMany
+    {
+        return $this->hasMany(StockLog::class, 'stock_log_stock_id', 'stock_id');
     }
 }

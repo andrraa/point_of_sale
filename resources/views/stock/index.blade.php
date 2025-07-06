@@ -12,13 +12,15 @@
         ]" />
 
         <a href="">
-            <div class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium tracking-wide">
+            <div
+                class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium tracking-wide hover:bg-white border border-transparent hover:border-red-500 hover:text-red-500 transition-all duration-300">
                 <i class="fa-solid fa-plus-minus text-xs mr-2"></i>
                 Ambil Stok
             </div>
         </a>
 
-        <button class="px-4 py-2 rounded-lg bg-green-500 text-white text-sm font-medium tracking-wide">
+        <button
+            class="px-4 py-2 rounded-lg bg-green-500 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-green-500 hover:text-green-500 transition-all duration-300 cursor-pointer">
             <i class="fa-solid fa-file text-xs mr-2"></i>
             Laporan Stok
         </button>
