@@ -10,6 +10,7 @@ class DashboardController
     public function __invoke(): View
     {
         $stocks = Stock::limit(10)
+            ->where('stock_out', '>', 0)
             ->orderBy('stock_out', 'desc')
             ->get();
 

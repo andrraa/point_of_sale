@@ -27,7 +27,7 @@
                         <th class="p-2 tracking-wide">Tanggal</th>
                     </tr>
                 </thead>
-                <tbody class="text-left">
+                <tbody class="text-left !text-xs">
                     @forelse ($sales as $index => $sale)
                         <tr class="even:bg-gray-100 !text-xs font-medium">
                             <td class="p-2 tracking-wide">{{ $index + 1 }}</td>
