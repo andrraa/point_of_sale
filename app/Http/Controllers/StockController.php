@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StockRequest;
 use App\Models\Category;
 use App\Models\Stock;
+use App\Models\StockLog;
 use App\Services\ValidationService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -107,9 +109,32 @@ class StockController
     {
         $validated = $request->validated();
 
-        $stock->update($validated)
-            ? flash()->preset('update_success')
-            : flash()->preset('update_failed');
+        $user = Auth::user();
+
+        $oldStockTotal = $stock->stock_total;
+
+        $updated = $stock->update($validated);
+
+        if ($updated) {
+            if ($validated['stock_total'] !== $oldStockTotal) {
+                $status = $validated['stock_total'] > $oldStockTotal
+                    ? StockLog::IN_STATUS
+                    : StockLog::OUT_STATUS;
+                $difference = abs($validated['stock_total'] - $oldStockTotal);
+
+                StockLog::create([
+                    'stock_log_stock_id' => $stock->stock_id,
+                    'stock_log_quantity' => $difference,
+                    'stock_log_description' => 'Perubahan jumlah stok dari update',
+                    'stock_log_status' => $status,
+                    'stock_log_user_id' => $user->user_id,
+                ]);
+
+                flash()->preset('update_success');
+            }
+        } else {
+            flash()->preset('update_failed');
+        }
 
         return redirect()->route('stock.index');
     }

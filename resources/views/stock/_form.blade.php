@@ -155,38 +155,4 @@
             'readonly' => true,
         ]" />
     </div>
-
-    <div>
-        <x-form.label :props="[
-            'for' => 'stock_in',
-            'label' => 'Stok Masuk',
-            'required' => true,
-        ]" />
-
-        <x-form.input :props="[
-            'id' => 'stock_in',
-            'name' => 'stock_in',
-            'class' => 'number-input',
-            'placeholder' => 'Masukkan stok masuk',
-            'value' => old('stock_in', $stock->stock_in ?? 0),
-            'readonly' => true,
-        ]" />
-    </div>
-
-    <div>
-        <x-form.label :props="[
-            'for' => 'stock_out',
-            'label' => 'Stok Keluar',
-            'required' => true,
-        ]" />
-
-        <x-form.input :props="[
-            'id' => 'stock_out',
-            'name' => 'stock_out',
-            'class' => 'number-input',
-            'placeholder' => 'Masukkan stok keluar',
-            'value' => old('stock_out', $stock->stock_out ?? 0),
-            'readonly' => true,
-        ]" />
-    </div>
 </div>
