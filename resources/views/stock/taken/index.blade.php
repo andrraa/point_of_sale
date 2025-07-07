@@ -19,7 +19,7 @@
             Ambil Stock
         </button>
 
-        <button id="open-stok-modal" type="button"
+        <button id="open-stock-modal" type="button"
             class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-red-500 hover:text-red-500 transition-all duration-300 cursor-pointer">
             <i class="fa-solid fa-file text-xs mr-2"></i>
             Laporan Stok Diambil
@@ -78,6 +78,7 @@
 
     <script type="module">
         {!! $validator !!}
+        {!! $reportValidator !!}
 
         $(document).ready(function() {
             const dataTableAction = window.DataTablesAction;
@@ -168,6 +169,14 @@
 
             $('.modal-taken-cancel').on('click', function() {
                 closeModal('#modal-stock-taken');
+            });
+
+            $('#open-stock-modal').on('click', function() {
+                openModal('#modal-stock-report');
+            });
+
+            $('.modal-stock-cancel').on('click', function() {
+                closeModal('#modal-stock-report');
             });
 
             function openModal(selector) {

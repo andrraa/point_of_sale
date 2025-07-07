@@ -35,4 +35,9 @@ class StockTaken extends Model
     {
         return $this->belongsTo(User::class, 'stock_taken_user_id', 'user_id');
     }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'stock_taken_category_id', 'category_id');
+    }
 }

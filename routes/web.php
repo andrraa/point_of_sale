@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
         Route::controller(StockTakenController::class)->group(function () {
             Route::get('stock/taken', 'index')->name('stock.taken');
             Route::post('stock/taken', 'store');
+            Route::post('stock/report', 'report')->name('stock.taken.report');
         });
 
         // CATEGORY & SUB CATEGORY

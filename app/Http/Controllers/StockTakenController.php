@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StockTakenReportRequest;
 use App\Http\Requests\StockTakenRequest;
 use App\Models\Category;
 use App\Models\Stock;
 use App\Models\StockLog;
 use App\Models\StockTaken;
 use App\Services\ValidationService;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -63,8 +66,13 @@ class StockTakenController
         $categories = Category::getItemCategories();
 
         $validator = $this->validationService->generateValidation(StockTakenRequest::class, '#form-stock-taken');
+        $reportValidator = $this->validationService->generateValidation(StockTakenReportRequest::class, '#form-report');
 
-        return view('stock.taken.index', compact(['categories', 'validator']));
+        return view('stock.taken.index', compact([
+            'categories',
+            'validator',
+            'reportValidator'
+        ]));
     }
 
     public function store(StockTakenRequest $request): RedirectResponse
@@ -106,5 +114,33 @@ class StockTakenController
         flash()->preset('create_success');
 
         return redirect()->route('stock.taken');
+    }
+
+    public function report(StockTakenReportRequest $request)
+    {
+        $validated = $request->validated();
+
+        $startDate = Carbon::parse($validated['start_date'])->format('d M Y');
+        $endDate = Carbon::parse($validated['end_date'])->format('d M Y');
+
+        $data = StockTaken::with(['stock', 'user', 'category'])
+            ->when($validated['stock_category'] !== 'all', function ($query) use ($validated) {
+                $query->where('stock_taken_category_id', $validated['stock_category']);
+            })
+            ->whereBetween(
+                'created_at',
+                [$validated['start_date'], $validated['end_date']]
+            )
+            ->get()
+            ->groupBy('stock_taken_category_id');
+
+
+        $pdf = Pdf::loadView(
+            'stock.taken.report',
+            compact(['data', 'startDate', 'endDate'])
+        )
+            ->setPaper('a4', 'landscape');
+
+        return $pdf->download("LAPORAN-PENGAMBILAN-STOK.pdf");
     }
 }
