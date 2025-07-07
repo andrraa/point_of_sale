@@ -49,13 +49,16 @@ Route::middleware('auth')->group(function () {
         Route::resource('stock', StockController::class)->except('show');
         Route::delete('stock/reset/{stock}', [StockController::class, 'reset'])
             ->name('stock.reset');
+        Route::post('stock/report', [StockController::class, 'report'])
+            ->name('stock.report');
 
-        Route::get('stock/log/{stock}', [StockLogController::class, 'index'])->name('stock.log');
+        Route::get('stock/log/{stock}', [StockLogController::class, 'index'])
+            ->name('stock.log');
 
         Route::controller(StockTakenController::class)->group(function () {
             Route::get('stock/taken', 'index')->name('stock.taken');
             Route::post('stock/taken', 'store');
-            Route::post('stock/report', 'report')->name('stock.taken.report');
+            Route::post('stock/taken/report', 'report')->name('stock.taken.report');
         });
 
         // CATEGORY & SUB CATEGORY

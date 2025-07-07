@@ -6,6 +6,7 @@ use App\Http\Requests\StockRequest;
 use App\Models\Category;
 use App\Models\Stock;
 use App\Services\ValidationService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -131,5 +132,25 @@ class StockController
         ]);
 
         return response()->json(true);
+    }
+
+    public function report(Request $request)
+    {
+        $category = $request->input('stock_category');
+
+        $stocks = Stock::with('category')
+            ->when($category !== 'all', function ($query) use ($category) {
+                $query->where('stock_category_id', $category);
+            })
+            ->get()
+            ->groupBy('stock_category_id');
+
+        $pdf = Pdf::loadView(
+            'stock.report',
+            compact(['stocks'])
+        )
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->download("LAPORAN-STOK.pdf");
     }
 }

@@ -19,7 +19,7 @@
             </div>
         </a>
 
-        <button
+        <button type="button" id="open-stock-modal"
             class="px-4 py-2 rounded-lg bg-green-500 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-green-500 hover:text-green-500 transition-all duration-300 cursor-pointer">
             <i class="fa-solid fa-file text-xs mr-2"></i>
             Laporan Stok
@@ -67,6 +67,8 @@
             </tfoot>
         </table>
     </div>
+
+    @include('stock.modal')
 @endsection
 
 @push('scripts')
@@ -159,6 +161,22 @@
             $('#filter').on('change', function() {
                 table.ajax.reload();
             });
+
+            $('#open-stock-modal').on('click', function() {
+                openModal('#modal-stock-report');
+            });
+
+            $('.modal-stock-cancel').on('click', function() {
+                closeModal('#modal-stock-report');
+            });
+
+            function openModal(selector) {
+                $(selector).removeClass('hidden').addClass('flex');
+            }
+
+            function closeModal(selector) {
+                $(selector).removeClass('flex').addClass('hidden');
+            }
         });
     </script>
 @endpush
