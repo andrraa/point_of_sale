@@ -55,4 +55,9 @@ class Stock extends Model
     {
         return $this->hasMany(StockLog::class, 'stock_log_stock_id', 'stock_id');
     }
+
+    public function takens(): HasMany
+    {
+        return $this->hasMany(StockTaken::class, 'stock_taken_stock_id', 'stock_id');
+    }
 }

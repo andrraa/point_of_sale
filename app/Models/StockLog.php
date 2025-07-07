@@ -17,7 +17,8 @@ class StockLog extends Model
         'stock_log_stock_id',
         'stock_log_quantity',
         'stock_log_description',
-        'stock_log_user_id'
+        'stock_log_user_id',
+        'stock_log_status'
     ];
 
     public function user(): BelongsTo

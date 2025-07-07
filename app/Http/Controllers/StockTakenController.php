@@ -1,0 +1,110 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\StockTakenRequest;
+use App\Models\Category;
+use App\Models\Stock;
+use App\Models\StockLog;
+use App\Models\StockTaken;
+use App\Services\ValidationService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+use Yajra\DataTables\Facades\DataTables;
+
+class StockTakenController
+{
+    protected $validationService;
+
+    public function __construct(ValidationService $validationService)
+    {
+        $this->validationService = $validationService;
+    }
+
+    public function index(Request $request): View|JsonResponse
+    {
+        if ($request->ajax()) {
+            $takens = StockTaken::with(['stock', 'user'])
+                ->select([
+                    'stock_taken_id',
+                    'stock_taken_stock_code',
+                    'stock_taken_stock_name',
+                    'stock_taken_quantity',
+                    'stock_taken_price',
+                    'stock_taken_description',
+                    'stock_taken_user_id',
+                    'stock_taken_category_id',
+                    'created_at'
+                ]);
+
+            if ($request->filled('category_id')) {
+                $takens->where('stock_taken_category_id', $request->category_id);
+            }
+
+            $totalStockAll = (clone $takens)->sum('stock_taken_quantity');
+            $totalStockPurchasePrice = (new StockTaken())
+                ->where('stock_taken_category_id', $request->category_id)
+                ->selectRaw('SUM(stock_taken_price * stock_taken_quantity) as total')
+                ->value('total');
+
+            return DataTables::of($takens)
+                ->addIndexColumn()
+                ->escapeColumns()
+                ->with([
+                    'total_stock_all' => $totalStockAll,
+                    'total_stock_purchase_price' => $totalStockPurchasePrice
+                ])
+                ->toJson();
+        }
+
+        $categories = Category::getItemCategories();
+
+        $validator = $this->validationService->generateValidation(StockTakenRequest::class, '#form-stock-taken');
+
+        return view('stock.taken.index', compact(['categories', 'validator']));
+    }
+
+    public function store(StockTakenRequest $request): RedirectResponse
+    {
+        $user = Auth::user();
+
+        $validated = $request->validated();
+
+        $stock = Stock::firstWhere('stock_code', $validated['stock_code']);
+
+        $data = [
+            'stock_taken_stock_id' => $stock->stock_id,
+            'stock_taken_stock_code' => $stock->stock_code,
+            'stock_taken_stock_name' => $stock->stock_name,
+            'stock_taken_quantity' => $validated['quantity'],
+            'stock_taken_price' => $stock->stock_purchase_price,
+            'stock_taken_description' => $validated['description'],
+            'stock_taken_category_id' => $stock->stock_category_id,
+            'stock_taken_user_id' => $user->user_id
+        ];
+
+        StockTaken::create($data);
+
+        $stock->update([
+            'stock_total' => $stock->stock_total - $validated['quantity'],
+            'stock_out' => $stock->stock_out + $validated['quantity']
+        ]);
+
+        $log = [
+            'stock_log_stock_id' => $stock->stock_id,
+            'stock_log_quantity' => $validated['quantity'],
+            'stock_log_description' => 'Pengambilan Stock',
+            'stock_log_status' => StockLog::OUT_STATUS,
+            'stock_log_user_id' => $user->user_id,
+        ];
+
+        StockLog::create($log);
+
+        flash()->preset('create_success');
+
+        return redirect()->route('stock.taken');
+    }
+}
