@@ -21,15 +21,15 @@
             <table class="table w-full mt-6">
                 <thead class="bg-gray-200 text-left !text-sm">
                     <tr>
-                        <th class="p-2 tracking-wide">No.</th>
-                        <th class="p-2 tracking-wide">Invoice</th>
-                        <th class="p-2 tracking-wide">Total</th>
-                        <th class="p-2 tracking-wide">Tanggal</th>
+                        <th class="p-2 tracking-wide font-medium">No.</th>
+                        <th class="p-2 tracking-wide font-medium">Invoice</th>
+                        <th class="p-2 tracking-wide font-medium">Total</th>
+                        <th class="p-2 tracking-wide font-medium">Tanggal</th>
                     </tr>
                 </thead>
                 <tbody class="text-left !text-xs">
                     @forelse ($sales as $index => $sale)
-                        <tr class="even:bg-gray-100 !text-xs font-medium">
+                        <tr class="even:bg-gray-100 !text-xs">
                             <td class="p-2 tracking-wide">{{ $index + 1 }}</td>
                             <td class="p-2 tracking-wide">
                                 {{ "$stock->stock_code - $stock->stock_name" }}
@@ -61,14 +61,14 @@
             <table class="table w-full mt-6">
                 <thead class="bg-gray-200 text-left !text-sm">
                     <tr>
-                        <th class="p-2 tracking-wide">No.</th>
-                        <th class="p-2 tracking-wide">Barang</th>
-                        <th class="p-2 tracking-wide">Terjual</th>
+                        <th class="p-2 tracking-wide font-medium">No.</th>
+                        <th class="p-2 tracking-wide font-medium">Barang</th>
+                        <th class="p-2 tracking-wide font-medium">Terjual</th>
                     </tr>
                 </thead>
                 <tbody class="text-left !text-xs">
                     @forelse ($stocks as $index => $stock)
-                        <tr class="even:bg-gray-100 !text-sm font-medium">
+                        <tr class="even:bg-gray-100 !text-xs">
                             <td class="p-2 tracking-wide">{{ $index + 1 }}</td>
                             <td class="p-2 tracking-wide">
                                 {{ "$stock->stock_code - $stock->stock_name" }}

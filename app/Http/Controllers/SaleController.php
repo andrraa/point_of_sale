@@ -36,6 +36,10 @@ class SaleController
                 ->whereDate('created_at', '<=', $endDate)
                 ->orderByDesc('created_at');
 
+            $totalPrice = (clone $sales)->sum('sales_total_payment');
+            $totalPayment = (clone $sales)->sum('sales_total_payment');
+            $totalDebt = (clone $sales)->sum('sale_total_debt');
+
             return DataTables::of($sales)
                 ->addIndexColumn()
                 ->escapeColumns()
@@ -51,6 +55,11 @@ class SaleController
 
                     return $actions;
                 })
+                ->with([
+                    'total_price' => $totalPrice,
+                    'total_payment' => $totalPayment,
+                    'total_debt' => $totalDebt
+                ])
                 ->toJson();
         }
 
@@ -98,8 +107,8 @@ class SaleController
         return response()->json(true);
     }
 
-    public function detail(Sale $sale)
+    public function detail(Sale $sale): View
     {
-
+        return view('sale.show', compact('sale'));
     }
 }

@@ -93,6 +93,17 @@
                     <th class="p-3 bg-gray-100">Aksi</th>
                 </tr>
             </thead>
+            <tfoot class="!text-[13px] !tracking-wide !font-medium bg-gray-100">
+                <tr>
+                    <td colspan="3" class="p-2 !text-center">Total</td>
+                    <td id="total_price" class="p-2"></td>
+                    <td id="total_payment" class="p-2"></td>
+                    <td id="total_debt" class="p-2"></td>
+                    <td class="p-2"></td>
+                    <td class="p-2"></td>
+                    <td class="p-2"></td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 
@@ -103,6 +114,9 @@
             class="relative mx-auto p-4 border border-gray-300 w-full max-w-[400px] shadow-lg rounded-lg bg-white">
         </div>
     </div>
+
+    {{-- MODAL REPORT --}}
+    @include('sale.modal')
 @endsection
 
 @push('scripts')
@@ -212,7 +226,19 @@
                     target: [0, -1, 4, 5],
                     searchable: false,
                     orderable: false
-                }]
+                }],
+                drawCallback: function(settings) {
+                    const json = settings.json;
+                    const price = json.total_price;
+                    const payment = json.total_payment;
+                    const debt = json.total_debt;
+
+                    if (json) {
+                        $('#total_price').html(`Rp ${customFunction.formatNumberToRupiah(price)}`);
+                        $('#total_payment').html(`Rp ${customFunction.formatNumberToRupiah(payment)}`);
+                        $('#total_debt').html(`Rp ${customFunction.formatNumberToRupiah(debt)}`);
+                    }
+                }
             });
 
             $('#filter-button').on('click', function() {
@@ -256,6 +282,17 @@
                         modalContainer.addClass('hidden').removeClass('flex');
                     }
                 });
+
+            // Report Modal
+            $('#open-report-modal').on('click', function() {});
+
+            function openModal() {
+
+            }
+
+            function closeModal() {
+
+            }
         });
     </script>
 @endpush
