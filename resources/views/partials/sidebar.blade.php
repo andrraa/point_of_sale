@@ -1,4 +1,4 @@
-<aside class="bg-white border-r border-r-gray-200 w-[240px] flex flex-col justify-between py-5 px-4">
+<aside class="bg-white border-r border-r-gray-200 w-[240px] flex flex-col justify-between py-5 px-4 shadow-lg">
     <div>
         <div class="pb-4">
             <h1 class="text-blue-500 font-bold text-[18px]">Point of Sale</h1>
