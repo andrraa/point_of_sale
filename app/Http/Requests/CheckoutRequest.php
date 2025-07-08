@@ -23,6 +23,10 @@ class CheckoutRequest extends FormRequest
                 'required',
                 'numeric'
             ],
+            'customerDebt' => [
+                'required',
+                'numeric'
+            ],
             'items' => [
                 'required',
                 'array'

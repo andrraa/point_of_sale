@@ -496,7 +496,13 @@
 
                 var payAmount = parseFloat(payInput.replace(/\./g, '').replace(',', '.') || 0);
 
-                var payChange = payAmount - total;
+                var payChange = 0;
+
+                if (payAmount >= (total + debt)) {
+                    payChange = payAmount - (total + debt);
+                } else {
+                    payChange = payAmount - total;
+                }
 
                 if (isNaN(payChange)) payChange = 0;
 
@@ -526,24 +532,25 @@
                             cancelButtonText: 'Batal'
                         }).then((res) => {
                             if (res.isConfirmed) {
-                                submitPayment(customerId, payAmount, cart);
+                                submitPayment(customerId, payAmount, debt, cart);
                             }
                         });
                     } else {
                         errorAlert(`Jumlah uang pembayaran kurang Rp ${tmpDebt.toLocaleString()}.`);
                     }
                 } else {
-                    submitPayment(customerId, payAmount, cart);
+                    submitPayment(customerId, payAmount, debt, cart);
                 }
             });
 
-            function submitPayment(customerId, customerPay, items) {
+            function submitPayment(customerId, customerPay, customerDebt, items) {
                 $.ajax({
                     url: "{{ route('cashier.checkout') }}",
                     type: "POST",
                     data: {
                         customerId: customerId,
                         customerPay: customerPay,
+                        customerDebt: customerDebt,
                         items: items,
                     },
                     success: function(response) {

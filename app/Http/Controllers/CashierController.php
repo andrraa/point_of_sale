@@ -149,6 +149,38 @@ class CashierController
             ]);
         }
 
+        // Check Previous Debt
+        $totalPriceWithDebt = $validated['customerDebt'] + $totalPrice;
+
+        if ($validated['customerPay'] >= $totalPriceWithDebt) {
+            $totalChange = $validated['customerPay'] - $totalPriceWithDebt;
+
+            $saleIds = [];
+
+            $customerCredits = CustomerCredit::where('customer_credit_customer_id', $validated['customerId'])
+                ->where('customer_credit_status', CustomerCredit::UNPAID_STATUS)
+                ->orderBy('created_at')
+                ->get();
+
+            foreach ($customerCredits as $credit) {
+                $saleIds[] = $credit->customer_credit_sales_id;
+
+                $credit->update([
+                    'customer_credit_status' => CustomerCredit::PAID_STATUS,
+                    'customer_credit_payment_date' => Carbon::now()
+                ]);
+            }
+
+            $sales = Sale::whereIn('sales_id', $saleIds)->get();
+
+            foreach ($sales as $sale) {
+                $sale->update([
+                    'sale_total_debt' => 0,
+                    'sales_status' => Sale::PAID_STATUS
+                ]);
+            }
+        }
+
         // INSERT TO TABLE CUSTOMER CREDIT
         if ($totalDebt > 0) {
             $creditData = [
