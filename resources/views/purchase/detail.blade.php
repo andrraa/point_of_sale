@@ -5,7 +5,7 @@
 @section('navTitle', 'Detail Pembelian')
 
 @section('content')
-    <div class="bg-white rounded-lg p-8 border border-gray-200">
+    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
         <div>
             <h1 class="font-semibold text-[16px] mb-1 text-blue-500">
                 Nomor Invoice: {{ $purchase['purchase_invoice'] }}

@@ -13,7 +13,7 @@
                 <h1 class="font-medium tracking-wider text-blue-500">Kategori Baru</h1>
             </div>
 
-            <div class="bg-white rounded-lg p-6 border border-gray-200">
+            <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
                 <form id="form-create-category" action="{{ route('category.create') }}" method="POST">
                     @csrf
 

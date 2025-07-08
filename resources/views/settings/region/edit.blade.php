@@ -13,7 +13,7 @@
                 <h1 class="font-medium tracking-wider text-blue-500">Ubah Wilayah</h1>
             </div>
 
-            <div class="bg-white rounded-lg p-6 border border-gray-200">
+            <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
                 <form id="form-edit-region" action="{{ route('region.update', $region->region_id) }}" method="POST">
                     @csrf
                     @method('PUT')

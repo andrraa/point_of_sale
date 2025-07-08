@@ -5,7 +5,7 @@
 @section('navTitle', 'Stok Baru')
 
 @section('content')
-    <div class="bg-white rounded-lg p-8 border border-gray-200">
+    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
         <form id="form-create-stock" action="{{ route('stock.store') }}" method="POST">
             @csrf
 

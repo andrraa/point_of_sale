@@ -5,14 +5,14 @@
 @section('navTitle', 'Daftar Pelanggan')
 
 @section('content')
-    <div class="mb-6">
+    <div class="mb-6 w-fit">
         <x-action-button :props="[
             'url' => route('customer.create'),
             'label' => 'Pelanggan Baru',
         ]" />
     </div>
 
-    <div class="bg-white rounded-lg border border-gray-200 mb-4 p-4">
+    <div class="bg-white rounded-xl border border-gray-200 mb-4 p-4 shadow-lg">
         <div class="w-1/3">
             <x-form.label :props="[
                 'for' => 'filter',
@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-lg p-4 border border-gray-200 overflow-x-auto">
+    <div class="bg-white rounded-xl shadow-lg p-4 border border-gray-200 overflow-x-auto">
         <table id="customer-table" class="w-full min-w-max">
             <thead class="!text-[13px] tracking-wide text-left">
                 <tr>

@@ -12,7 +12,7 @@
         </a>
     </div>
 
-    <div class="bg-white rounded-lg p-6 border border-gray-200">
+    <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
         <table class="table w-full">
             <thead class="!text-[13px] !tracking-wide !text-left bg-gray-100">
                 <tr>

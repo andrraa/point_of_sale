@@ -21,7 +21,7 @@
             </div>
 
             {{-- DATA --}}
-            <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
                 <table class="w-full">
                     <thead class="text-left bg-gray-100">
                         <tr>

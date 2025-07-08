@@ -13,15 +13,8 @@
                 <h1 class="font-medium tracking-wider text-blue-500">Daftar Kategori Pelanggan</h1>
             </div>
 
-            {{-- <div class="py-4">
-                <x-action-button :props="[
-                    'url' => route('customer-category.create'),
-                    'label' => 'Kategori Pelanggan Baru',
-                ]" />
-            </div> --}}
-
             {{-- DATA --}}
-            <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
                 <table class="w-full">
                     <thead class="text-left bg-gray-100">
                         <tr>
@@ -44,18 +37,6 @@
                                 <td class="p-3 !text-[13px] tracking-wider">{{ $category->category_code }}</td>
                                 <td class="p-3 !text-[13px] tracking-wider">{{ $category->category_name }}</td>
                                 <td class="p-3 !text-[13px] tracking-wider">{{ $category->category_price_level }}</td>
-                                {{-- <td class="p-3 !text-[13px] tracking-wider">
-                                    <div class="flex gap-1.5">
-                                        <a href="{{ route('customer-category.edit', ['category' => $category->category_id]) }}"
-                                            class="px-3 py-1.5 rounded-lg border text-xs border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-medium tracking-wide transition duration-200">
-                                            Ubah
-                                        </a>
-                                        <button type="button" data-id="{{ $category->category_id }}"
-                                            class="delete-button px-3 py-1.5 rounded-lg border text-xs border-red-900 text-red-900 hover:bg-red-900 hover:text-white font-medium tracking-wide transition duration-200 cursor-pointer">
-                                            Delete
-                                        </button>
-                                    </div>
-                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>

@@ -5,7 +5,7 @@
 @section('navTitle', 'Ubah Stok')
 
 @section('content')
-    <div class="bg-white rounded-lg p-8 border border-gray-200">
+    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
         <form id="form-edit-customer" action="{{ route('stock.update', $stock->stock_id) }}" method="POST">
             @csrf
             @method('PUT')

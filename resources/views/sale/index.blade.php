@@ -50,7 +50,7 @@
         </button>
     </div>
 
-    <div class="bg-white rounded-lg border border-gray-200 mb-4 p-4">
+    <div class="bg-white rounded-xl shadow-lg border border-gray-200 mb-4 p-4">
         <div class="w-full">
             <x-form.label :props="[
                 'for' => 'filter',
@@ -78,7 +78,7 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-lg p-4 border border-gray-200 overflow-x-auto">
+    <div class="bg-white rounded-xl shadow-lg p-4 border border-gray-200 overflow-x-auto">
         <table id="sale-table" class="w-full min-w-max">
             <thead class="!text-[13px] tracking-wide text-left">
                 <tr>

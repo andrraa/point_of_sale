@@ -15,7 +15,7 @@
 <body>
     <section class="min-h-dvh flex flex-col bg-slate-100">
         <main class="flex-1 flex items-center justify-center">
-            <div class="bg-white rounded-lg border border-gray-200 shadow-lg p-4 w-[380px]">
+            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-4 w-[380px]">
                 <div class="mb-4 pb-2 border-b border-b-gray-200">
                     <h1 class="text-lg font-bold text-blue-500 traking-wide">Masuk Akun</h1>
                 </div>
