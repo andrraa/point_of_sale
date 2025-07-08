@@ -14,22 +14,24 @@
 
 <body class="h-dvh bg-gray-200 flex flex-col pb-4">
     {{-- DATETIME --}}
-    <div class="h-12 w-full bg-blue-500 relative flex items-center justify-between px-4">
-        <div>
-            <h1 class="font-bold uppercase text-white/80 tracking-wide">
-                {{ $store->store_name }} # Telp: {{ $store->store_phone_number }}
-            </h1>
-        </div>
+    <div class="px-4 pt-3 pb-1">
+        <div class="h-12 w-full bg-blue-500 relative flex items-center justify-between px-4 shadow-lg rounded-xl">
+            <div>
+                <h1 class="font-bold uppercase text-white/80 tracking-wide">
+                    {{ $store->store_name }} # Telp: {{ $store->store_phone_number }}
+                </h1>
+            </div>
 
-        <div>
-            <span id="datetime" class="font-bold text-white/80 tracking-wide"></span>
+            <div>
+                <span id="datetime" class="font-bold text-white/80 tracking-wide"></span>
+            </div>
         </div>
     </div>
 
     {{-- TOTAL AND LOGO --}}
     <div class="h-32 w-full mt-2 px-4">
         {{-- TOTAL PRICE --}}
-        <div class="h-full bg-black/90 rounded-sm flex items-center justify-between px-8">
+        <div class="h-full bg-black/90 rounded-xl shadow-lg flex items-center justify-between px-8">
             <div>
                 <span class="text-white/80 text-2xl font-bold tracking-wide">
                     TOTAL :
@@ -46,7 +48,7 @@
     {{-- MAIN --}}
     <div class="h-[calc(100%-200px)] mt-4 px-4 flex gap-4 overflow-hidden">
         <div class="h-full flex-grow min-w-[400px] max-w-[calc(100%-400px)]">
-            <div class="flex items-center gap-4 bg-white/80 p-2 rounded-sm">
+            <div class="flex items-center gap-4 bg-white/80 p-3 rounded-xl shadow-lg">
                 <div class="w-1/3 flex items-center gap-2">
                     <label for="stock_code" class="font-medium uppercase text-sm">Kode</label>
 
@@ -75,7 +77,7 @@
                 </div>
             </div>
 
-            <div class="mt-4 bg-white shadow-lg h-full overflow-y-auto rounded-sm">
+            <div class="mt-4 bg-white shadow-lg h-full overflow-y-auto rounded-xl">
                 <table id="product-table" class="min-w-full table">
                     <thead
                         class="text-[13px] text-left border-t border-b border-t-gray-300 border-b-gray-300 bg-gray-100">
@@ -112,7 +114,7 @@
                 <div class="flex items-center gap-3 mb-3">
                     @foreach ($row as $button)
                         <div id="{{ $button['id'] }}"
-                            class="h-24 w-full bg-blue-500 text-white font-medium uppercase rounded-sm flex items-center justify-center cursor-pointer">
+                            class="h-24 w-full bg-blue-500 text-white font-semibold uppercase rounded-xl shadow-lg hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center cursor-pointer tracking-wide">
                             {{ $button['label'] }}
                         </div>
                     @endforeach
@@ -127,7 +129,7 @@
 
                 @if ($isAdmin)
                     <a href="{{ route('dashboard') }}"
-                        class="h-24 w-full bg-blue-500 text-white font-medium uppercase rounded-sm flex items-center justify-center cursor-pointer">
+                        class="h-24 w-full bg-blue-500 text-white font-semibold tracking-wide uppercase flex items-center justify-center cursor-pointer rounded-xl shadow-lg transiton-colors duration-300 hover:bg-blue-600">
                         Admin
                     </a>
                 @endif
@@ -135,7 +137,7 @@
                 <form action="{{ route('logout') }}" method="POST" class="w-full">
                     @csrf
                     <button type="submit"
-                        class="h-24 w-full bg-red-500 text-white font-medium uppercase rounded-sm flex items-center justify-center cursor-pointer">
+                        class="h-24 w-full bg-red-500 text-white font-semibold tracking-wide uppercase rounded-xl flex items-center justify-center cursor-pointer shadow-lg hover:bg-red-600 transition-colors duration-300">
                         Keluar
                     </button>
                 </form>
