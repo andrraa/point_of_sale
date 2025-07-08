@@ -135,6 +135,12 @@ class CustomerController
 
         $creditData = CustomerCredit::where('customer_credit_id', $creditId)
             ->first();
+        $saleData = Sale::firstWhere('sales_id', $creditData->customer_credit_sales_id);
+
+        $saleData->update([
+            'sale_total_debt' => 0,
+            'sales_status' => Sale::PAID_STATUS
+        ]);
 
         $creditData->customer_credit_payment_date = Carbon::now();
         $creditData->customer_credit_status = CustomerCredit::PAID_STATUS;

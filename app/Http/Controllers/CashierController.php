@@ -135,6 +135,7 @@ class CashierController
             'sales_total_gross' => $totalGross,
             'sales_total_payment' => $validated['customerPay'],
             'sales_total_change' => $totalChange,
+            'sale_total_debt' => $totalDebt,
             'sales_status' => $totalDebt > 0 ? Sale::CREDIT_STATUS : sale::PAID_STATUS
         ];
 
@@ -192,7 +193,7 @@ class CashierController
                 'sale_detail_total_price' => $item['quantity'] * $item['price'],
                 'sale_detail_discount' => intval($item['discount']),
                 'sale_detail_discount_amount' =>
-                floatval($item['price']) * intval($item['quantity']) * ($item['discount'] / 100),
+                    floatval($item['price']) * intval($item['quantity']) * ($item['discount'] / 100),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ];

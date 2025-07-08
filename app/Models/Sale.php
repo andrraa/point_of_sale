@@ -26,6 +26,7 @@ class Sale extends Model
         'sales_total_gross',
         'sales_total_payment',
         'sales_total_change',
+        'sale_total_debt',
         'sales_status'
     ];
 

@@ -51,6 +51,7 @@
                     <th class="p-3 bg-gray-100">Pelanggan</th>
                     <th class="p-3 bg-gray-100">Total Harga</th>
                     <th class="p-3 bg-gray-100">Total Bayar</th>
+                    <th class="p-3 bg-gray-100">Total Hutang</th>
                     <th class="p-3 bg-gray-100">Tanggal Penjualan</th>
                     <th class="p-3 bg-gray-100">Status</th>
                     <th class="p-3 bg-gray-100">Aksi</th>
@@ -108,6 +109,14 @@
                     {
                         data: 'sales_total_payment',
                         name: 'sales_total_payment',
+                        class: 'tracking-wider !text-xs !text-gray-900',
+                        render: function(data) {
+                            return 'Rp ' + customFunction.formatNumberToRupiah(data);
+                        }
+                    },
+                    {
+                        data: 'sale_total_debt',
+                        name: 'sale_total_debt',
                         class: 'tracking-wider !text-xs !text-gray-900',
                         render: function(data) {
                             return 'Rp ' + customFunction.formatNumberToRupiah(data);

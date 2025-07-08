@@ -61,7 +61,7 @@
                     </tr>
 
                     @php
-                        $totalPrice = $detail->sale_detail_quantity * $detail->sale_detail_price;
+                        $totalPrice += $detail->sale_detail_quantity * $detail->sale_detail_price;
                         $totalQuantity += $detail->sale_detail_quantity;
                     @endphp
                 @endforeach

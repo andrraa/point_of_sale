@@ -6,7 +6,9 @@ use App\Http\Requests\SaleDetailRequest;
 use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Stock;
+use App\Models\StockLog;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SaleDetailController
@@ -15,6 +17,8 @@ class SaleDetailController
     {
         $newQuantity = $request->validated()['quantity'];
         $oldQuantity = $saleDetail->sale_detail_quantity;
+
+        $user = Auth::user();
 
         DB::beginTransaction();
 
@@ -32,12 +36,28 @@ class SaleDetailController
                 'stock_in' => $stock->stock_in + $difference,
                 'stock_out' => $stock->stock_out - $difference
             ]);
+
+            StockLog::create([
+                'stock_log_stock_id' => $stock->stock_id,
+                'stock_log_quantity' => $difference,
+                'stock_log_description' => 'Penyesuaian karena pengurangan quantity penjualan',
+                'stock_log_status' => StockLog::IN_STATUS,
+                'stock_log_user_id' => $user->user_id,
+            ]);
         } elseif ($newQuantity > $oldQuantity) {
             $difference = $newQuantity - $oldQuantity;
 
             $stock->update([
                 'stock_out' => $stock->stock_out + $difference,
                 'stock_in' => $stock->stock_in - $difference
+            ]);
+
+            StockLog::create([
+                'stock_log_stock_id' => $stock->stock_id,
+                'stock_log_quantity' => $difference,
+                'stock_log_description' => 'Penyesuaian karena penambahan quantity penjualan',
+                'stock_log_status' => StockLog::OUT_STATUS,
+                'stock_log_user_id' => $user->user_id,
             ]);
         }
 
@@ -92,9 +112,19 @@ class SaleDetailController
 
         $stock = Stock::firstWhere('stock_id', $saleDetail->sale_detail_stock_id);
 
+        $user = Auth::user();
+
         $stock->update([
             'stock_out' => $stock->stock_out - $saleDetail->sale_detail_quantity,
             'stock_in' => $stock->stock_in + $saleDetail->sale_detail_quantity
+        ]);
+
+        StockLog::create([
+            'stock_log_stock_id' => $stock->stock_id,
+            'stock_log_quantity' => $saleDetail->sale_detail_quantity,
+            'stock_log_description' => 'Penyesuaian karena pengurangan quantity penjualan',
+            'stock_log_status' => StockLog::OUT_STATUS,
+            'stock_log_user_id' => $user->user_id,
         ]);
 
         $sale = $saleDetail->sale;

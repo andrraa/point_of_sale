@@ -8,7 +8,7 @@
     <div class="bg-white rounded-lg px-4 py-6 border border-gray-200">
         {{-- CUSTOMER --}}
         <div class="mb-2 pb-2 border-b border-b-gray-200">
-            <h2 class="text-sm tracking-wide text-blue-500 font-medium text-[15px]">Data Pelanggan</h2>
+            <h2 class="text-sm tracking-wide text-blue-500 font-medium text-[15px]">Detail Pelanggan</h2>
         </div>
 
         <table class="w-full mb-4">
@@ -52,43 +52,43 @@
         <table class="w-full mb-6">
             <thead>
                 <tr class="border-b border-b-gray-200">
-                    <th class="p-2 text-left text-sm tracking-wider bg-gray-100">#</th>
-                    <th class="p-2 text-left text-sm tracking-wider bg-gray-100">Invoice</th>
-                    <th class="p-2 text-left text-sm tracking-wider bg-gray-100">Total Hutang</th>
-                    <th class="p-2 text-left text-sm tracking-wider bg-gray-100">Status</th>
-                    <th class="p-2 text-left text-sm tracking-wider bg-gray-100">Tanggal Bayar</th>
-                    <th class="p-2 text-left text-sm tracking-wider bg-gray-100">Aksi</th>
+                    <th class="p-2 text-left text-[13px] tracking-wider bg-gray-100">#</th>
+                    <th class="p-2 text-left text-[13px] tracking-wider bg-gray-100">Invoice</th>
+                    <th class="p-2 text-left text-[13px] tracking-wider bg-gray-100">Total Hutang</th>
+                    <th class="p-2 text-left text-[13px] tracking-wider bg-gray-100">Status</th>
+                    <th class="p-2 text-left text-[13px] tracking-wider bg-gray-100">Tanggal Bayar</th>
+                    <th class="p-2 text-left text-[13px] tracking-wider bg-gray-100">Aksi</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
                 @forelse ($customer->credits as $index => $credit)
                     <tr>
-                        <td class="p-2 text-sm text-gray-900 text-left">
+                        <td class="p-2 text-[13px] text-gray-900 text-left">
                             {{ $index + 1 }}
                         </td>
-                        <td class="p-2 text-sm text-left font-medium text-blue-500">
+                        <td class="p-2 text-[13px] text-left font-medium text-blue-500">
                             {{ $credit->customer_credit_invoice }}
                         </td>
-                        <td class="p-2 text-sm text-gray-900 font-medium text-left">
+                        <td class="p-2 text-[13px] text-gray-900 font-medium text-left">
                             Rp {{ number_format($credit->customer_credit) }}
                         </td>
-                        <td class="p-2 text-sm text-gray-900 text-left">
+                        <td class="p-2 text-[13px] text-gray-900 text-left">
                             @if ($credit->customer_credit_status != \App\Models\CustomerCredit::UNPAID_STATUS)
                                 <span
-                                    class="text-xs tracking-wider font-bold border-2 boder-md px-2 py-1 rounded-md bg-blue-500 text-white">
+                                    class="text-[10px] tracking-wider font-bold border-2 boder-md px-2 py-1 rounded-md bg-blue-500 text-white">
                                     LUNAS
                                 </span>
                             @else
                                 <span
-                                    class="text-xs tracking-wider font-bold border-2 boder-md px-2 py-1 rounded-md bg-red-900 text-white">
+                                    class="text-[10px] tracking-wider font-bold border-2 boder-md px-2 py-1 rounded-md bg-red-900 text-white">
                                     BELUM LUNAS
                                 </span>
                             @endif
                         </td>
-                        <td class="p-2 text-sm text-gray-900 text-left font-medium">
+                        <td class="p-2 text-[13px] text-gray-900 text-left font-medium">
                             {{ $credit->customer_credit_payment_date ?? '-' }}
                         </td>
-                        <td class="p-2 text-sm text-gray-900 text-left font-medium">
+                        <td class="p-2 text-[13px] text-gray-900 text-left font-medium">
                             @if ($credit->customer_credit_status == \App\Models\CustomerCredit::UNPAID_STATUS)
                                 <button title="Lunasi Hutang" type="button"
                                     class="creditPayment px-[6px] py-[2px] border rounded-md border-green-500 cursor-pointer hover:bg-green-500 hover:text-white text-green-500"
