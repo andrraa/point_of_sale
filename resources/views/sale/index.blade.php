@@ -42,6 +42,42 @@
 @section('navTitle', 'Daftar Penjualan')
 
 @section('content')
+    <div class="mb-4 flex items-center gap-2">
+        <button type="button" id="open-report-modal"
+            class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-red-500 hover:text-red-500 transition-all duration-300 cursor-pointer">
+            <i class="fa-solid fa-file text-xs mr-2"></i>
+            Laporan Penjualan
+        </button>
+    </div>
+
+    <div class="bg-white rounded-lg border border-gray-200 mb-4 p-4">
+        <div class="w-full">
+            <x-form.label :props="[
+                'for' => 'filter',
+                'label' => 'Filter Tanggal',
+                'required' => true,
+            ]" />
+
+            <div class="flex items-center gap-4 pb-3">
+                @php
+                    $today = \Carbon\Carbon::now()->toDateString();
+                @endphp
+
+                <input type="date" id="start_date" name="start_date"
+                    class="px-4 py-2 w-full rounded-lg border border-gray-300 outline-none" value="{{ $today }}">
+
+                <input type="date" id="end_date" name="end_date"
+                    class="px-4 py-2 w-full rounded-lg border border-gray-300 outline-none" value="{{ $today }}">
+            </div>
+
+            <button id="filter-button"
+                class="px-4 py-2 bg-blue-500 text-white text-sm rounded-lg tracking-wide font-medium hover:bg-blue-600 transition-colors duration-300 cursor-pointer">
+                <i class="fa-solid fa-magnifying-glass text-xs mr-1"></i>
+                Cari Data
+            </button>
+        </div>
+    </div>
+
     <div class="bg-white rounded-lg p-4 border border-gray-200 overflow-x-auto">
         <table id="sale-table" class="w-full min-w-max">
             <thead class="!text-[13px] tracking-wide text-left">
@@ -80,10 +116,16 @@
 
             const customFunction = window.CustomFunction;
 
-            $(dataTableSelector).dataTable({
+            let table = $(dataTableSelector).DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('sale.index') }}",
+                ajax: {
+                    url: "{{ route('sale.index') }}",
+                    data: function(d) {
+                        d.start_date = $('#start_date').val();
+                        d.end_date = $('#end_date').val();
+                    }
+                },
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
@@ -171,6 +213,10 @@
                     searchable: false,
                     orderable: false
                 }]
+            });
+
+            $('#filter-button').on('click', function() {
+                table.ajax.reload();
             });
 
             // PRINT BUTTON

@@ -65,12 +65,12 @@
                                 'navIcon' => 'fa-solid fa-truck-ramp-box',
                                 'navTitle' => 'Penjualan',
                             ],
-                            [
-                                'routeUrl' => route('report'),
-                                'routePattern' => 'report',
-                                'navIcon' => 'fa-solid fa-file-lines',
-                                'navTitle' => 'Laporan',
-                            ],
+                            // [
+                            //     'routeUrl' => route('report'),
+                            //     'routePattern' => 'report',
+                            //     'navIcon' => 'fa-solid fa-file-lines',
+                            //     'navTitle' => 'Laporan',
+                            // ],
                         ],
                     ],
                     [

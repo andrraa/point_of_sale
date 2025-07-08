@@ -23,7 +23,18 @@ class SaleController
     public function index(Request $request): View|JsonResponse
     {
         if ($request->ajax()) {
-            $sales = Sale::with(['details', 'customer', 'credit']);
+            $startDate = $request->input('start_date') ?: now()->toDateString();
+            $endDate = $request->input('end_date') ?: now()->toDateString();
+
+            $sales = Sale::with(
+                [
+                    'details',
+                    'customer',
+                    'credit'
+                ]
+            )->whereDate('created_at', '>=', $startDate)
+                ->whereDate('created_at', '<=', $endDate)
+                ->orderByDesc('created_at');
 
             return DataTables::of($sales)
                 ->addIndexColumn()
@@ -35,6 +46,7 @@ class SaleController
                         $actions['edit'] = route('sale.edit', $sale->sales_id);
                         $actions['delete'] = route('sale.destroy', $sale->sales_id);
                         $actions['print'] = $sale->sales_id;
+                        $actions['detail'] = route('sale.show', $sale->sales_id);
                     }
 
                     return $actions;
@@ -84,5 +96,10 @@ class SaleController
         DB::commit();
 
         return response()->json(true);
+    }
+
+    public function detail(Sale $sale)
+    {
+
     }
 }

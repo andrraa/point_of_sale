@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function () {
             ->except(['create', 'store', 'update']);
         Route::resource('sale-detail', SaleDetailController::class)
             ->only(['update', 'destroy']);
+        Route::get('sale/detail/{sale}', [SaleController::class, 'detail'])
+            ->name('sale.detail');
 
         // STOCK
         Route::resource('stock', StockController::class)->except('show');
