@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaleReportRequest;
 use App\Http\Requests\SaleRequest;
 use App\Models\Sale;
 use App\Services\ValidationService;
@@ -110,5 +111,10 @@ class SaleController
     public function detail(Sale $sale): View
     {
         return view('sale.show', compact('sale'));
+    }
+
+    public function report(SaleReportRequest $request)
+    {
+        $validated = $request->validated();
     }
 }

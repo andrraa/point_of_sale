@@ -284,14 +284,20 @@
                 });
 
             // Report Modal
-            $('#open-report-modal').on('click', function() {});
+            $('#open-report-modal').on('click', function() {
+                openModal();
+            });
+
+            $('.modal-report-cancel').on('click', function() {
+                closeModal();
+            });
 
             function openModal() {
-
+                $('#modal-sale-report').removeClass('hidden').addClass('flex');
             }
 
             function closeModal() {
-
+                $('#modal-sale-report').removeClass('flex').addClass('hidden');
             }
         });
     </script>

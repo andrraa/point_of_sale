@@ -44,7 +44,8 @@
         $grandTotalPrice = 0;
     @endphp
 
-    <h2>Laporan Tanggal {{ $startDate }} s.d {{ $endDate }}</h2>
+    <h1>Laporan Barang Diambil</h1>
+    <h2>Tanggal {{ $startDate }} s.d {{ $endDate }}</h2>
 
     @forelse ($data as $categoryId => $takens)
         <div style="margin-top: 20px;">
@@ -57,6 +58,7 @@
                         <th style="width: 300px;">Barang</th>
                         <th style="width: 70px;">Jumlah</th>
                         <th style="width: 70px;">Harga</th>
+                        <th style="width: 70px;">Total</th>
                         <th style="width: 100px;">Tanggal</th>
                         <th style="width: 70px;">Pengguna</th>
                         <th style="width: 100px;">Deskripsi</th>
@@ -74,6 +76,7 @@
                             <td>{{ "$item->stock_taken_stock_code - $item->stock_taken_stock_name" }}</td>
                             <td>{{ $item->stock_taken_quantity }} pcs</td>
                             <td>Rp {{ number_format($item->stock_taken_price) }}</td>
+                            <td>Rp {{ number_format($item->stock_taken_price * $item->stock_taken_quantity) }}</td>
                             <td>{{ $item->created_at }}</td>
                             <td>{{ $item->user->username }}</td>
                             <td>{{ $item->stock_taken_description ?? '' }}</td>
@@ -87,6 +90,7 @@
                     <tr>
                         <td colspan="2" style="text-align: center;"><em>Subtotal</em></td>
                         <td><strong>{{ $totalQuantity }} pcs</strong></td>
+                        <td></td>
                         <td><strong>Rp{{ number_format($totalPrice) }}</strong></td>
                         <td colspan="3"></td>
                     </tr>
