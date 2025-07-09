@@ -20,7 +20,7 @@
         </a>
 
         <button type="button" id="open-stock-modal"
-            class="px-4 py-2 rounded-lg bg-green-500 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-green-500 hover:text-green-500 transition-all duration-300 cursor-pointer shadow-lg">
+            class="px-4 py-2 rounded-lg bg-green-600 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-green-600 hover:text-green-600 transition-all duration-300 cursor-pointer shadow-lg">
             <i class="fa-solid fa-file text-xs mr-2"></i>
             Laporan Stok
         </button>

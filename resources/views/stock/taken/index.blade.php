@@ -7,22 +7,23 @@
 @section('content')
     <div class="mb-4 flex items-center gap-2">
         <a href="{{ route('stock.index') }}">
-            <div class="flex items-center gap-2 px-4 py-2 rounded-md border text-sm border-gray-400">
+            <div
+                class="flex items-center gap-2 px-4 py-2 rounded-md text-sm bg-white shadow-lg hover:bg-gray-100 transition-colors duration-300 border border-gray-200">
                 <i class="fa-solid fa-chevron-left text-xs"></i>
                 <span>Kembali</span>
             </div>
         </a>
 
         <button id="open-taken-modal" type="button"
-            class="px-4 py-2 rounded-lg bg-blue-500 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-blue-500 hover:text-blue-500 transition-all duration-300 cursor-pointer">
+            class="px-4 py-2 rounded-lg bg-blue-500 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-blue-500 hover:text-blue-500 transition-all duration-300 cursor-pointer shadow-lg">
             <i class="fa-solid fa-plus text-xs mr-2"></i>
             Ambil Stock
         </button>
 
         <button id="open-stock-modal" type="button"
-            class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-red-500 hover:text-red-500 transition-all duration-300 cursor-pointer">
+            class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-red-500 hover:text-red-500 transition-all duration-300 cursor-pointer shadow-lg">
             <i class="fa-solid fa-file text-xs mr-2"></i>
-            Laporan Stok Diambil
+            Laporan Stok
         </button>
     </div>
 
