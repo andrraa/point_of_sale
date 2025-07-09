@@ -57,6 +57,7 @@ class SaleController
 
                     return $actions;
                 })
+                ->addColumn('created_at', fn($sale) => $sale->formatted_created_at)
                 ->with([
                     'total_price' => $totalPrice,
                     'total_debt' => $totalDebt
@@ -129,7 +130,7 @@ class SaleController
 
         return $typeCategory === '1'
             ? $this->reportDetail($startDate, $endDate, $stockCategory)
-            : $this->reportGeneral($startDate, $endDate, $typeCategory);
+            : $this->reportGeneral($startDate, $endDate, $stockCategory);
     }
 
     private function reportDetail($startDate, $endDate, $categoryId)
@@ -207,11 +208,75 @@ class SaleController
         )
             ->setPaper('a4', 'landscape');
 
-        return $pdf->download("LAPORAN-PENJUALAN-{$startDate}-{$endDate}.pdf");
+        return $pdf->download("LAPORAN-PENJUALAN-DETAIL-{$startDate}-{$endDate}.pdf");
     }
 
     private function reportGeneral($startDate, $endDate, $categoryId)
     {
-        return view('sale.report.general');
+        $sales = Sale::whereBetween('created_at', [$startDate, $endDate])
+            ->where('sales_status', SALE::PAID_STATUS)
+            ->whereNull('deleted_at')
+            ->whereHas('details', function ($query) use ($categoryId) {
+                if ($categoryId !== 'all') {
+                    $query->where('sale_detail_stock_category_id', $categoryId);
+                }
+            })
+            ->with([
+                'details' => function ($query) use ($categoryId) {
+                    if ($categoryId !== 'all') {
+                        $query->where('sale_detail_stock_category_id', $categoryId);
+                    }
+                }
+            ])
+            ->get();
+
+        $categoryName = null;
+
+        if ($categoryId !== 'all') {
+            $category = Category::find($categoryId);
+            $categoryName = $category?->category_name ?? 'Kategori Tidak Ditemukan';
+        }
+
+        $monthlyData = [];
+
+        foreach ($sales as $sale) {
+            $monthKey = $sale->created_at->format('Y-m');
+
+            if (!isset($monthlyData[$monthKey])) {
+                $monthlyData[$monthKey] = [
+                    'month' => Carbon::parse($sale->created_at)->translatedFormat('F Y'),
+                    'total_quantity' => 0,
+                    'total_sell_price' => 0,
+                    'total_discount_amount' => 0,
+                    'total_profit' => 0,
+                    'total_debt' => 0,
+                ];
+            }
+
+            $monthlyData[$monthKey]['total_debt'] += $sale->sales_total_debt ?? 0;
+
+            foreach ($sale->details as $detail) {
+                $monthlyData[$monthKey]['total_quantity'] += $detail->sale_detail_quantity;
+                $monthlyData[$monthKey]['total_sell_price'] += $detail->sale_detail_price;
+                $monthlyData[$monthKey]['total_discount_amount'] += $detail->sale_detail_discount_amount;
+                $monthlyData[$monthKey]['total_profit'] += ($detail->sale_detail_price - $detail->sale_detail_cost_price) * $detail->sale_detail_quantity;
+            }
+        }
+
+        $formattedStartDate = Carbon::parse($startDate)->format('d M Y');
+        $formattedEndDate = Carbon::parse($endDate)->format('d M Y');
+
+        $pdf = Pdf::loadView(
+            'sale.report.general',
+            compact([
+                'monthlyData',
+                'formattedStartDate',
+                'formattedEndDate',
+                'categoryName'
+            ])
+        )
+            ->setPaper('a4', 'landscape');
+
+        return $pdf->download("LAPORAN-PENJUALAN-UMUM-{$startDate}-{$endDate}.pdf");
     }
 }

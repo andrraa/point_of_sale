@@ -53,11 +53,6 @@
         p {
             margin: 5px 0;
         }
-
-        th:first-child,
-        td:first-child {
-            width: 30px !important;
-        }
     </style>
 
 </head>

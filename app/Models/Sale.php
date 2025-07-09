@@ -30,7 +30,7 @@ class Sale extends Model
         'sales_status'
     ];
 
-    public function getCreatedAtAttribute($value): string
+    public function getFormattedCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->translatedFormat('d F Y, H:i');
     }
