@@ -202,7 +202,7 @@ class SaleController
         }
 
         $formattedStartDate = Carbon::parse($startDate)->format('d M Y');
-        $formattedEndDate = Carbon::parse($startDate)->format('d M Y');
+        $formattedEndDate = Carbon::parse($endDate)->format('d M Y');
 
         $pdf = Pdf::loadView(
             'sale.report.detail',
@@ -210,7 +210,7 @@ class SaleController
         )
             ->setPaper('a4', 'landscape');
 
-        return $pdf->download("LAPORAN-PENJUALAN.pdf");
+        return $pdf->download("LAPORAN-PENJUALAN-{$startDate}-{$endDate}.pdf");
     }
 
     private function reportGeneral($startDate, $endDate, $categoryId)

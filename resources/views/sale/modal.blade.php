@@ -1,4 +1,4 @@
-<div id="modal-sale-report" class="fixed inset-0 backdrop-blur-xs bg-gray-500/60 flex justify-center items-center z-50">
+<div id="modal-sale-report" class="fixed inset-0 backdrop-blur-xs bg-gray-500/60 hidden justify-center items-center z-50">
     <div class="bg-white rounded-xl w-[450px] p-3">
         <div class="flex items-center justify-between mb-2">
             <h2 class="text-lg font-semibold text-black/80 tracking-wide">
