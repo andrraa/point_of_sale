@@ -7,6 +7,8 @@ use App\Http\Requests\SaleRequest;
 use App\Models\Category;
 use App\Models\Sale;
 use App\Services\ValidationService;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,7 +40,7 @@ class SaleController
                 ->whereDate('created_at', '<=', $endDate)
                 ->orderByDesc('created_at');
 
-            $totalPrice = (clone $sales)->sum('sales_total_payment');
+            $totalPrice = (clone $sales)->sum('sales_total_price');
             $totalPayment = (clone $sales)->sum('sales_total_payment');
             $totalDebt = (clone $sales)->sum('sale_total_debt');
 
@@ -162,8 +164,7 @@ class SaleController
                 'date' => $sale->created_at,
                 'items' => $sale->details->map(function ($detail) {
                     $profit = ($detail->sale_detail_price - $detail->sale_detail_cost_price)
-                        * $detail->sale_detail_quantity
-                        - $detail->sale_detail_discount_amount;
+                        * $detail->sale_detail_quantity;
 
                     return [
                         'code' => $detail->sale_detail_stock_code,
@@ -199,6 +200,17 @@ class SaleController
                 $totals['total_profit'] += $item['profit'];
             }
         }
+
+        $formattedStartDate = Carbon::parse($startDate)->format('d M Y');
+        $formattedEndDate = Carbon::parse($startDate)->format('d M Y');
+
+        $pdf = Pdf::loadView(
+            'sale.report.detail',
+            compact(['datas', 'totals', 'formattedStartDate', 'formattedEndDate'])
+        )
+            ->setPaper('a4', 'landscape');
+
+        return $pdf->download("LAPORAN-PENJUALAN.pdf");
     }
 
     private function reportGeneral($startDate, $endDate, $categoryId)

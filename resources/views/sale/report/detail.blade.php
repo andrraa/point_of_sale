@@ -4,81 +4,102 @@
 
 @section('content')
     <h1>Laporan Penjualan</h1>
-    <h2>Tanggal: </h2>
+    <h2>Tanggal: {{ $formattedStartDate }} s.d {{ $formattedEndDate }}</h2>
 
-    @forelse ($datas as $index => $data)
-        <div style="margin-top: 20px;">
-            <table style="width: 100%;">
+    @foreach ($datas as $dataIndex => $data)
+        <div class="report-wrapper">
+            <h3>Invoice: {{ $data['invoice'] }}</h3>
+            <p>Tanggal: {{ $data['date'] }}</p>
+
+            @php
+                $totalSubQty = 0;
+                $totalSubCostPrice = 0;
+                $totalSubGrossPrice = 0;
+                $totalSubNettoPrice = 0;
+                $totalSubDiscountAmount = 0;
+                $totalSubProfit = 0;
+            @endphp
+
+            <table>
                 <thead>
                     <tr>
-                        <th style="width: 10px;">No.</th>
-                        <th style="width: 300px;">Barang</th>
-                        <th style="width: 70px;">Stok Total</th>
-                        <th style="width: 70px;">Stok Keluar</th>
-                        <th style="width: 70px;">Harga Beli</th>
+                        <th>No.</th>
+                        <th>Kode</th>
+                        <th>Nama</th>
+                        <th>Kategori</th>
+                        <th>Qty (Pcs)</th>
+                        <th>Harga Beli</th>
+                        <th>Harga Jual (Gross)</th>
+                        <th>Harga Jual (Netto)</th>
+                        <th>Diskon</th>
+                        <th>Laba</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @php
-                        $totalQuantity = 0;
-                        $totalOut = 0;
-                        $totalPrice = 0;
-                    @endphp
-
-                    @foreach ($stock as $i => $item)
+                    @foreach ($data['items'] as $index => $item)
                         <tr>
-                            <td>{{ $i + 1 }}</td>
-                            <td>{{ "$item->stock_code - $item->stock_name" }}</td>
-                            <td>{{ $item->stock_total }} pcs</td>
-                            <td>{{ $item->stock_out }} pcs</td>
-                            <td>Rp {{ number_format($item->stock_purchase_price) }}</td>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $item['code'] }}</td>
+                            <td>{{ $item['name'] }}</td>
+                            <td>{{ $item['category'] }}</td>
+                            <td>{{ $item['quantity'] }}</td>
+                            <td>Rp {{ number_format($item['cost_price']) }}</td>
+                            <td>Rp {{ number_format($item['total_price']) }}</td>
+                            <td>Rp {{ number_format($item['sell_price']) }}</td>
+                            <td>Rp {{ number_format($item['discount_amount']) }}</td>
+                            <td>Rp {{ number_format($item['profit']) }}</td>
                         </tr>
+
                         @php
-                            $totalQuantity += $item->stock_total;
-                            $totalOut += $item->stock_out;
-                            $totalPrice += $item->stock_purchase_price * $item->stock_out;
+                            $totalSubQty += $item['quantity'];
+                            $totalSubCostPrice += $item['cost_price'];
+                            $totalSubGrossPrice += $item['total_price'];
+                            $totalSubNettoPrice += $item['sell_price'];
+                            $totalSubDiscountAmount += $item['discount_amount'];
+                            $totalSubProfit += $item['profit'];
                         @endphp
                     @endforeach
-
-                    <tr>
-                        <td colspan="2" style="text-align: center;"><em>Subtotal</em></td>
-                        <td><strong>{{ $totalQuantity }} pcs</strong></td>
-                        <td><strong>{{ $totalOut }} pcs</strong></td>
-                        <td><strong>Rp {{ number_format($totalPrice) }}</strong></td>
-                    </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" style="text-align: right;">Subtotal:</td>
+                        <td>{{ $totalSubQty }}</td>
+                        <td>Rp {{ number_format($totalSubCostPrice) }}</td>
+                        <td>Rp {{ number_format($totalSubGrossPrice) }}</td>
+                        <td>Rp {{ number_format($totalSubNettoPrice) }}</td>
+                        <td>Rp {{ number_format($totalSubDiscountAmount) }}</td>
+                        <td>Rp {{ number_format($totalSubProfit) }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="9" style="text-align: right;">Total Piutang (Debt):</td>
+                        <td>Rp {{ number_format($data['total_debt']) }}</td>
+                    </tr>
+                </tfoot>
             </table>
-
-            {{-- @php
-                $grandTotalQty += $totalQuantity;
-                $grandTotalOut += $totalOut;
-                $grandTotalPrice += $totalPrice;
-            @endphp --}}
         </div>
-    @empty
-        <p>Tidak ada data laporan.</p>
-    @endforelse
+    @endforeach
 
-    {{-- @if ($grandTotalQty !== 0 || $grandTotalPrice !== 0)
-        <table style="margin-top: 30px; width: 80%%;">
+    <div class="report-wrapper">
+        <h2>Grand Total</h2>
+        <table>
             <thead>
                 <tr>
-                    <th style="text-align: left; width: 250px;">Total Keseluruhan</th>
-                    <th style="text-align: right; width: 150px;">Stok Total</th>
-                    <th style="text-align: right; width: 150px;">Stok Keluar</th>
-                    <th style="text-align: right; width: 200px;">Harga Beli</th>
+                    <th>Total Quantity</th>
+                    <th>Total Penjualan</th>
+                    <th>Total Diskon</th>
+                    <th>Total Laba</th>
+                    <th>Total Piutang</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td style="font-weight: bold;">Grand Total</td>
-                    <td style="text-align: right; font-weight: bold;">{{ $grandTotalQty }} pcs</td>
-                    <td style="text-align: right; font-weight: bold;">{{ $grandTotalOut }} pcs</td>
-                    <td style="text-align: right; font-weight: bold;">
-                        Rp {{ number_format($grandTotalPrice) }}
-                    </td>
+                    <td>{{ $totals['total_quantity'] }} pcs</td>
+                    <td>Rp {{ number_format($totals['total_sell_price']) }}</td>
+                    <td>Rp {{ number_format($totals['total_discount_amount']) }}</td>
+                    <td>Rp {{ number_format($totals['total_profit']) }}</td>
+                    <td>Rp {{ number_format($totals['total_debt']) }}</td>
                 </tr>
             </tbody>
         </table>
-    @endif --}}
+    </div>
 @endsection

@@ -15,10 +15,20 @@
             padding: 0;
         }
 
+        * {
+            box-sizing: border-box;
+        }
+
+        .report-wrapper {
+            border: 1px dotted black;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 5px;
+            margin: 10px 0;
             table-layout: fixed;
         }
 
@@ -28,11 +38,25 @@
             padding: 4px;
             text-align: left;
             word-wrap: break-word;
-            overflow-wrap: break-word;
         }
 
-        th {
-            background-color: #EEE;
+        thead {
+            background-color: #f5f5f5;
+        }
+
+        tfoot {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        h3,
+        p {
+            margin: 5px 0;
+        }
+
+        th:first-child,
+        td:first-child {
+            width: 30px !important;
         }
     </style>
 
