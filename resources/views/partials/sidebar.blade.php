@@ -115,7 +115,7 @@
                 @foreach ($menu['menus'] as $item)
                     @php
                         $navActiveClass = request()->routeIs($item['routePattern'])
-                            ? 'bg-blue-500 text-white'
+                            ? 'bg-blue-500 text-white shadow-lg'
                             : 'hover:bg-blue-500/20 text-gray-500';
                     @endphp
 

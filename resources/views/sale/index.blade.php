@@ -44,7 +44,7 @@
 @section('content')
     <div class="mb-4 flex items-center gap-2">
         <button type="button" id="open-report-modal"
-            class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-red-500 hover:text-red-500 transition-all duration-300 cursor-pointer">
+            class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-red-500 hover:text-red-500 transition-all duration-300 cursor-pointer shadow-lg">
             <i class="fa-solid fa-file text-xs mr-2"></i>
             Laporan Penjualan
         </button>

@@ -5,11 +5,17 @@
 @section('navTitle', 'Daftar Pembelian')
 
 @section('content')
-    <div class="mb-6">
+    <div class="mb-6 flex gap-2 items-center w-fit">
         <x-action-button :props="[
             'url' => route('purchase.create'),
             'label' => 'Pembelian Baru',
         ]" />
+
+        <button id="open-stock-modal" type="button"
+            class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-red-500 hover:text-red-500 transition-all duration-300 cursor-pointer shadow-lg">
+            <i class="fa-solid fa-file text-xs mr-2"></i>
+            Laporan Pembelian
+        </button>
     </div>
 
     <div class="bg-white rounded-xl shadow-lg p-4 border border-gray-200 overflow-x-auto">
