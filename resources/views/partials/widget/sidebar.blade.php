@@ -1,4 +1,4 @@
-<aside class="bg-white border border-gray-200 w-[200px] rounded-lg flex flex-col p-3">
+<aside class="bg-white border border-gray-200 w-[200px] rounded-lg flex flex-col p-3 shadow-lg">
     @php
         $menuItems = [
             [

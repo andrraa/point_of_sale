@@ -13,7 +13,7 @@
                 <h1 class="font-medium tracking-wider text-blue-500">Ubah Pengguna</h1>
             </div>
 
-            <div class="bg-white rounded-lg p-6 border border-gray-200">
+            <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-lg">
                 <form id="form-edit-user" action="{{ route('user.update', $user->user_id) }}" method="POST">
                     @csrf
                     @method('PUT')

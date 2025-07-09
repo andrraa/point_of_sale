@@ -13,7 +13,7 @@
                 <h1 class="font-medium tracking-wider text-blue-500">Informasi Toko</h1>
             </div>
 
-            <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-lg">
                 <form action="{{ route('store.store') }}" method="POST">
                     @csrf
 
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="flex justify-end">
-                        <div class="w-1/5">
+                        <div class="w-1/7">
                             <x-form.submit :props="[
                                 'label' => 'Simpan',
                             ]" />

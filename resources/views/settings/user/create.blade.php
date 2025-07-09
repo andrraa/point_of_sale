@@ -13,7 +13,7 @@
                 <h1 class="font-medium tracking-wider text-blue-500">Pengguna Baru</h1>
             </div>
 
-            <div class="bg-white rounded-lg p-6 border border-gray-200">
+            <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-lg">
                 <form id="form-create-user" action="{{ route('user.store') }}" method="POST">
                     @csrf
 
