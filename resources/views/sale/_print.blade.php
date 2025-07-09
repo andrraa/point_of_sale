@@ -97,8 +97,14 @@
     <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($sale->sales_invoice, 'C128', 3, 70) }}" alt="barcode" />
 </div>
 
+<div class="flex items-center gap-2">
+    <button type="button" id="cancel-print-button"
+        class="no-print w-full py-2 rounded-lg text-sm transition duration-200 tracking-wide mt-4 cursor-pointer font-medium border border-gray-300 hover:bg-gray-100">
+        Tutup
+    </button>
 
-<button type="button" id="print-button" onclick="window.print()"
-    class="no-print w-full py-2 rounded-lg bg-blue-500 text-white text-sm hover:bg-blue-950 transition duration-200 tracking-wide mt-4 cursor-pointer font-medium">
-    CETAK
-</button>
+    <button type="button" id="print-button"
+        class="no-print w-full py-2 rounded-lg bg-blue-500 text-white text-sm hover:bg-blue-950 transition duration-200 tracking-wide mt-4 cursor-pointer font-medium">
+        Cetak
+    </button>
+</div>

@@ -290,6 +290,15 @@
             function closeModal() {
                 $('#modal-sale-report').removeClass('flex').addClass('hidden');
             }
+
+            $(document).on('click', '#cancel-print-button', function() {
+                $('#modal-container').addClass('hidden').removeClass('flex');
+                $('#modal-card').html('');
+            });
+
+            $(document).on('click', '#print-button', function() {
+                window.print();
+            });
         });
     </script>
 @endpush

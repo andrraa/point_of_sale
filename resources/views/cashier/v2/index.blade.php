@@ -10,6 +10,41 @@
     <title>Kasir - Point of Sale</title>
 
     @vite('resources/css/app.css')
+
+    <style>
+        @media print {
+            body * {
+                visibility: hidden !important;
+                margin: 0;
+            }
+
+            #modal-container,
+            #modal-container * {
+                visibility: visible !important;
+            }
+
+            #modal-container {
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 75mm !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+                box-shadow: none !important;
+                display: block !important;
+            }
+
+            #modal-card {
+                all: unset;
+                width: 100%;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="h-dvh bg-gray-200 flex flex-col pb-4">
@@ -147,6 +182,14 @@
 
     {{-- PAY MODAL --}}
     @include('cashier.v2.modal')
+
+    {{-- MODAL PRINT --}}
+    <div id="modal-container"
+        class="fixed inset-0 bg-gray-600/50 overflow-y-auto h-full w-full items-center justify-center hidden">
+        <div id="modal-card"
+            class="relative mx-auto p-4 border border-gray-300 w-full max-w-[400px] shadow-lg rounded-lg bg-white">
+        </div>
+    </div>
 
     @vite(['resources/js/app.js', 'resources/js/function.js'])
 
@@ -558,6 +601,7 @@
                     success: function(response) {
                         closeModal();
                         successAlert('Pembayaran berhasil!.');
+                        print(response.id);
                         setTimeout(function() {
                             resetAll();
                         }, 1000);
@@ -617,6 +661,33 @@
                     showConfirmButton: false
                 });
             }
+
+            // PRINT INVOICE
+            const modalCard = $('#modal-card');
+            const modalContainer = $('#modal-container');
+
+            function print(salesId) {
+                $.ajax({
+                    url: `/sale/${salesId}`,
+                    type: "GET",
+                    success: function(res) {
+                        modalCard.html(res);
+                        modalContainer.removeClass('hidden').addClass('flex');
+                        setTimeout(() => {
+                            window.print();
+                        }, 100);
+                    }
+                });
+            }
+
+            $(document).on('click', '#cancel-print-button', function() {
+                $('#modal-container').addClass('hidden').removeClass('flex');
+                $('#modal-card').html('');
+            });
+
+            $(document).on('click', '#print-button', function() {
+                window.print();
+            });
         });
     </script>
 </body>
