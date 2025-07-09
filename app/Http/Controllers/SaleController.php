@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SaleReportRequest;
 use App\Http\Requests\SaleRequest;
+use App\Models\Category;
 use App\Models\Sale;
 use App\Services\ValidationService;
 use Illuminate\Http\JsonResponse;
@@ -64,7 +65,12 @@ class SaleController
                 ->toJson();
         }
 
-        return view('sale.index');
+        $categories = Category::getItemCategories();
+
+        $validator = $this->validationService
+            ->generateValidation(SaleReportRequest::class, '#form-report');
+
+        return view('sale.index', compact(['categories', 'validator']));
     }
 
     public function edit(Sale $sale): View
@@ -116,5 +122,87 @@ class SaleController
     public function report(SaleReportRequest $request)
     {
         $validated = $request->validated();
+
+        $startDate = $validated['start_date'];
+        $endDate = $validated['end_date'];
+        $typeCategory = $validated['type_category'];
+        $stockCategory = $validated['stock_category'];
+
+        return $typeCategory === '1'
+            ? $this->reportDetail($startDate, $endDate, $stockCategory)
+            : $this->reportGeneral($startDate, $endDate, $typeCategory);
+    }
+
+    private function reportDetail($startDate, $endDate, $categoryId)
+    {
+        $sales = Sale::whereBetween('created_at', [$startDate, $endDate])
+            ->where('sales_status', SALE::PAID_STATUS)
+            ->whereNull('deleted_at')
+            ->whereHas('details', function ($query) use ($categoryId) {
+                if ($categoryId !== 'all') {
+                    $query->where('sale_detail_stock_category_id', $categoryId);
+                }
+            })
+            ->with([
+                'details' => function ($query) use ($categoryId) {
+                    if ($categoryId !== 'all') {
+                        $query->where('sale_detail_stock_category_id', $categoryId);
+                    }
+                }
+            ])
+            ->get();
+
+        $datas = $sales->map(
+            fn($sale) => [
+                'invoice' => $sale->sales_invoice,
+                'total_gross' => $sale->sales_total_gross,
+                'total_price' => $sale->sales_total_price,
+                'total_debt' => $sale->sales_total_debt ?? 0,
+                'total_change' => $sale->sales_total_change,
+                'date' => $sale->created_at,
+                'items' => $sale->details->map(function ($detail) {
+                    $profit = ($detail->sale_detail_price - $detail->sale_detail_cost_price)
+                        * $detail->sale_detail_quantity
+                        - $detail->sale_detail_discount_amount;
+
+                    return [
+                        'code' => $detail->sale_detail_stock_code,
+                        'name' => $detail->sale_detail_stock_name,
+                        'quantity' => $detail->sale_detail_quantity,
+                        'category' => $detail->sale_detail_stock_category_name,
+                        'cost_price' => $detail->sale_detail_cost_price,
+                        'sell_price' => $detail->sale_detail_price,
+                        'total_price' => $detail->sale_detail_total_price,
+                        'discount' => $detail->sale_detail_discount,
+                        'discount_amount' => $detail->sale_detail_discount_amount,
+                        'profit' => $profit
+                    ];
+                }),
+            ]
+        );
+
+        $totals = [
+            'total_quantity' => 0,
+            'total_sell_price' => 0,
+            'total_debt' => 0,
+            'total_discount_amount' => 0,
+            'total_profit' => 0,
+        ];
+
+        foreach ($datas as $sale) {
+            $totals['total_debt'] += $sale['total_debt'];
+
+            foreach ($sale['items'] as $item) {
+                $totals['total_quantity'] += $item['quantity'];
+                $totals['total_sell_price'] += $item['sell_price'];
+                $totals['total_discount_amount'] += $item['discount_amount'];
+                $totals['total_profit'] += $item['profit'];
+            }
+        }
+    }
+
+    private function reportGeneral($startDate, $endDate, $categoryId)
+    {
+
     }
 }

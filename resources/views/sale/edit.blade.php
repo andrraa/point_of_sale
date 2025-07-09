@@ -5,10 +5,13 @@
 @section('navTitle', 'Ubah Penjualan / Return Barang')
 
 @section('content')
-    <div class="mb-6 mt-2">
-        <a href="{{ route('sale.index') }}"
-            class="px-4 py-2 rounded-md border border-gray-500 text-sm transition-colors duration-300 hover:bg-gray-200 tracking-wide text-gray-500">
-            Kembali
+    <div class="mb-6 mt-2 w-fit">
+        <a href="{{ route('sale.index') }}">
+            <div
+                class="flex items-center gap-2 px-4 py-2 rounded-md text-sm bg-white shadow-lg hover:bg-gray-100 transition-colors duration-300 border border-gray-200">
+                <i class="fa-solid fa-chevron-left text-xs"></i>
+                <span>Kembali</span>
+            </div>
         </a>
     </div>
 
@@ -16,11 +19,11 @@
         <table class="table w-full">
             <thead class="!text-[13px] !tracking-wide !text-left bg-gray-100">
                 <tr>
-                    <th class="p-3">No.</th>
-                    <th class="p-3">Nama Barang</th>
-                    <th class="p-3">Harga Jual</th>
-                    <th class="p-3 w-[300px]">Jumlah Jual</th>
-                    <th class="p-3 w-[150px]">Aksi</th>
+                    <th class="p-2">No.</th>
+                    <th class="p-2">Nama Barang</th>
+                    <th class="p-2">Harga Jual</th>
+                    <th class="p-2 w-[300px]">Jumlah Jual</th>
+                    <th class="p-2 w-[150px]">Aksi</th>
                 </tr>
             </thead>
             @php
@@ -30,12 +33,12 @@
             <tbody class="!text-[13px] !tracking-wide divide-y divide-gray-100">
                 @foreach ($sale->details as $index => $detail)
                     <tr>
-                        <td class="p-3">{{ $index + 1 }}</td>
-                        <td class="p-3">
+                        <td class="p-2">{{ $index + 1 }}</td>
+                        <td class="p-2">
                             {{ $detail->sale_detail_stock_code . ' - ' . $detail->sale_detail_stock_name }}
                         </td>
-                        <td class="p-3">Rp {{ number_format($detail->sale_detail_price) }}</td>
-                        <td class="p-3">
+                        <td class="p-2">Rp {{ number_format($detail->sale_detail_price) }}</td>
+                        <td class="p-2">
                             <x-form.input :props="[
                                 'id' => 'quantity-' . $detail->sale_detail_id,
                                 'name' => 'quantity-' . $detail->sale_detail_id,
@@ -43,7 +46,7 @@
                                 'class' => 'number-input',
                             ]" />
                         </td>
-                        <td class="p-3">
+                        <td class="p-2">
                             <div class="flex items-center gap-2">
                                 <button type="button" data-id="{{ $detail->sale_detail_id }}"
                                     data-url="{{ route('sale-detail.update', $detail->sale_detail_id) }}"
@@ -68,17 +71,17 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td class="p-3 bg-gray-100 text-[13px] font-medium"></td>
-                    <td class="p-3 bg-gray-100 text-[13px] font-medium">
+                    <td class="p-2 bg-gray-100 text-[13px] font-medium"></td>
+                    <td class="p-2 bg-gray-100 text-[13px] font-medium">
                         Total:
                     </td>
-                    <td class="p-3 bg-gray-100 text-[13px] font-medium">
+                    <td class="p-2 bg-gray-100 text-[13px] font-medium">
                         Rp {{ number_format($totalPrice) }}
                     </td>
-                    <td class="p-3 bg-gray-100 text-[13px] font-medium">
+                    <td class="p-2 bg-gray-100 text-[13px] font-medium">
                         {{ $totalQuantity }} pcs
                     </td>
-                    <td class="p-3 bg-gray-100 text-[13px] font-medium"></td>
+                    <td class="p-2 bg-gray-100 text-[13px] font-medium"></td>
                 </tr>
             </tfoot>
         </table>

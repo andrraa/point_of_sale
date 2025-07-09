@@ -121,8 +121,11 @@
 
 @push('scripts')
     @vite(['resources/js/datatables.js', 'resources/js/function.js'])
+    <script type="module" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
 
     <script type="module">
+        {!! $validator !!}
+
         $(document).ready(function() {
             const dataTable = window.DataTables;
             const dataTableAction = window.DataTablesAction;

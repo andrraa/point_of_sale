@@ -10,21 +10,31 @@
             </button>
         </div>
 
-        <form id="form-report" action="{{ route('stock.taken.report') }}" method="POST">
+        <form id="form-report" action="{{ route('sale.report') }}" method="POST">
             @csrf
+
+            <div class="mb-1">
+                <label for="type_category"
+                    class="font-medium text-sm text-gray-500 tracking-wide block mb-1">Tipe</label>
+                <select name="type_category" id="type_category"
+                    class="w-full px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm outline-none cursor-pointer">
+                    <option value="1">Detail</option>
+                    <option value="2">Umum</option>
+                </select>
+            </div>
 
             <div class="mb-1">
                 <label for="stock_category" class="font-medium text-sm text-gray-500 tracking-wide block mb-1">
                     Kategori
                 </label>
 
-                {{-- <select name="stock_category" id="stock_category"
+                <select name="stock_category" id="stock_category"
                     class="w-full px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm outline-none cursor-pointer">
                     <option value="all">Semua Kategori</option>
                     @foreach ($categories as $key => $category)
                         <option value="{{ $key }}">({{ $key }}) {{ $category }}</option>
                     @endforeach
-                </select> --}}
+                </select>
             </div>
 
             <div class="mb-2">

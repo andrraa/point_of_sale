@@ -1,22 +1,13 @@
 @extends('layouts.report')
 
-@section('title', 'Laporan Stok')
+@section('title', 'Laporan Penjualan')
 
 @section('content')
-    @php
-        $grandTotalQty = 0;
-        $grandTotalOut = 0;
-        $grandTotalPrice = 0;
-    @endphp
+    <h1>Laporan Penjualan</h1>
+    <h2>Tanggal: </h2>
 
-    <h2>Laporan Stok</h2>
-
-    @forelse ($stocks as $category => $stock)
+    @forelse ($datas as $index => $data)
         <div style="margin-top: 20px;">
-            <h3>Kategori:
-                {{ optional($stock->first()->category)->category_name ?? 'Tidak diketahui' }}
-            </h3>
-
             <table style="width: 100%;">
                 <thead>
                     <tr>
@@ -58,17 +49,17 @@
                 </tbody>
             </table>
 
-            @php
+            {{-- @php
                 $grandTotalQty += $totalQuantity;
                 $grandTotalOut += $totalOut;
                 $grandTotalPrice += $totalPrice;
-            @endphp
+            @endphp --}}
         </div>
     @empty
         <p>Tidak ada data laporan.</p>
     @endforelse
 
-    @if ($grandTotalQty !== 0 || $grandTotalPrice !== 0)
+    {{-- @if ($grandTotalQty !== 0 || $grandTotalPrice !== 0)
         <table style="margin-top: 30px; width: 80%%;">
             <thead>
                 <tr>
@@ -89,5 +80,5 @@
                 </tr>
             </tbody>
         </table>
-    @endif
+    @endif --}}
 @endsection
