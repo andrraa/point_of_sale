@@ -71,7 +71,7 @@
             </div>
 
             <button id="filter-button"
-                class="px-4 py-2 bg-blue-500 text-white text-sm rounded-lg tracking-wide font-medium hover:bg-blue-600 transition-colors duration-300 cursor-pointer">
+                class="px-4 py-2 bg-blue-500 text-white text-sm rounded-lg tracking-wide font-medium hover:bg-blue-600 transition-colors duration-300 cursor-pointer shadow-lg">
                 <i class="fa-solid fa-magnifying-glass text-xs mr-1"></i>
                 Cari Data
             </button>
@@ -82,22 +82,20 @@
         <table id="sale-table" class="w-full min-w-max">
             <thead class="!text-[13px] tracking-wide text-left">
                 <tr>
-                    <th class="p-3 bg-gray-100">#</th>
+                    <th class="p-3 bg-gray-100 w-[10px]">#</th>
                     <th class="p-3 bg-gray-100">Invoice</th>
-                    <th class="p-3 bg-gray-100">Pelanggan</th>
-                    <th class="p-3 bg-gray-100">Total Harga</th>
-                    <th class="p-3 bg-gray-100">Total Bayar</th>
-                    <th class="p-3 bg-gray-100">Total Hutang</th>
-                    <th class="p-3 bg-gray-100">Tanggal Penjualan</th>
-                    <th class="p-3 bg-gray-100">Status</th>
-                    <th class="p-3 bg-gray-100">Aksi</th>
+                    <th class="p-3 bg-gray-100 w-[200px]">Pelanggan</th>
+                    <th class="p-3 bg-gray-100 w-[150px]">Total Harga</th>
+                    <th class="p-3 bg-gray-100 w-[150px]">Total Hutang</th>
+                    <th class="p-3 bg-gray-100 w-[150px]">Tanggal Penjualan</th>
+                    <th class="p-3 bg-gray-100 w-[150px]">Status</th>
+                    <th class="p-3 bg-gray-100 w-[150px]">Aksi</th>
                 </tr>
             </thead>
             <tfoot class="!text-[13px] !tracking-wide !font-medium bg-gray-100">
                 <tr>
                     <td colspan="3" class="p-2 !text-center">Total</td>
                     <td id="total_price" class="p-2"></td>
-                    <td id="total_payment" class="p-2"></td>
                     <td id="total_debt" class="p-2"></td>
                     <td class="p-2"></td>
                     <td class="p-2"></td>
@@ -166,14 +164,6 @@
                         }
                     },
                     {
-                        data: 'sales_total_payment',
-                        name: 'sales_total_payment',
-                        class: 'tracking-wider !text-xs !text-gray-900',
-                        render: function(data) {
-                            return 'Rp ' + customFunction.formatNumberToRupiah(data);
-                        }
-                    },
-                    {
                         data: 'sale_total_debt',
                         name: 'sale_total_debt',
                         class: 'tracking-wider !text-xs !text-gray-900',
@@ -226,19 +216,17 @@
                     },
                 ],
                 columnDefs: [{
-                    target: [0, -1, 4, 5],
+                    target: [0, -1],
                     searchable: false,
                     orderable: false
                 }],
                 drawCallback: function(settings) {
                     const json = settings.json;
                     const price = json.total_price;
-                    const payment = json.total_payment;
                     const debt = json.total_debt;
 
                     if (json) {
                         $('#total_price').html(`Rp ${customFunction.formatNumberToRupiah(price)}`);
-                        $('#total_payment').html(`Rp ${customFunction.formatNumberToRupiah(payment)}`);
                         $('#total_debt').html(`Rp ${customFunction.formatNumberToRupiah(debt)}`);
                     }
                 }

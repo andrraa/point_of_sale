@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SaleReportRequest;
-use App\Http\Requests\SaleRequest;
 use App\Models\Category;
 use App\Models\Sale;
 use App\Services\ValidationService;
@@ -41,7 +40,6 @@ class SaleController
                 ->orderByDesc('created_at');
 
             $totalPrice = (clone $sales)->sum('sales_total_price');
-            $totalPayment = (clone $sales)->sum('sales_total_payment');
             $totalDebt = (clone $sales)->sum('sale_total_debt');
 
             return DataTables::of($sales)
@@ -61,7 +59,6 @@ class SaleController
                 })
                 ->with([
                     'total_price' => $totalPrice,
-                    'total_payment' => $totalPayment,
                     'total_debt' => $totalDebt
                 ])
                 ->toJson();
@@ -215,6 +212,6 @@ class SaleController
 
     private function reportGeneral($startDate, $endDate, $categoryId)
     {
-
+        return view('sale.report.general');
     }
 }
