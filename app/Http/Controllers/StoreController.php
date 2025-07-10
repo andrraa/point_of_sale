@@ -6,6 +6,7 @@ use App\Http\Requests\StoreRequest;
 use App\Models\Store;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Session;
 
 class StoreController
 {
@@ -23,11 +24,15 @@ class StoreController
 
     public function store(StoreRequest $request): RedirectResponse
     {
+        Session::remove('store');
+
         $validated = $request->validated();
 
         $store = Store::first();
 
         $store->update($validated);
+
+        Session::put(['store' => $store]);
 
         flash()->preset('update_success');
 

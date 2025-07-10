@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SignInRequest;
 use App\Models\Role;
+use App\Models\Store;
 use App\Models\User;
 use App\Services\ValidationService;
 use Illuminate\Http\RedirectResponse;
@@ -49,6 +50,10 @@ class AuthController
 
         session(['user' => $user->load('role')]);
 
+        $store = Store::first();
+
+        session(['store' => $store]);
+
         flash()->preset('auth_success', ['username' => $user->username]);
 
         return $user->user_role_id == Role::ROLE_ADMIN
@@ -64,6 +69,8 @@ class AuthController
         $request->session()->regenerateToken();
 
         Session::remove('user');
+
+        Session::remove('store');
 
         Auth::logout();
 

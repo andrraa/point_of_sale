@@ -1,7 +1,7 @@
 <div class="text-center">
-    <h2 class="text-[12px] tracking-wider uppercase">Toko Mutiara Indah</h2>
-    <h2 class="text-[12px] tracking-wider uppercase">JL. INDONESIA RAYA NOMOR 35, BANDAR LAMPUNG, LAMPUNG</h2>
-    <h2 class="text-[12px] tracking-wider">081276374983</h2>
+    <h2 class="text-[12px] tracking-wider uppercase">{{ $store->store_name }}</h2>
+    <h2 class="text-[12px] tracking-wider uppercase">{{ $store->store_address }}</h2>
+    <h2 class="text-[12px] tracking-wider">{{ $store->store_phone_number }}</h2>
 </div>
 
 <div class="w-full border-t border-dashed border-black my-1"></div>
@@ -37,6 +37,10 @@
 
 <div class="w-full border-t border-dashed border-black my-1"></div>
 
+@php
+    $totalDiscount = 0;
+@endphp
+
 @foreach ($sale->details as $item)
     <div class="flex items-center justify-between">
         @php
@@ -55,6 +59,10 @@
             <h2 class="text-[12px] tracking-wider">{{ number_format($quantity * $price) }}</h2>
         </div>
     </div>
+
+    @php
+        $totalDiscount += $item->sale_detail_discount_amount;
+    @endphp
 @endforeach
 
 <div class="w-full border-t border-dashed border-black my-1"></div>
@@ -62,26 +70,37 @@
 <div class="flex flex-col">
     <div class="flex items-center justify-between">
         <div>
+            <h2 class="text-[12px] tracking-wider uppercase">Subtotal</h2>
+        </div>
+        <div class="text-[12px] tracking-wider">
+            {{ number_format($sale->sales_total_gross) }}
+        </div>
+    </div>
+
+    <div class="flex items-center justify-between">
+        <div>
             <h2 class="text-[12px] tracking-wider uppercase">Diskon</h2>
         </div>
         <div class="text-[12px] tracking-wider">
-            {{ number_format($sale->sales_total_discount) }}
+            {{ number_format($totalDiscount) }}
         </div>
     </div>
-    <div class="flex items-center justify-between">
-        <div>
-            <h2 class="text-[12px] tracking-wider uppercase">Total</h2>
-        </div>
-        <div class="text-[12px] tracking-wider">
-            {{ number_format($sale->sales_total_price - ($sale->sales_total_discount ?? 0)) }}
-        </div>
-    </div>
+
     <div class="flex items-center justify-between">
         <div>
             <h2 class="text-[12px] tracking-wider uppercase">Total Bayar</h2>
         </div>
         <div class="text-[12px] tracking-wider">
             {{ number_format($sale->sales_total_payment) }}
+        </div>
+    </div>
+
+    <div class="flex items-center justify-between">
+        <div>
+            <h2 class="text-[12px] tracking-wider uppercase">Total Kembalian</h2>
+        </div>
+        <div class="text-[12px] tracking-wider">
+            {{ number_format($sale->sales_total_change) }}
         </div>
     </div>
 </div>

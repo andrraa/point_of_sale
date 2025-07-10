@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Session;
 use Yajra\DataTables\DataTables;
 
 class SaleController
@@ -82,9 +83,11 @@ class SaleController
 
     public function show(Sale $sale): View
     {
+        $store = Session::get('store');
+
         $sale->load(['details', 'customer']);
 
-        return view('sale._print', compact('sale'));
+        return view('sale._print', compact(['sale', 'store']));
     }
 
     public function destroy(Sale $sale): JsonResponse
