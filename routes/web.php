@@ -118,6 +118,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('purchase')->controller(PurchaseController::class)
             ->group(function () {
                 Route::post('get-item', 'getItem')->name('purchase.get.item');
+                Route::post('report', 'report')->name('purchase.report');
             });
 
         // STORE

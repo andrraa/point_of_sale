@@ -6,9 +6,9 @@
 
 @section('content')
     <div class="mb-4 w-fit">
-        <a href="{{ route('stock.index') }}">
+        <a href="{{ route('stock.index') }}" class="w-fit mb-4">
             <div
-                class="flex items-center gap-2 px-4 py-2 rounded-md border text-sm border-gray-400 hover:bg-gray-200 transition-colors duration-300 tracking-wide">
+                class="flex items-center gap-2 px-4 py-2 rounded-md text-sm bg-white shadow-lg hover:bg-gray-100 transition-colors duration-300 border border-gray-200 w-fit">
                 <i class="fa-solid fa-chevron-left text-xs"></i>
                 <span>Kembali</span>
             </div>

@@ -5,7 +5,15 @@
 @section('navTitle', 'Detail Pembelian')
 
 @section('content')
-    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+    <a href="{{ route('purchase.index') }}" class="w-fit mb-4">
+        <div
+            class="flex items-center gap-2 px-4 py-2 rounded-md text-sm bg-white shadow-lg hover:bg-gray-100 transition-colors duration-300 border border-gray-200 w-fit">
+            <i class="fa-solid fa-chevron-left text-xs"></i>
+            <span>Kembali</span>
+        </div>
+    </a>
+
+    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-200 mt-4">
         <div>
             <h1 class="font-semibold text-[16px] mb-1 text-blue-500">
                 Nomor Invoice: {{ $purchase['purchase_invoice'] }}
@@ -48,68 +56,61 @@
             </div>
 
             {{-- STOCK --}}
-            <div class="mb-6    ">
-                <table class="w-full">
-                    <thead class="text-left text-sm bg-gray-100 font-medium">
-                        <tr>
-                            <td class="p-2 tracking-wide">Kode Barang</td>
-                            <td class="p-2 tracking-wide">Nama Barang</td>
-                            <td class="p-2 tracking-wide">Harga Beli</td>
-                            <td class="p-2 tracking-wide">Jumlah</td>
-                            <td class="p-2 tracking-wide">Total Harga</td>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
+            <table class="w-full">
+                <thead class="text-left text-sm bg-gray-100 font-medium">
+                    <tr>
+                        <td class="p-2 tracking-wide">Kode Barang</td>
+                        <td class="p-2 tracking-wide">Nama Barang</td>
+                        <td class="p-2 tracking-wide">Harga Beli</td>
+                        <td class="p-2 tracking-wide">Jumlah</td>
+                        <td class="p-2 tracking-wide">Total Harga</td>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @php
+                        $total = 0;
+                    @endphp
+                    @foreach ($purchase['details'] as $detail)
                         @php
-                            $total = 0;
+                            $totalEach = $detail['purchase_detail_price'] * $detail['purchase_detail_quantity'];
                         @endphp
-                        @foreach ($purchase['details'] as $detail)
-                            @php
-                                $totalEach = $detail['purchase_detail_price'] * $detail['purchase_detail_quantity'];
-                            @endphp
 
-                            <tr class="{{ $loop->last ? 'border-b border-b-gray-100' : '' }}">
-                                <td class="p-2 tracking-wider !text-sm text-gray-900">
-                                    {{ $detail['stock']['stock_code'] }}
-                                </td>
-                                <td class="p-2 tracking-wider !text-sm text-gray-900">
-                                    {{ $detail['stock']['stock_name'] }}
-                                </td>
-                                <td class="p-2 tracking-wider !text-sm text-gray-900">
-                                    Rp {{ number_format($detail['purchase_detail_price']) }}
-                                </td>
-                                <td class="p-2 tracking-wider !text-sm text-gray-900">
-                                    {{ $detail['purchase_detail_quantity'] }} pcs
-                                </td>
-                                <td class="p-2 tracking-wider !text-sm text-gray-900">
-                                    Rp
-                                    {{ number_format($totalEach) }}
-                                </td>
-                            </tr>
-
-                            @php
-                                $total += $totalEach;
-                            @endphp
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr class="border-b border-b-gray-100">
-                            <td class="p-2 tracking-wider !text-sm text-gray-900"></td>
-                            <td class="p-2 tracking-wider !text-sm text-gray-900"></td>
-                            <td class="p-2 tracking-wider !text-sm text-gray-900"></td>
-                            <td class="p-2 tracking-wider !text-sm text-gray-900"></td>
-                            <td class="p-2 tracking-wider !text-sm text-blue-500 font-bold">
-                                Rp {{ number_format($total) }}
+                        <tr class="{{ $loop->last ? 'border-b border-b-gray-100' : '' }}">
+                            <td class="p-2 tracking-wider !text-sm text-gray-900">
+                                {{ $detail['stock']['stock_code'] }}
+                            </td>
+                            <td class="p-2 tracking-wider !text-sm text-gray-900">
+                                {{ $detail['stock']['stock_name'] }}
+                            </td>
+                            <td class="p-2 tracking-wider !text-sm text-gray-900">
+                                Rp {{ number_format($detail['purchase_detail_price']) }}
+                            </td>
+                            <td class="p-2 tracking-wider !text-sm text-gray-900">
+                                {{ $detail['purchase_detail_quantity'] }} pcs
+                            </td>
+                            <td class="p-2 tracking-wider !text-sm text-gray-900">
+                                Rp
+                                {{ number_format($totalEach) }}
                             </td>
                         </tr>
-                    </tfoot>
-                </table>
-            </div>
 
-            <a href="{{ route('purchase.index') }}"
-                class="w-fit px-4 py-2 rounded-lg border border-gray-300 text-sm tracking-wider font-semibold hover:bg-gray-50">
-                Kembali
-            </a>
+                        @php
+                            $total += $totalEach;
+                        @endphp
+                    @endforeach
+                </tbody>
+                <tfoot>
+                    <tr class="border-b border-b-gray-100">
+                        <td class="p-2 tracking-wider !text-sm text-gray-900"></td>
+                        <td class="p-2 tracking-wider !text-sm text-gray-900"></td>
+                        <td class="p-2 tracking-wider !text-sm text-gray-900"></td>
+                        <td class="p-2 tracking-wider !text-sm text-gray-900"></td>
+                        <td class="p-2 tracking-wider !text-sm text-blue-500 font-bold">
+                            Rp {{ number_format($total) }}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
     </div>
 @endsection

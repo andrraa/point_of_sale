@@ -5,13 +5,17 @@
 @section('navTitle', 'Daftar Pembelian')
 
 @section('content')
+    @php
+        $today = \Carbon\Carbon::now()->toDateString();
+    @endphp
+
     <div class="mb-6 flex gap-2 items-center w-fit">
         <x-action-button :props="[
             'url' => route('purchase.create'),
             'label' => 'Pembelian Baru',
         ]" />
 
-        <button id="open-stock-modal" type="button"
+        <button id="open-report-modal" type="button"
             class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-red-500 hover:text-red-500 transition-all duration-300 cursor-pointer shadow-lg">
             <i class="fa-solid fa-file text-xs mr-2"></i>
             Laporan Pembelian
@@ -34,12 +38,18 @@
             </thead>
         </table>
     </div>
+
+    {{-- REPORT MODAL --}}
+    @include('purchase.modal')
 @endsection
 
 @push('scripts')
     @vite(['resources/js/datatables.js', 'resources/js/function.js'])
+    <script type="module" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
 
     <script type="module">
+        {!! $validator !!}
+
         $(document).ready(function() {
             const dataTable = window.DataTables;
             const dataTableAction = window.DataTablesAction;
@@ -108,6 +118,23 @@
                     orderable: false
                 }]
             });
+
+            // Report Modal
+            $('#open-report-modal').on('click', function() {
+                openModal();
+            });
+
+            $('.modal-report-cancel').on('click', function() {
+                closeModal();
+            });
+
+            function openModal() {
+                $('#modal-sale-report').removeClass('hidden').addClass('flex');
+            }
+
+            function closeModal() {
+                $('#modal-sale-report').removeClass('flex').addClass('hidden');
+            }
         });
     </script>
 @endpush
