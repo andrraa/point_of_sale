@@ -8,7 +8,7 @@
         $grandTotalPrice = 0;
     @endphp
 
-    <h1>Laporan Barang Diambil</h1>
+    <h1>Laporan Pengambilan Barang</h1>
     <h2>Tanggal {{ $startDate }} s.d {{ $endDate }}</h2>
 
     @forelse ($data as $categoryId => $takens)

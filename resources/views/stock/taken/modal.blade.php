@@ -92,7 +92,8 @@
                 </label>
 
                 <input type="date" id="start_date" name="start_date"
-                    class="text-black/80 font-semibold tracking-wide px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm w-full outline-none">
+                    class="text-black/80 font-semibold tracking-wide px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm w-full outline-none"
+                    value="{{ $today }}">
             </div>
 
             <div class="mb-4">
@@ -101,7 +102,8 @@
                 </label>
 
                 <input type="date" id="end_date" name="end_date"
-                    class="text-black/80 font-semibold tracking-wide px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm w-full outline-none">
+                    class="text-black/80 font-semibold tracking-wide px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm w-full outline-none"
+                    value="{{ $today }}">
             </div>
 
             <div class="flex items-center gap-2 mt-4">
