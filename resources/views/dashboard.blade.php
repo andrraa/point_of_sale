@@ -31,14 +31,19 @@
                     @forelse ($sales as $index => $sale)
                         <tr class="even:bg-gray-100 !text-xs">
                             <td class="p-2 tracking-wide">{{ $index + 1 }}</td>
-                            <td class="p-2 tracking-wide">
-                                {{ "$stock->stock_code - $stock->stock_name" }}
+                            <td class="p-2 tracking-wide font-medium text-blue-500">
+                                {{ $sale->sales_invoice }}
                             </td>
-                            <td class="p-2 tracking-wide">{{ $stock->stock_out }} pcs</td>
+                            <td class="p-2 tracking-wide">
+                                Rp {{ number_format($sale->sales_total_price) }}
+                            </td>
+                            <td class="p-2 tracking-wide">
+                                {{ $sale->formatted_created_at }}
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="3" class="p-2 tracking-wide">Tidak ada data.</td>
+                            <td colspan="4" class="p-2 tracking-wide">Tidak ada data.</td>
                         </tr>
                     @endforelse
                 </tbody>
