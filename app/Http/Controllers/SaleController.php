@@ -53,7 +53,7 @@ class SaleController
                         $actions['edit'] = route('sale.edit', $sale->sales_id);
                         $actions['delete'] = route('sale.destroy', $sale->sales_id);
                         $actions['print'] = $sale->sales_id;
-                        $actions['detail'] = route('sale.show', $sale->sales_id);
+                        // $actions['detail'] = route('sale.show', $sale->sales_id);
                     }
 
                     return $actions;
