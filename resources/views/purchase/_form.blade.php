@@ -69,12 +69,12 @@
 
 <div class="grid grid-cols-3 gap-4 mb-4">
     <div>
-        <x-form.select :props="[
+        <x-form.input :props="[
             'id' => 'item',
             'name' => 'item',
-            'class' => 'w-full',
-            'value' => null,
-        ]" :options="$stocks" />
+            'placeholder' => 'Masukkan kode produk',
+            'autofocus' => true,
+        ]" />
     </div>
 
     <div>
@@ -83,6 +83,7 @@
             'name' => 'quantity',
             'class' => 'number-input',
             'placeholder' => 'Masukkan Jumlah Barang (PCS)',
+            'value' => 1,
         ]" />
     </div>
 

@@ -1,4 +1,5 @@
 <input type="{{ $props['type'] ?? 'text' }}"" id="{{ $props['id'] }}" name="{{ $props['name'] }}"
     class="px-4 py-[10px] rounded-md outline-none border border-gray-200 w-full focus:border-blue-500 {{ isset($props['class']) ? $props['class'] : '' }}"
     value="{{ $props['value'] ?? null }}" placeholder="{{ $props['placeholder'] ?? '' }}" autocomplete="off"
-    {{ isset($props['readonly']) && $props['readonly'] ? 'readonly' : '' }}>
+    {{ isset($props['readonly']) && $props['readonly'] ? 'readonly' : '' }}
+    {{ isset($props['autofocus']) && $props['autofocus'] ? 'autofocus' : '' }}>

@@ -71,8 +71,20 @@
                         index: index
                     },
                     success: function(response) {
-                        $('#quantity').val('');
-                        $('table tbody').append(response);
+                        if (!response) {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Produk tidak ditemukan',
+                                icon: 'error',
+                                timer: 1000,
+                                timerProgressBar: true,
+                                showConfirmButton: false
+                            });
+                        } else {
+                            $('#item').val('');
+                            $('#quantity').val(1);
+                            $('table tbody').append(response);
+                        }
                     },
                 });
             });

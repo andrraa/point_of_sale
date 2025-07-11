@@ -261,13 +261,17 @@ class PurchaseController
     }
 
     // EXTRA FUNCTION
-    public function getItem(Request $request): View
+    public function getItem(Request $request): View|JsonResponse
     {
         $item = $request->input('item');
         $quantity = $request->input('quantity');
         $index = $request->input('index');
 
-        $stock = Stock::where('stock_id', $item)->first();
+        $stock = Stock::where('stock_code', $item)->first();
+
+        if (!$stock) {
+            return response()->json(false);
+        }
 
         $data = [
             'id' => $stock->stock_id,
