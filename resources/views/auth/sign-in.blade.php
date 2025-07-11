@@ -34,6 +34,7 @@
                             'id' => 'username',
                             'name' => 'username',
                             'placeholder' => 'Masukkan nama pengguna',
+                            'autofocus' => true,
                         ]" />
                     </div>
 
