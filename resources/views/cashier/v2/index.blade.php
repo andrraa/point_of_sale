@@ -656,6 +656,28 @@
             });
             // END LISTENER (F ROW)
 
+            // START LISTENER CLICK BUTTON
+            $('#scan-button').on('click', function() {
+                focusStockCode();
+            });
+
+            $('#calculate-button').on('click', function() {
+                calculatePrice();
+            });
+
+            $('#discount-button').on('click', function() {
+                checkDebt();
+            });
+
+            $('#reset-button').on('click', function() {
+                resetAll();
+            });
+
+            $('#pay-button').on('click', function() {
+                payment();
+            });
+            // END LISTENER CLICK BUTTON
+
             function errorAlert(message) {
                 customAlert(message, 'error');
             }
