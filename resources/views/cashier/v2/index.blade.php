@@ -20,6 +20,13 @@
 
             body {
                 margin: 0 !important;
+                padding: 0 !important;
+                font-size: 10px !important;
+                line-height: 1.2 !important;
+            }
+
+            body * {
+                visibility: hidden !important;
             }
 
             #modal-container,
@@ -31,12 +38,16 @@
                 position: absolute !important;
                 top: 0 !important;
                 left: 0 !important;
-                width: 58 !important;
+                width: 58mm !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 background: white !important;
                 box-shadow: none !important;
                 display: block !important;
+                font-size: 10px !important;
+                line-height: 1.2 !important;
+                overflow: hidden;
+                page-break-inside: avoid;
             }
 
             #modal-card {
