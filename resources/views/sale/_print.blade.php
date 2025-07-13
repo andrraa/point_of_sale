@@ -9,28 +9,26 @@
 <table class="w-full">
     <tr>
         <td class="text-[8px] tracking-wider uppercase">Invoice</td>
-        <td class="text-[8px] tracking-wider uppercase w-[10px]">:</td>
+        {{-- <td class="text-[8px] tracking-wider uppercase">{{ $sale->sales_invoice }}</td> --}}
+    </tr>
+    <tr>
         <td class="text-[8px] tracking-wider uppercase">{{ $sale->sales_invoice }}</td>
     </tr>
     <tr>
         <td class="text-[8px] tracking-wider uppercase">Tanggal</td>
-        <td class="text-[8px] tracking-wider uppercase w-[10px]">:</td>
         <td class="text-[8px] tracking-wider uppercase">{{ $sale->created_at }}</td>
     </tr>
     <tr>
         <td class="text-[8px] tracking-wider uppercase">Kasir</td>
-        <td class="text-[8px] tracking-wider uppercase w-[10px]">:</td>
         <td class="text-[8px] tracking-wider uppercase">Admin</td>
     </tr>
     <tr>
         <td class="text-[8px] tracking-wider uppercase">Jenis Order</td>
-        <td class="text-[8px] tracking-wider uppercase w-[10px]">:</td>
         <td class="text-[8px] tracking-wider uppercase">
             {{ $sale->sales_status == \App\Models\Sale::PAID_STATUS ? 'Kontan' : 'Kredit/Tempo' }}</td>
     </tr>
     <tr>
         <td class="text-[8px] tracking-wider uppercase">Nama Pelanggan</td>
-        <td class="text-[8px] tracking-wider uppercase w-[10px]">:</td>
         <td class="text-[8px] tracking-wider uppercase">{{ $sale->customer->customer_name }}</td>
     </tr>
 </table>
@@ -68,40 +66,24 @@
 <div class="w-full border-t border-dashed border-black my-1"></div>
 
 <div class="flex flex-col">
-    <div class="flex items-center justify-between">
-        <div>
-            <h2 class="text-[8px] tracking-wider uppercase">Subtotal</h2>
-        </div>
-        <div class="text-[8px] tracking-wider">
-            {{ number_format($sale->sales_total_gross) }}
-        </div>
+    <div class="flex flex-col">
+        <h2 class="text-[8px] tracking-wider uppercase">Subtotal</h2>
+        <span class="text-[8px]">{{ number_format($sale->sales_total_gross) }}</span>
     </div>
 
-    <div class="flex items-center justify-between">
-        <div>
-            <h2 class="text-[8px] tracking-wider uppercase">Diskon</h2>
-        </div>
-        <div class="text-[8px] tracking-wider">
-            {{ number_format($totalDiscount) }}
-        </div>
+    <div class="flex flex-col">
+        <h2 class="text-[8px] tracking-wider uppercase">Diskon</h2>
+        <span class="text-[8px]">{{ number_format($totalDiscount) }}</span>
     </div>
 
-    <div class="flex items-center justify-between">
-        <div>
-            <h2 class="text-[8px] tracking-wider uppercase">Total Bayar</h2>
-        </div>
-        <div class="text-[8px] tracking-wider">
-            {{ number_format($sale->sales_total_payment) }}
-        </div>
+    <div class="flex flex-col">
+        <h2 class="text-[8px] tracking-wider uppercase">Total Bayar</h2>
+        <span class="text-[8px]">{{ number_format($sale->sales_total_payment) }}</span>
     </div>
 
-    <div class="flex items-center justify-between">
-        <div>
-            <h2 class="text-[8px] tracking-wider uppercase">Total Kembalian</h2>
-        </div>
-        <div class="text-[8px] tracking-wider">
-            {{ number_format($sale->sales_total_change) }}
-        </div>
+    <div class="flex flex-col">
+        <h2 class="text-[8px] tracking-wider uppercase">Total Kembalian</h2>
+        <span class="text-[8px]">{{ number_format($sale->sales_total_change) }}</span>
     </div>
 </div>
 
