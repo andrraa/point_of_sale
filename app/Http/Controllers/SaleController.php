@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SaleReportRequest;
 use App\Models\Category;
 use App\Models\Sale;
+use App\Models\StockLog;
 use App\Services\ValidationService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -50,8 +53,10 @@ class SaleController
                     $actions = [];
 
                     if ($sale->sales_status != Sale::CANCEL_STATUS) {
-                        $actions['edit'] = route('sale.edit', $sale->sales_id);
-                        $actions['delete'] = route('sale.destroy', $sale->sales_id);
+                        if ($sale->sales_status == Sale::PAID_STATUS) {
+                            $actions['edit'] = route('sale.edit', $sale->sales_id);
+                            $actions['delete'] = route('sale.destroy', $sale->sales_id);
+                        }
                         $actions['print'] = $sale->sales_id;
                         // $actions['detail'] = route('sale.show', $sale->sales_id);
                     }
@@ -94,7 +99,9 @@ class SaleController
     {
         abort_unless(request()->expectsJson(), 403);
 
-        $sale->load('details.stock');
+        $sale->load(['credit', 'details.stock']);
+
+        $user = Auth::user();
 
         DB::beginTransaction();
 
@@ -106,6 +113,18 @@ class SaleController
             $stock->update([
                 'stock_out' => $stockOut
             ]);
+
+            StockLog::create([
+                'stock_log_stock_id'   => $stock->stock_id,
+                'stock_log_quantity'   => $detail->sale_detail_quantity,
+                'stock_log_description' => 'Penyesuaian karena penghapusan penjualan',
+                'stock_log_status'     => StockLog::IN_STATUS,
+                'stock_log_user_id'    => $user->user_id,
+            ]);
+        }
+
+        if ($credit = $sale->credit) {
+            $credit->delete();
         }
 
         $sale->update([

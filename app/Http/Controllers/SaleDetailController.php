@@ -82,23 +82,12 @@ class SaleDetailController
 
         $sale = Sale::findOrFail($saleId);
 
-        $totalChange = 0;
-        $totalDebt = 0;
-
-        if ($sale->sales_total_payment >= $totalPrice) {
-            $totalChange = $sale->sales_total_payment - $totalPrice;
-        } else {
-            $totalDebt = $totalPrice - $sale->sales_total_payment;
-        }
-
-        $paymentType = $totalDebt > 0 ? 'credit' : 'cash';
-
         $sale->update([
             'sales_total_price' => $totalPrice,
             'sales_total_gross' => $totalGross,
-            'sales_total_change' => $totalChange,
-            'sales_payment_type' => $paymentType,
-            'sales_status' => $totalDebt > 0 ? Sale::CREDIT_STATUS : Sale::PAID_STATUS,
+            'sales_total_payment' => $totalPrice,
+            'sales_total_change' => 0,
+            'sales_status' => Sale::PAID_STATUS,
         ]);
 
         DB::commit();
