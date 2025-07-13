@@ -13,13 +13,14 @@
 
     <style>
         @media print {
-            body * {
-                visibility: hidden !important;
-                margin: 0;
+            @page {
+                size: auto;
+                margin: 0mm;
             }
 
-            @page { margin: 0; }
-            body { margin: 1.6cm; }
+            body {
+                margin: 0 !important;
+            }
 
             #modal-container,
             #modal-container * {
@@ -30,7 +31,7 @@
                 position: absolute !important;
                 top: 0 !important;
                 left: 0 !important;
-                width: 75mm !important;
+                width: 58 !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 background: white !important;
