@@ -86,7 +86,7 @@
             <thead class="!text-[13px] tracking-wide text-left">
                 <tr>
                     <th class="p-3 bg-gray-100 w-[10px]">#</th>
-                    <th class="p-3 bg-gray-100">Invoice</th>
+                    <th class="p-3 bg-gray-100 w-[100px]">Invoice</th>
                     <th class="p-3 bg-gray-100 w-[200px]">Pelanggan</th>
                     <th class="p-3 bg-gray-100 w-[150px]">Total Harga</th>
                     <th class="p-3 bg-gray-100 w-[150px]">Total Hutang</th>

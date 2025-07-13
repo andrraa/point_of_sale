@@ -138,9 +138,14 @@ class SaleController
 
     private function reportDetail($startDate, $endDate, $categoryId)
     {
+        $startDate = Carbon::parse($startDate)->startOfDay();
+        $endDate = Carbon::parse($endDate)->endOfDay();
+
         $sales = Sale::whereBetween('created_at', [$startDate, $endDate])
-            ->where('sales_status', SALE::PAID_STATUS)
-            ->orWhere('sales_status', SALE::CREDIT_STATUS)
+            ->where(function ($query) {
+                $query->where('sales_status', SALE::PAID_STATUS)
+                    ->orWhere('sales_status', SALE::CREDIT_STATUS);
+            })
             ->whereNull('deleted_at')
             ->whereHas('details', function ($query) use ($categoryId) {
                 if ($categoryId !== 'all') {
@@ -161,7 +166,7 @@ class SaleController
                 'invoice' => $sale->sales_invoice,
                 'total_gross' => $sale->sales_total_gross,
                 'total_price' => $sale->sales_total_price,
-                'total_debt' => $sale->sales_total_debt ?? 0,
+                'total_debt' => $sale->sale_total_debt ?? 0,
                 'total_change' => $sale->sales_total_change,
                 'date' => $sale->created_at,
                 'items' => $sale->details->map(function ($detail) {
@@ -217,6 +222,9 @@ class SaleController
 
     private function reportGeneral($startDate, $endDate, $categoryId)
     {
+        $startDate = Carbon::parse($startDate)->startOfDay();
+        $endDate = Carbon::parse($endDate)->endOfDay();
+
         $sales = Sale::whereBetween('created_at', [$startDate, $endDate])
             ->where('sales_status', SALE::PAID_STATUS)
             ->whereNull('deleted_at')
@@ -257,7 +265,7 @@ class SaleController
                 ];
             }
 
-            $monthlyData[$monthKey]['total_debt'] += $sale->sales_total_debt ?? 0;
+            $monthlyData[$monthKey]['total_debt'] += $sale->sale_total_debt ?? 0;
 
             foreach ($sale->details as $detail) {
                 $monthlyData[$monthKey]['total_quantity'] += $detail->sale_detail_quantity;

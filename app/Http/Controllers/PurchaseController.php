@@ -201,6 +201,9 @@ class PurchaseController
         $startDate = $validated['start_date'];
         $endDate = $validated['end_date'];
 
+        $startDate = Carbon::parse($startDate)->startOfDay();
+        $endDate = Carbon::parse($endDate)->endOfDay();
+
         $purchases = Purchase::whereBetween('created_at', [$startDate, $endDate])
             ->whereHas('details', function ($query) use ($category) {
                 if ($category !== 'all') {

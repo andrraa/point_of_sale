@@ -68,7 +68,7 @@
                         <td>Rp {{ number_format($totalSubGrossPrice) }}</td>
                         <td>Rp {{ number_format($totalSubNettoPrice) }}</td>
                         <td>Rp {{ number_format($totalSubDiscountAmount) }}</td>
-                        <td>Rp {{ number_format($totalSubProfit) }}</td>
+                        <td>Rp {{ number_format($totalSubProfit - $data['total_debt']) }}</td>
                     </tr>
                     <tr>
                         <td colspan="9" style="text-align: right;">Total Piutang (Debt):</td>

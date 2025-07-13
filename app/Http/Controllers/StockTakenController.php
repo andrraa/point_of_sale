@@ -123,13 +123,16 @@ class StockTakenController
         $startDate = Carbon::parse($validated['start_date'])->format('d M Y');
         $endDate = Carbon::parse($validated['end_date'])->format('d M Y');
 
+        $qStartDate = Carbon::parse($startDate)->startOfDay();
+        $qEndDate = Carbon::parse($endDate)->endOfDay();
+
         $data = StockTaken::with(['stock', 'user', 'category'])
             ->when($validated['stock_category'] !== 'all', function ($query) use ($validated) {
                 $query->where('stock_taken_category_id', $validated['stock_category']);
             })
             ->whereBetween(
                 'created_at',
-                [$validated['start_date'], $validated['end_date']]
+                [$qStartDate, $qEndDate]
             )
             ->get()
             ->groupBy('stock_taken_category_id');
