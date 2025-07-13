@@ -103,6 +103,17 @@
             .items-center {
                 align-items: center !important;
             }
+
+            #modal-container h1,
+            #modal-container h2,
+            #modal-container h3,
+            #modal-container td,
+            #modal-container div,
+            #modal-container span,
+            #modal-container p {
+                font-size: 10px !important;
+                line-height: 1.3 !important;
+            }
         }
     </style>
 @endpush
@@ -325,7 +336,7 @@
                             modalContainer.removeClass('hidden').addClass('flex');
                             setTimeout(() => {
                                 window.print();
-                            }, 100);
+                            }, 300);
                         }
                     });
                 });
