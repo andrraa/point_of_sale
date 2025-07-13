@@ -11,8 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
-use Session;
 use Yajra\DataTables\DataTables;
 
 class SaleController
@@ -140,6 +140,7 @@ class SaleController
     {
         $sales = Sale::whereBetween('created_at', [$startDate, $endDate])
             ->where('sales_status', SALE::PAID_STATUS)
+            ->orWhere('sales_status', SALE::CREDIT_STATUS)
             ->whereNull('deleted_at')
             ->whereHas('details', function ($query) use ($categoryId) {
                 if ($categoryId !== 'all') {

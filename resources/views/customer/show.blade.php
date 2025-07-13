@@ -5,6 +5,16 @@
 @section('navTitle', 'Detail Pelanggan')
 
 @section('content')
+    <div class="mb-6 w-fit">
+        <a href="{{ route('customer.index') }}">
+            <div
+                class="flex items-center gap-2 px-4 py-2 rounded-md text-sm bg-white shadow-lg hover:bg-gray-100 transition-colors duration-300 border border-gray-200">
+                <i class="fa-solid fa-chevron-left text-xs"></i>
+                <span>Kembali</span>
+            </div>
+        </a>
+    </div>
+
     <div class="bg-white rounded-lg px-4 py-6 border border-gray-200">
         {{-- CUSTOMER --}}
         <div class="mb-2 pb-2 border-b border-b-gray-200">
@@ -61,34 +71,42 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
+                @php
+                    $total = 0;
+                @endphp
+
                 @forelse ($customer->credits as $index => $credit)
                     <tr>
                         <td class="p-2 text-[13px] text-gray-900 text-left">
                             {{ $index + 1 }}
                         </td>
-                        <td class="p-2 text-[13px] text-left font-medium text-blue-500">
+                        <td class="p-2 text-[13px] text-left text-blue-500">
                             {{ $credit->customer_credit_invoice }}
                         </td>
-                        <td class="p-2 text-[13px] text-gray-900 font-medium text-left">
+                        <td class="p-2 text-[13px] text-gray-900 text-left">
                             Rp {{ number_format($credit->customer_credit) }}
                         </td>
                         <td class="p-2 text-[13px] text-gray-900 text-left">
                             @if ($credit->customer_credit_status != \App\Models\CustomerCredit::UNPAID_STATUS)
                                 <span
-                                    class="text-[10px] tracking-wider font-bold border-2 boder-md px-2 py-1 rounded-md bg-blue-500 text-white">
+                                    class="text-[10px] tracking-wider font-bold px-2 py-1 rounded-md bg-blue-500 text-white shadow-md">
                                     LUNAS
                                 </span>
                             @else
                                 <span
-                                    class="text-[10px] tracking-wider font-bold border-2 boder-md px-2 py-1 rounded-md bg-red-900 text-white">
+                                    class="text-[10px] tracking-wider font-bold px-2 py-1 rounded-md bg-red-500 text-white shadow-md">
                                     BELUM LUNAS
                                 </span>
                             @endif
                         </td>
-                        <td class="p-2 text-[13px] text-gray-900 text-left font-medium">
-                            {{ $credit->customer_credit_payment_date ?? '-' }}
+                        <td class="p-2 text-[13px] text-gray-900 text-left">
+                            @if ($credit->customer_credit_status == \App\Models\CustomerCredit::UNPAID_STATUS)
+                                <span>-</span>
+                            @else
+                                {{ $credit->customer_credit_payment_date }}
+                            @endif
                         </td>
-                        <td class="p-2 text-[13px] text-gray-900 text-left font-medium">
+                        <td class="p-2 text-[13px] text-gray-900 text-left">
                             @if ($credit->customer_credit_status == \App\Models\CustomerCredit::UNPAID_STATUS)
                                 <button title="Lunasi Hutang" type="button"
                                     class="creditPayment px-[6px] py-[2px] border rounded-md border-green-500 cursor-pointer hover:bg-green-500 hover:text-white text-green-500"
@@ -100,28 +118,36 @@
                             @endif
                         </td>
                     </tr>
+
+                    @php
+                        $total += $credit->customer_credit;
+                    @endphp
                 @empty
                     <tr>
-                        <td colspan="6" class="p-2 text-sm text-gray-900 text-left font-medium tracking-wide">
+                        <td colspan="6" class="p-2 text-sm text-gray-900 text-left tracking-wide">
                             Tidak ada data hutang / credit.
                         </td>
                     </tr>
                 @endforelse
             </tbody>
+            @if ($customer->credits)
+                <tfoot>
+                    <tr class="border-b border-b-gray-200">
+                        <td colspan="2" class="p-2 text-[13px] tracking-wider bg-gray-100 text-center font-medium">Total</td>
+                        <td class="p-2 text-left text-[13px] tracking-wider bg-gray-100 font-medium">Rp {{ number_format($total) }}</td>
+                        <td colspan="3" class="p-2 text-left text-[13px] tracking-wider bg-gray-100"></td>
+                    </tr>
+                </tfoot>
+            @endif
         </table>
-
-        <a href="{{ route('customer.index') }}"
-            class="px-4 py-2 rounded-lg border border-gray-300 text-sm tracking-wide transition duration-200 hover:bg-gray-200">
-            Kembali
-        </a>
     </div>
 @endsection
 
 @push('scripts')
     <script type="module">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $(document).on('click', '.creditPayment',
-                function() {
+                function () {
                     const creditId = $(this).data('id');
 
                     Swal.fire({
@@ -147,7 +173,7 @@
                                 data: {
                                     creditId: creditId
                                 },
-                                success: function(result) {
+                                success: function (result) {
                                     if (result) {
                                         Swal.fire({
                                             icon: 'success',

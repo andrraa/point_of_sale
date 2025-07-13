@@ -18,6 +18,9 @@
                 margin: 0;
             }
 
+            @page { margin: 0; }
+            body { margin: 1.6cm; }
+
             #modal-container,
             #modal-container * {
                 visibility: visible !important;
