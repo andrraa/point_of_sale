@@ -721,6 +721,8 @@
             $(document).on('click', '#cancel-print-button', function() {
                 $('#modal-container').addClass('hidden').removeClass('flex');
                 $('#modal-card').html('');
+                focusStockCode();
+                toggleFullscreen();
             });
 
             $(document).on('click', '#print-button', function() {
