@@ -49,8 +49,20 @@
 
 <body class="h-dvh bg-gray-200 flex flex-col pb-4">
     {{-- DATETIME --}}
-    <div class="px-4 pt-3 pb-1">
-        <div class="h-12 w-full bg-blue-500 relative flex items-center justify-between px-4 shadow-lg rounded-xl">
+    <div class="px-4 pt-3 pb-1 flex items-center gap-4">
+        <div class="bg-white shadow-lg border flex items-center gap-2 rounded-full py-1 px-2 border-gray-200">
+            <div class="bg-blue-500 w-6 h-6 flex items-center justify-center rounded-full">
+                <i class="fa-solid fa-user text-white"></i>
+            </div>
+
+            <div>
+                <h1 class="text-sm font-medium tracking-wider text-blue-500 capitalize">
+                    {{ Session::get('user')['full_name'] }}
+                </h1>
+            </div>
+        </div>
+
+        <div class="h-12 bg-blue-500 relative flex items-center justify-between px-4 shadow-lg rounded-xl grow">
             <div>
                 <h1 class="font-bold uppercase text-white/80 tracking-wide">
                     {{ $store->store_name }} # Telp: {{ $store->store_phone_number }}
@@ -92,6 +104,7 @@
                         'name' => 'stock_code',
                         'value' => null,
                         'placeholder' => 'Scan / Masukkan Kode Produk',
+                        'class' => '!border-2 focus:!border-2 !py-1.5',
                     ]" />
                 </div>
 
