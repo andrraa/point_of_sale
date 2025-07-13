@@ -11,7 +11,7 @@
             body {
                 margin: 0 !important;
                 padding: 0 !important;
-                font-size: 10px !important;
+                font-size: 8px !important;
                 line-height: 1.3 !important;
                 color: black !important;
             }
@@ -31,13 +31,12 @@
                 top: 0 !important;
                 left: 0 !important;
                 width: 52mm !important;
-                /* Aman di semua printer 58mm */
                 padding: 0 !important;
                 margin: 0 auto !important;
                 background: white !important;
                 box-shadow: none !important;
                 display: block !important;
-                font-size: 10px !important;
+                font-size: 8px !important;
                 line-height: 1.3 !important;
                 overflow: hidden !important;
             }
@@ -62,7 +61,7 @@
             th,
             div,
             span {
-                font-size: 10px !important;
+                font-size: 8px !important;
                 line-height: 1.3 !important;
             }
 

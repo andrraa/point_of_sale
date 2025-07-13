@@ -21,7 +21,7 @@
             body {
                 margin: 0 !important;
                 padding: 0 !important;
-                font-size: 10px !important;
+                font-size: 8px !important;
                 line-height: 1.3 !important;
                 color: black !important;
             }
@@ -47,7 +47,7 @@
                 background: white !important;
                 box-shadow: none !important;
                 display: block !important;
-                font-size: 10px !important;
+                font-size: 8px !important;
                 line-height: 1.3 !important;
                 overflow: hidden !important;
             }
@@ -72,7 +72,7 @@
             th,
             div,
             span {
-                font-size: 10px !important;
+                font-size: 8px !important;
                 line-height: 1.3 !important;
             }
 
@@ -271,7 +271,7 @@
     <div id="modal-container"
         class="fixed inset-0 bg-gray-600/50 overflow-y-auto h-full w-full items-center justify-center hidden">
         <div id="modal-card"
-            class="relative mx-auto p-4 border border-gray-300 w-full max-w-[400px] shadow-lg rounded-lg bg-white">
+            class="relative mx-auto p-4 border border-gray-300 w-[200px] shadow-lg rounded-lg bg-white">
         </div>
     </div>
 
