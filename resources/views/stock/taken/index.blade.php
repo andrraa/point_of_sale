@@ -145,7 +145,7 @@
                     },
                 ],
                 columnDefs: [{
-                    target: [0, -1],
+                    target: [0],
                     searchable: false,
                     orderable: false
                 }],
