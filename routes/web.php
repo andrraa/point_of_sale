@@ -7,7 +7,6 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegionController;
-use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SaleDetailController;
 use App\Http\Controllers\StockController;
@@ -94,15 +93,6 @@ Route::middleware('auth')->group(function () {
             // DESTROY CATEGORY & SUBCATEGORY
             Route::delete('category/{category}', 'deleteCategory')
                 ->name('category.delete');
-        });
-
-        // REPORT
-        Route::controller(ReportController::class)->group(function () {
-            Route::get('report', 'index')->name('report');
-            Route::prefix('report')->group(function () {
-                Route::post('sales', 'sales')->name('report.sales');
-                Route::post('purchase', 'purchase')->name('report.purchase');
-            });
         });
 
         // CUSTOMER
