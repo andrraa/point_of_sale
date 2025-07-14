@@ -53,18 +53,19 @@
             <thead class="!text-[13px] !tracking-wide text-left">
                 <tr>
                     <th class="p-3 bg-gray-100 w-[50px]">#</th>
-                    <th class="p-3 bg-gray-100 w-[100px]">Kode Stok</th>
+                    <th class="p-3 bg-gray-100">Kode Stok</th>
                     <th class="p-3 bg-gray-100">Nama Stok</th>
-                    <th class="p-3 bg-gray-100 w-[50px]">Jumlah</th>
-                    <th class="p-3 bg-gray-100 w-[120px]">Harga</th>
-                    <th class="p-3 bg-gray-100 w-[120px]">Tanggal</th>
-                    <th class="p-3 bg-gray-100 w-[100px]">Pengguna</th>
+                    <th class="p-3 bg-gray-100">Kategori</th>
+                    <th class="p-3 bg-gray-100">Jumlah</th>
+                    <th class="p-3 bg-gray-100">Harga</th>
+                    <th class="p-3 bg-gray-100">Tanggal</th>
+                    <th class="p-3 bg-gray-100">Pengguna</th>
                     <th class="p-3 bg-gray-100">Deskripsi</th>
                 </tr>
             </thead>
             <tfoot class="!text-[13px] !tracking-wide !font-medium bg-gray-100">
                 <tr>
-                    <td colspan="3" class="p-2 !text-center">Total</td>
+                    <td colspan="4" class="p-2 !text-center">Total</td>
                     <td id="total_stock_all" class="p-2"></td>
                     <td colspan="4" id="total_stock_purchase_price" class="p-2"></td>
                 </tr>
@@ -98,6 +99,9 @@
                         d.category_id = $('#filter').val()
                     }
                 },
+                // order: [
+                //     [3, 'asc']
+                // ],
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
@@ -111,6 +115,11 @@
                         data: 'stock_taken_stock_name',
                         name: 'stock_taken_stock_name',
                         class: 'tracking-wide !text-xs !text-gray-900 line-clamp-1'
+                    },
+                    {
+                        data: 'category.category_name',
+                        name: 'category.category_name',
+                        class: 'tracking-wide !text-xs !text-gray-900'
                     },
                     {
                         data: 'stock_taken_quantity',

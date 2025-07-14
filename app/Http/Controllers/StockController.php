@@ -27,6 +27,8 @@ class StockController
     public function index(Request $request): View|JsonResponse
     {
         if ($request->ajax()) {
+            $category = $request->input('category_id');
+
             $stocks = Stock::with('category')
                 ->select([
                     'stock_id',
@@ -37,11 +39,12 @@ class StockController
                     'stock_out',
                     'stock_category_id',
                     'stock_purchase_price'
-                ]);
-
-            if ($request->filled('category_id')) {
-                $stocks->where('stock_category_id', $request->category_id);
-            }
+                ])
+                ->when(
+                    $category !== 'all',
+                    fn($q)
+                    => $q->where('stock_category_id', $category)
+                );
 
             $totalStockAll = (clone $stocks)->sum('stock_total');
             $totalStockOut = (clone $stocks)->sum('stock_out');
@@ -67,7 +70,7 @@ class StockController
                 ->toJson();
         }
 
-        $categories = Category::getItemCategories();
+        $categories = Category::getItemCategories()->prepend('Semua Kategori', 'all');
 
         return view('stock.index', compact('categories'));
     }

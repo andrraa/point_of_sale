@@ -24,17 +24,20 @@ class SupplierController
     public function index(Request $request): View|JsonResponse
     {
         if ($request->ajax()) {
+            $region = $request->input('region_id');
+
             $suppliers = Supplier::with('region')
                 ->select([
                     'supplier_id',
                     'supplier_code',
                     'supplier_name',
                     'supplier_region_id'
-                ]);
-
-            if ($request->filled('region_id')) {
-                $suppliers->where('supplier_region_id', $request->region_id);
-            }
+                ])
+                ->when(
+                    $region !== 'all',
+                    fn($q)
+                    => $q->where('supplier_region_id', $region)
+                );
 
             return DataTables::of($suppliers)
                 ->addIndexColumn()
@@ -46,7 +49,7 @@ class SupplierController
                 ->toJson();
         }
 
-        $regions = Region::getRegionDropdown();
+        $regions = Region::getRegionDropdown()->prepend('Semua Kategori', 'all');
 
         return view('supplier.index', compact('regions'));
     }

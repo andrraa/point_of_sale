@@ -30,7 +30,9 @@ class StockTakenController
     public function index(Request $request): View|JsonResponse
     {
         if ($request->ajax()) {
-            $takens = StockTaken::with(['stock', 'user'])
+            $category = $request->input('category_id');
+
+            $takens = StockTaken::with(['stock', 'user', 'category'])
                 ->select([
                     'stock_taken_id',
                     'stock_taken_stock_code',
@@ -41,11 +43,12 @@ class StockTakenController
                     'stock_taken_user_id',
                     'stock_taken_category_id',
                     'created_at'
-                ]);
-
-            if ($request->filled('category_id')) {
-                $takens->where('stock_taken_category_id', $request->category_id);
-            }
+                ])
+                ->when(
+                    $category !== 'all',
+                    fn($q)
+                    => $q->where('stock_taken_category_id', $category)
+                );
 
             $totalStockAll = (clone $takens)->sum('stock_taken_quantity');
             $totalStockPurchasePrice = (new StockTaken())
@@ -63,10 +66,12 @@ class StockTakenController
                 ->toJson();
         }
 
-        $categories = Category::getItemCategories();
+        $categories = Category::getItemCategories()->prepend('Semua Kategori', 'all');
 
-        $validator = $this->validationService->generateValidation(StockTakenRequest::class, '#form-stock-taken');
-        $reportValidator = $this->validationService->generateValidation(StockTakenReportRequest::class, '#form-report');
+        $validator = $this->validationService
+            ->generateValidation(StockTakenRequest::class, '#form-stock-taken');
+        $reportValidator = $this->validationService
+            ->generateValidation(StockTakenReportRequest::class, '#form-report');
 
         return view('stock.taken.index', compact([
             'categories',

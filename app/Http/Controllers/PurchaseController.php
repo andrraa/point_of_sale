@@ -34,6 +34,9 @@ class PurchaseController
     public function index(Request $request): View|JsonResponse
     {
         if ($request->ajax()) {
+            $startDate = $request->input('start_date') ?: now()->toDateString();
+            $endDate = $request->input('end_date') ?: now()->toDateString();
+
             $purchases = Purchase::with([
                 'supplier',
                 'region',
@@ -45,7 +48,10 @@ class PurchaseController
                     'purchase_region_id',
                     'purchase_supplier_id',
                     'created_at'
-                ]);
+                ])
+                ->whereDate('created_at', '>=', $startDate)
+                ->whereDate('created_at', '<=', $endDate)
+                ->orderByDesc('created_at');
 
             return DataTables::of($purchases)
                 ->addIndexColumn()

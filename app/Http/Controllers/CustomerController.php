@@ -28,6 +28,8 @@ class CustomerController
     public function index(Request $request): View|JsonResponse
     {
         if ($request->ajax()) {
+            $category = $request->input('category_id');
+
             $customers = Customer::with([
                 'category',
                 'region'
@@ -39,11 +41,12 @@ class CustomerController
                     'customer_name',
                     'customer_credit_limit',
                     'customer_status'
-                ]);
-
-            if ($request->filled('category_id')) {
-                $customers->where('customer_category_id', $request->category_id);
-            }
+                ])
+                ->when(
+                    $category !== 'all',
+                    fn($q)
+                    => $q->where('customer_category_id', $category)
+                );
 
             return DataTables::of($customers)
                 ->addIndexColumn()
@@ -56,7 +59,7 @@ class CustomerController
                 ->toJson();
         }
 
-        $categories = Category::getCustomerCategories();
+        $categories = Category::getCustomerCategories()->prepend('Semua Kategori', 'all');
 
         return view('customer.index', compact('categories'));
     }

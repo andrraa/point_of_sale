@@ -11,7 +11,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -115,11 +114,11 @@ class SaleController
             ]);
 
             StockLog::create([
-                'stock_log_stock_id'   => $stock->stock_id,
-                'stock_log_quantity'   => $detail->sale_detail_quantity,
+                'stock_log_stock_id' => $stock->stock_id,
+                'stock_log_quantity' => $detail->sale_detail_quantity,
                 'stock_log_description' => 'Penyesuaian karena penghapusan penjualan',
-                'stock_log_status'     => StockLog::IN_STATUS,
-                'stock_log_user_id'    => $user->user_id,
+                'stock_log_status' => StockLog::IN_STATUS,
+                'stock_log_user_id' => $user->user_id,
             ]);
         }
 

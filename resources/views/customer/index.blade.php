@@ -62,6 +62,9 @@
                         d.category_id = $('#filter').val()
                     }
                 },
+                order: [
+                    [2, 'asc']
+                ],
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
