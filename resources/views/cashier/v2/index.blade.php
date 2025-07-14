@@ -199,15 +199,31 @@
             let total = 0;
             let change = 0;
 
+            let lastEnterTime = 0;
+
             $('#stock_code').on('keydown', function(e) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
 
-                    const code = $(this).val().trim();
-                    const customerId = $('#cart_customer').val();
+                    const now = Date.now();
+                    const timeDiff = now - lastEnterTime;
 
-                    if (code !== '') {
-                        searchProduct(code, customerId);
+                    lastEnterTime = now;
+
+                    if (timeDiff < 400) {
+                        if (cart.length > 0) {
+
+                            payment();
+                        } else {
+                            errorAlert('Keranjang Kosong!.');
+                        }
+                    } else {
+                        const code = $(this).val().trim();
+                        const customerId = $('#cart_customer').val();
+
+                        if (code !== '') {
+                            searchProduct(code, customerId);
+                        }
                     }
                 }
             });
@@ -496,8 +512,15 @@
                 $('#modal-customer-pay').val('').focus();
             }
 
+            let justOpenModal = false;
+
             function openModal() {
                 $('#modal-pay').removeClass('hidden').addClass('flex');
+                justOpenModal = true;
+
+                setTimeout(() => {
+                    justOpenModal = false;
+                }, 500)
             }
 
             function closeModal() {
@@ -618,6 +641,22 @@
                     // F6
                     e.preventDefault();
                     payment();
+                }
+
+                if ($('#modal-pay').hasClass('flex')) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+
+                        if (justOpenModal) {
+                            return;
+                        }
+
+                        $('#modal-pay-confirm').click();
+                    } else if (e.key === 'Escape') {
+                        e.preventDefault();
+                        closeModal();
+                        focusStockCode();
+                    }
                 }
             });
             // END LISTENER (F ROW)
