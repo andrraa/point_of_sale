@@ -53,6 +53,16 @@ class PurchaseController
                 ->whereDate('created_at', '<=', $endDate)
                 ->orderByDesc('created_at');
 
+            $clonedPurchases = (clone $purchases)->get();
+
+            $totalQuantity = $clonedPurchases->sum(
+                fn($purchase) => $purchase->details->sum('purchase_detail_quantity')
+            );
+
+            $totalPrice = $clonedPurchases->sum(
+                fn($purchase) => $purchase->details->sum('purchase_detail_total_price')
+            );
+
             return DataTables::of($purchases)
                 ->addIndexColumn()
                 ->escapeColumns()
@@ -63,14 +73,15 @@ class PurchaseController
                 ->addColumn('total_items', function ($purchase) {
                     $itemCount = $purchase->details->count();
                     $totalQuantity = $purchase->details->sum('purchase_detail_quantity');
-
                     return "{$itemCount} barang ({$totalQuantity} pcs)";
                 })
                 ->addColumn('total_price', function ($purchase) {
-                    return $purchase->details->sum(function ($detail) {
-                        return $detail->purchase_detail_quantity * ($detail->stock->stock_purchase_price ?? 0);
-                    });
+                    return $purchase->details->sum('purchase_detail_total_price');
                 })
+                ->with([
+                    'total_price' => $totalPrice,
+                    'total_quantity' => $totalQuantity
+                ])
                 ->toJson();
         }
 

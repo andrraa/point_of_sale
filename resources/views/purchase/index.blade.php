@@ -60,6 +60,14 @@
                     <th class="p-3 bg-gray-100">Aksi</th>
                 </tr>
             </thead>
+            <tfoot class="!text-[13px] tracking-wide">
+                <tr>
+                    <td colspan="4" class="p-3 bg-gray-100 !text-center font-medium">Total</td>
+                    <td id="total-quantity" class="p-3 bg-gray-100 font-medium"></td>
+                    <td id="total-price" class="p-3 bg-gray-100 font-medium"></td>
+                    <td colspan="2" class="p-3 bg-gray-100"></td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 
@@ -146,7 +154,17 @@
                     target: [0, -1, 4, 5],
                     searchable: false,
                     orderable: false
-                }]
+                }],
+                drawCallback: function(settings) {
+                    const json = settings.json;
+                    const quantity = json.total_quantity;
+                    const price = json.total_price;
+
+                    if (json) {
+                        $('#total-quantity').html(`${quantity} pcs`);
+                        $('#total-price').html(`Rp ${customFunction.formatNumberToRupiah(price)}`);
+                    }
+                }
             });
 
             $('#filter-button').on('click', function() {
