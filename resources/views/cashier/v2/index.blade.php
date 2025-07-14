@@ -9,124 +9,8 @@
 
     <title>Kasir - Point of Sale</title>
 
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/css/print.css'])
 
-    <style>
-        @media print {
-            @page {
-                size: 58mm auto;
-                margin: 0;
-            }
-
-            body {
-                margin: 0 !important;
-                padding: 0 !important;
-                font-size: 8px !important;
-                line-height: 1.3 !important;
-                color: black !important;
-            }
-
-            body * {
-                visibility: hidden !important;
-                box-sizing: border-box;
-            }
-
-            #modal-container,
-            #modal-container * {
-                visibility: visible !important;
-            }
-
-            #modal-container {
-                position: absolute !important;
-                top: 0 !important;
-                left: 0 !important;
-                width: 52mm !important;
-                /* Aman di semua printer 58mm */
-                padding: 0 !important;
-                margin: 0 auto !important;
-                background: white !important;
-                box-shadow: none !important;
-                display: block !important;
-                font-size: 8px !important;
-                line-height: 1.3 !important;
-                overflow: hidden !important;
-            }
-
-            #modal-card {
-                all: unset;
-                width: 100% !important;
-            }
-
-            .no-print {
-                display: none !important;
-            }
-
-            h1,
-            h2,
-            h3,
-            h4,
-            h5,
-            h6,
-            p,
-            td,
-            th,
-            div,
-            span {
-                font-size: 8px !important;
-                line-height: 1.3 !important;
-            }
-
-            img {
-                max-width: 100% !important;
-                height: auto !important;
-            }
-
-            table {
-                width: 100% !important;
-                border-collapse: collapse !important;
-            }
-
-            .border-t {
-                border-top: 1px dashed black !important;
-            }
-
-            .my-1 {
-                margin-top: 4px !important;
-                margin-bottom: 4px !important;
-            }
-
-            .text-center {
-                text-align: center !important;
-            }
-
-            .uppercase {
-                text-transform: uppercase !important;
-            }
-
-            .flex {
-                display: flex !important;
-            }
-
-            .justify-between {
-                justify-content: space-between !important;
-            }
-
-            .items-center {
-                align-items: center !important;
-            }
-
-            #modal-container h1,
-            #modal-container h2,
-            #modal-container h3,
-            #modal-container td,
-            #modal-container div,
-            #modal-container span,
-            #modal-container p {
-                font-size: 10px !important;
-                line-height: 1.3 !important;
-            }
-        }
-    </style>
 </head>
 
 <body class="h-dvh bg-gray-200 flex flex-col pb-4">
@@ -282,7 +166,7 @@
     <div id="modal-container"
         class="fixed inset-0 bg-gray-600/50 overflow-y-auto h-full w-full items-center justify-center hidden">
         <div id="modal-card"
-            class="relative mx-auto p-4 border border-gray-300 w-[200px] shadow-lg rounded-lg bg-white">
+            class="relative mx-auto p-4 border border-gray-300 w-[219px] shadow-lg rounded-lg bg-white">
         </div>
     </div>
 
