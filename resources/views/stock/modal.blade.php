@@ -21,7 +21,7 @@
 
                 <select name="stock_category" id="stock_category"
                     class="w-full px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm outline-none cursor-pointer">
-                    <option value="all">Semua Kategori</option>
+                    {{-- <option value="all">Semua Kategori</option> --}}
                     @foreach ($categories as $key => $category)
                         <option value="{{ $key }}">({{ $key }}) {{ $category }}</option>
                     @endforeach
