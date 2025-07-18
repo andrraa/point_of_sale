@@ -72,6 +72,8 @@
                         'placeholder' => 'Scan / Masukkan Kode Produk',
                         'class' => '!border-2 focus:!border-2 !py-1.5',
                     ]" />
+
+                    <audio id="beep" src="{{ Vite::asset('resources/sound/beep.wav') }}" preload="auto"></audio>
                 </div>
 
                 <div class="flex items-center gap-2 w-1/3">
@@ -175,6 +177,7 @@
     <script type="module">
         $(document).ready(function() {
             const customFunction = window.CustomFunction;
+            const beep = $('#beep').get(0);
 
             $('.price-input').on('input',
                 function() {
@@ -222,6 +225,7 @@
                         const customerId = $('#cart_customer').val();
 
                         if (code !== '') {
+                            beep.play();
                             searchProduct(code, customerId);
                         }
                     }
