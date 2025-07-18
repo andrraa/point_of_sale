@@ -70,7 +70,7 @@ class SaleController
                 ->toJson();
         }
 
-        $categories = Category::getItemCategories();
+        $categories = Category::getItemCategories()->prepend('all', 'Semua Kategori');
 
         $validator = $this->validationService
             ->generateValidation(SaleReportRequest::class, '#form-report');

@@ -85,7 +85,7 @@ class PurchaseController
                 ->toJson();
         }
 
-        $categories = Category::getItemCategories();
+        $categories = Category::getItemCategories()->prepend('all', 'Semua Kategori');
 
         $validator = $this->validationService
             ->generateValidation(PurchaseReportRequest::class, '#form-report');
