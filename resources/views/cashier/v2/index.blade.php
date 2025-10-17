@@ -150,6 +150,11 @@
                     </a>
                 @endif
 
+                <div id="open-report-modal"
+                    class="h-24 w-full bg-green-500 text-white font-semibold uppercase rounded-xl shadow-lg hover:bg-green-600 transition-colors duration-300 flex items-center justify-center cursor-pointer tracking-wide">
+                    Laporan
+                </div>
+
                 <form action="{{ route('logout') }}" method="POST" class="w-full">
                     @csrf
                     <button type="submit"
@@ -163,6 +168,9 @@
 
     {{-- PAY MODAL --}}
     @include('cashier.v2.modal')
+
+    {{-- REPORT MODAL --}}
+    @include('cashier.v2.report')
 
     {{-- MODAL PRINT --}}
     <div id="modal-container"
@@ -733,6 +741,15 @@
 
             $(document).on('click', '#print-button', function() {
                 window.print();
+            });
+
+            // Report Modal
+            $('#open-report-modal').on('click', function() {
+                $('#modal-sale-report').removeClass('hidden').addClass('flex');
+            });
+
+            $('.modal-report-cancel').on('click', function() {
+                $('#modal-sale-report').removeClass('flex').addClass('hidden');
             });
         });
     </script>

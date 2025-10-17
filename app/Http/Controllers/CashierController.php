@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CheckoutRequest;
+use App\Models\Category;
 use App\Models\Customer;
 use App\Models\CustomerCredit;
 use App\Models\Sale;
@@ -23,8 +24,10 @@ class CashierController
     {
         $store = Store::first();
         $customers = Customer::getCustomerDropdown();
+        $categories = Category::getItemCategories()->prepend('Semua Kategori', 'all');
+        $today = Carbon::now()->toDateString();
 
-        return view('cashier.v2.index', compact(['store', 'customers']));
+        return view('cashier.v2.index', compact(['store', 'customers', 'categories', 'today']));
     }
 
     public function getItem(Request $request): JsonResponse
