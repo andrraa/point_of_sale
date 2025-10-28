@@ -6,6 +6,7 @@
     @php
         $grandTotalQty = 0;
         $grandTotalOut = 0;
+        $grandTotalRemaining = 0;
         $grandTotalPrice = 0;
     @endphp
 
@@ -24,6 +25,7 @@
                         <th style="width: 300px;">Barang</th>
                         <th style="width: 70px;">Stok Total</th>
                         <th style="width: 70px;">Stok Keluar</th>
+                        <th style="width: 70px;">Stok Sisa</th>
                         <th style="width: 70px;">Harga Beli</th>
                     </tr>
                 </thead>
@@ -31,20 +33,26 @@
                     @php
                         $totalQuantity = 0;
                         $totalOut = 0;
+                        $totalRemaining = 0;
                         $totalPrice = 0;
                     @endphp
 
                     @foreach ($stock as $i => $item)
+                        @php
+                            $remaining = $item->stock_in - $item->stock_out;
+                        @endphp
                         <tr>
                             <td>{{ $i + 1 }}</td>
                             <td>{{ "$item->stock_code - $item->stock_name" }}</td>
                             <td>{{ $item->stock_total }} pcs</td>
                             <td>{{ $item->stock_out }} pcs</td>
+                            <td>{{ $remaining }} pcs</td>
                             <td>Rp {{ number_format($item->stock_purchase_price) }}</td>
                         </tr>
                         @php
                             $totalQuantity += $item->stock_total;
                             $totalOut += $item->stock_out;
+                            $totalRemaining += $remaining;
                             $totalPrice += $item->stock_purchase_price * $item->stock_out;
                         @endphp
                     @endforeach
@@ -53,6 +61,7 @@
                         <td colspan="2" style="text-align: center;"><em>Subtotal</em></td>
                         <td><strong>{{ $totalQuantity }} pcs</strong></td>
                         <td><strong>{{ $totalOut }} pcs</strong></td>
+                        <td><strong>{{ $totalRemaining }} pcs</strong></td>
                         <td><strong>Rp {{ number_format($totalPrice) }}</strong></td>
                     </tr>
                 </tbody>
@@ -61,6 +70,7 @@
             @php
                 $grandTotalQty += $totalQuantity;
                 $grandTotalOut += $totalOut;
+                $grandTotalRemaining += $totalRemaining;
                 $grandTotalPrice += $totalPrice;
             @endphp
         </div>
@@ -75,6 +85,7 @@
                     <th style="text-align: left; width: 250px;">Total Keseluruhan</th>
                     <th style="text-align: right; width: 150px;">Stok Total</th>
                     <th style="text-align: right; width: 150px;">Stok Keluar</th>
+                    <th style="text-align: right; width: 150px;">Stok Sisa</th>
                     <th style="text-align: right; width: 200px;">Harga Beli</th>
                 </tr>
             </thead>
@@ -83,6 +94,7 @@
                     <td style="font-weight: bold;">Grand Total</td>
                     <td style="text-align: right; font-weight: bold;">{{ $grandTotalQty }} pcs</td>
                     <td style="text-align: right; font-weight: bold;">{{ $grandTotalOut }} pcs</td>
+                    <td style="text-align: right; font-weight: bold;">{{ $grandTotalRemaining }} pcs</td>
                     <td style="text-align: right; font-weight: bold;">
                         Rp {{ number_format($grandTotalPrice) }}
                     </td>

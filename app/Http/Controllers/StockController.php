@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -38,7 +39,8 @@ class StockController
                     'stock_in',
                     'stock_out',
                     'stock_category_id',
-                    'stock_purchase_price'
+                    'stock_purchase_price',
+                    DB::raw('(stock_in - stock_out) as stock_remaining')
                 ])
                 ->when(
                     $category !== 'all',
@@ -52,6 +54,12 @@ class StockController
                 ->where('stock_category_id', $request->category_id)
                 ->selectRaw('SUM(stock_purchase_price * stock_total) as total')
                 ->value('total');
+            $totalStockRemaining = Stock::when(
+                    $category !== 'all',
+                    fn($q) => $q->where('stock_category_id', $category)
+                )
+                ->selectRaw('SUM(stock_in - stock_out) as remaining')
+                ->value('remaining');
 
             return DataTables::of($stocks)
                 ->addIndexColumn()
@@ -65,7 +73,8 @@ class StockController
                 ->with([
                     'total_stock_all' => $totalStockAll,
                     'total_stock_out' => $totalStockOut,
-                    'total_stock_purchase_price' => $totalStockPurchasePrice
+                    'total_stock_purchase_price' => $totalStockPurchasePrice,
+                    'total_stock_remaining' => $totalStockRemaining
                 ])
                 ->toJson();
         }
