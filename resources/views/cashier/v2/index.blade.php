@@ -93,7 +93,7 @@
                 </div>
             </div>
 
-            <div class="mt-4 bg-white shadow-lg h-full overflow-y-auto rounded-xl">
+            <div class="mt-4 bg-white shadow-lg h-full overflow-y-auto rounded-xl min-h-[480px]">
                 <table id="product-table" class="min-w-full table">
                     <thead
                         class="text-[13px] text-left border-t border-b border-t-gray-300 border-b-gray-300 bg-gray-100">
@@ -117,7 +117,7 @@
         @php
             $buttons = [
                 ['id' => 'fullscreen-button', 'label' => 'Fullscreen (F1)'],
-                ['id' => 'scan-button', 'label' => 'Pindai (F2)'],
+                ['id' => 'scan-button', 'label' => 'Mode: Pindai (F2)'],
                 ['id' => 'calculate-button', 'label' => 'Hitung (F3)'],
                 ['id' => 'discount-button', 'label' => 'Cek Hutang (F4)'],
                 ['id' => 'reset-button', 'label' => 'Reset (F5)'],
@@ -223,7 +223,6 @@
 
                     if (timeDiff < 400) {
                         if (cart.length > 0) {
-
                             payment();
                         } else {
                             errorAlert('Keranjang Kosong!.');
@@ -234,7 +233,12 @@
 
                         if (code !== '') {
                             beep.play();
-                            searchProduct(code, customerId);
+                            
+                            if (currentMode === 'scan') {
+                                searchProduct(code, customerId);
+                            } else {
+                                searchOnly(code);
+                            }
                         }
                     }
                 }
@@ -636,6 +640,7 @@
                 } else if (e.which === 113) {
                     // F2
                     e.preventDefault();
+                    toggleMode();
                     focusStockCode();
                 } else if (e.which === 114) {
                     // F3
@@ -751,6 +756,57 @@
             $('.modal-report-cancel').on('click', function() {
                 $('#modal-sale-report').removeClass('flex').addClass('hidden');
             });
+
+            // LISTENER TO SEARCH
+            let currentMode = 'scan';
+            function toggleMode() {
+                currentMode = currentMode === 'scan' ? 'search' : 'scan';
+                updateModeButton();
+            }
+
+            function updateModeButton() {
+                const $btn = $('#scan-button');
+                if (currentMode === 'scan') {
+                    $btn.removeClass('bg-yellow-500').addClass('bg-blue-500');
+                    $btn.text('Mode: Pindai (F2)');
+                } else {
+                    $btn.removeClass('bg-blue-500').addClass('bg-yellow-500');
+                    $btn.text('Mode: Cari (F2)');
+                }
+            }
+
+            updateModeButton();
+
+            function searchOnly(keyword) {
+                $.ajax({
+                    url: '{{ route('cashier.search') }}',
+                    type: 'GET',
+                    data: { q: keyword },
+                    success: function(res) {
+                        Swal.fire({
+                            title: 'Hasil Pencarian Produk',
+                            html: res.html,
+                            width: 600,
+                            showConfirmButton: false,
+                            didOpen: () => {
+                                $('.search-result-item').on('click', function() {
+                                    $(this).addClass('bg-green-100');
+                                    setTimeout(() => {
+                                        const code = $(this).data('code');
+                                        const customerId = $('#cart_customer').val();
+                                        Swal.close();
+                                        beep.play();
+                                        searchProduct(code, customerId);
+                                    }, 150);
+                                });
+                            }
+                        });
+                    },
+                    error: function() {
+                        errorAlert('Gagal mencari produk!');
+                    }
+                });
+            }
         });
     </script>
 </body>

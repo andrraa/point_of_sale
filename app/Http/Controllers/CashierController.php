@@ -287,4 +287,22 @@ class CashierController
         return "INV/ORD/{$year}/{$month}/{$day}/"
             . str_pad($count + 1, 4, '0', STR_PAD_LEFT);
     }
+
+    public function search(Request $request): JsonResponse
+    {
+        $query = $request->q;
+
+        $results = Stock::where('stock_code', 'LIKE', "%$query%")
+            ->orWhere('stock_name', 'LIKE', "%$query%")
+            ->limit(10)
+            ->get();
+        
+        if ($results->isEmpty()) {
+            return response()->json(['html' => '<p>Tidak ada hasil ditemukan.</p>']);
+        }
+
+        $html = view('cashier.v2.search', compact('results'))->render();
+
+        return response()->json(['html' => $html]);
+    }
 }
