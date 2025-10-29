@@ -81,6 +81,7 @@
                                 'routePattern' => [
                                     'category.*',
                                     'customer-category.*',
+                                    'rack.*',
                                     'region.*',
                                     'user.*',
                                     'store.*',

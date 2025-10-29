@@ -11,12 +11,15 @@ class Category extends Model
 {
     public const CATEGORY_CUSTOMER = 0;
     public const ITEM_CATEGORY = 1;
+    public const RACK_CATEGORY = 2;
 
     public const ITEM_CACHE_KEY = 'item_category_cache';
     public const CUSTOMER_CACHE_KEY = 'customer_category_cache';
+    public const RACK_CACHE_KEY = 'rack_category_cache';
 
     public const ITEM_DROPDOWN_CACHE_KEY = 'item_dropdown_cache';
     public const CUSTOMER_DROPDOWN_CACHE_KEY = 'customer_dropdown_cache';
+    public const RACK_DROPDOWN_CACHE_KEY = 'rack_dropdown_cache';
 
     protected $table = 'tbl_categories';
 
@@ -48,6 +51,18 @@ class Category extends Model
             now()->addHours(2),
             fn() =>
             self::where('category_type', self::CATEGORY_CUSTOMER)
+                ->select(['category_id', 'category_name'])
+                ->pluck('category_name', 'category_id')
+        );
+    }
+
+    public static function getRackCategories(): Collection
+    {
+        return Cache::remember(
+            self::RACK_DROPDOWN_CACHE_KEY,
+            now()->addHours(2),
+            fn() =>
+            self::where('category_type', self::RACK_CATEGORY)
                 ->select(['category_id', 'category_name'])
                 ->pluck('category_name', 'category_id')
         );

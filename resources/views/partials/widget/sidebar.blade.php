@@ -14,6 +14,12 @@
                 'menuTitle' => 'Kategori Pelanggan',
             ],
             [
+                'routeUrl' => route('rack.index'),
+                'routePattern' => 'rack.*',
+                'menuIcon' => 'fa-solid fa-box',
+                'menuTitle' => 'Rak',
+            ],
+            [
                 'routeUrl' => route('region.index'),
                 'routePattern' => 'region.*',
                 'menuIcon' => 'fa-solid fa-location-dot',

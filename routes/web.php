@@ -90,6 +90,15 @@ Route::middleware('auth')->group(function () {
                     ->name('customer-category.update');
             });
 
+            // RACK CATEGORY
+            Route::get('rack', 'rackCategory')->name('rack.index');
+            Route::prefix('rack')->group(function() {
+                Route::get('create', 'createRackCategory')->name('rack.create');
+                Route::post('store', 'storeRackCategory')->name('rack.store');
+                Route::get('{category}/edit', 'editRackCategory')->name('rack.edit');
+                Route::put('{category}/updae', 'updateRackCategory')->name('rack.update');
+            });
+
             // DESTROY CATEGORY & SUBCATEGORY
             Route::delete('category/{category}', 'deleteCategory')
                 ->name('category.delete');

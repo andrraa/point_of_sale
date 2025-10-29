@@ -113,7 +113,6 @@ class CategoryController
         $validator = $this->validationService->generateValidation(CategoryRequest::class, '#form-create-subcategory');
 
         return view('settings.customer.create', compact(['validator']));
-
     }
 
     public function storeCategoryCustomer(CategoryRequest $request): RedirectResponse
@@ -155,7 +154,70 @@ class CategoryController
         Cache::forget(Category::CUSTOMER_DROPDOWN_CACHE_KEY);
     }
 
-    // DESTROY CATEGORY & SUBCATEGORY
+    // RACK CATEGORY
+    public function rackCategory(): View
+    {
+        $rackCategories = Cache::remember(Category::RACK_CACHE_KEY, 84600, function () {
+            return Category::query()
+                ->select([
+                    'category_id',
+                    'category_code',
+                    'category_name',
+                ])
+                ->where('category_type', Category::RACK_CATEGORY)
+                ->get();
+        });
+
+        return view('settings.rack.index', compact('rackCategories'));
+    }
+
+    public function createRackCategory(): View
+    {
+        $validator = $this->validationService->generateValidation(CategoryRequest::class, '#form-create-rack');
+
+        return view('settings.rack.create', compact(['validator']));
+    }
+
+    public function storeRackCategory(CategoryRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        Category::create($validated)
+            ? flash()->preset('create_success')
+            : flash()->preset('create_failed');
+
+        $this->clearRackCache();
+
+        return redirect()->route('rack.index');
+    }
+
+    public function editRackCategory(Category $category): View
+    {
+        $validator = $this->validationService->generateValidation(CategoryRequest::class, '#form-edit-rack');
+
+        return view('settings.rack.edit', compact(['category', 'validator']));
+    }
+
+    public function updateRackCategory(CategoryRequest $request, Category $category): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        $category->update($validated)
+            ? flash()->preset('update_success')
+            : flash()->preset('update_failed');
+
+        $this->clearRackCache();
+
+        return redirect()->route('rack.index');
+    }
+
+    private function clearRackCache(): void
+    {
+        Cache::forget(Category::RACK_CACHE_KEY);
+        Cache::forget(Category::RACK_DROPDOWN_CACHE_KEY);
+    }
+
+    // DESTROY CATEGORY & SUBCATEGORY & RACK CATEGORY
     public function deleteCategory(Category $category): JsonResponse
     {
         abort_unless(request()->expectsJson(), 403);
@@ -168,6 +230,20 @@ class CategoryController
         $category->category_type === Category::ITEM_CATEGORY
             ? $this->clearItemCache()
             : $this->clearCustomerCache();
+
+        switch ($category->category_type) {
+            case Category::ITEM_CATEGORY:
+                $this->clearItemCache();
+                break;
+            case Category::CATEGORY_CUSTOMER:
+                $this->clearCustomerCache();
+                break;
+            case Category::RACK_CATEGORY:
+                $this->clearRackCache();
+                break;
+            default:
+                break;
+        }
 
         $result = $category->delete();
 

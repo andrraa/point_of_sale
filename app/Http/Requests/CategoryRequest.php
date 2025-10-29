@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -42,7 +43,12 @@ class CategoryRequest extends FormRequest
     {
         $this->merge([
             'category_name' => strtoupper($this->category_name),
-            'category_type' => $this->category_type === 'Barang' ? 1 : 0
+            'category_type' => match ($this->category_type) {
+                'Barang' => Category::ITEM_CATEGORY,
+                'Pelanggan' => Category::CATEGORY_CUSTOMER,
+                'Rak' => Category::RACK_CATEGORY,
+                default => Category::CATEGORY_CUSTOMER,
+            },
         ]);
     }
 }
