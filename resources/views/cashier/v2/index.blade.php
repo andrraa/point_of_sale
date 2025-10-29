@@ -180,6 +180,41 @@
         </div>
     </div>
 
+    {{-- MODAL ALL PRODUCT --}}
+    <div id="modal-all-products"
+        class="fixed inset-0 bg-black/50 items-center justify-center hidden z-50">
+        <div class="bg-white min-w-lg max-w-6xl rounded-xl shadow-lg overflow-hidden">
+            <div class="p-4 border-b flex justify-between items-center">
+                <h2 class="text-xl font-bold">Daftar Produk</h2>
+                <button id="close-product-modal" class="text-gray-500 hover:text-red-500">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+
+            <div class="p-4 border-b bg-gray-50">
+                <input type="text" id="search-product-input"
+                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Cari produk..." />
+            </div>
+
+            <div class="p-4 max-h-[75vh] overflow-y-auto">
+                <table id="modal-product-table" class="w-full text-sm border-collapse">
+                    <thead class="bg-gray-100 text-left">
+                        <tr>
+                            <th class="p-2 border">Kode</th>
+                            <th class="p-2 border">Nama Produk</th>
+                            <th class="p-2 border text-center">Stok</th>
+                            <th class="p-2 border text-center w-24">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modal-product-body">
+                        <tr><td colspan="5" class="text-center p-4 text-gray-500">Memuat...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     @vite(['resources/js/app.js', 'resources/js/function.js'])
 
     <script type="module">
@@ -230,6 +265,11 @@
                     } else {
                         const code = $(this).val().trim();
                         const customerId = $('#cart_customer').val();
+
+                        if (code === '') {
+                            openProductModal();
+                            return;
+                        }
 
                         if (code !== '') {
                             beep.play();
@@ -807,6 +847,75 @@
                     }
                 });
             }
+
+            // ALL PRODUCT MODAL
+            function openProductModal() {
+                $('#modal-all-products').removeClass('hidden').addClass('flex');
+                $('#search-product-input').val('');
+                loadAllProducts();
+                setTimeout(() => $('#search-product-input').focus(), 300);
+            }
+
+            function closeProductModal() {
+                $('#modal-all-products').removeClass('flex').addClass('hidden');
+            }
+
+            $('#close-product-modal').on('click', closeProductModal);
+
+            function loadAllProducts(keyword = '') {
+                const $tbody = $('#modal-product-body');
+                $tbody.html('<tr><td colspan="5" class="text-center p-4 text-gray-500">Memuat data...</td></tr>');
+
+                $.ajax({
+                    url: "{{ route('cashier.get-products') }}",
+                    type: "GET",
+                    dataType: "json",
+                    data: { q: keyword },
+                    success: function(res) {
+                        if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+                            let rows = '';
+                            res.data.forEach(p => {
+                                rows += `
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="p-2 font-medium">${p.code}</td>
+                                        <td class="p-2">${p.name}</td>
+                                        <td class="p-2 text-center">${p.stock ?? 0}</td>
+                                        <td class="p-2 text-center">
+                                            <button class="add-product-btn bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600"
+                                                data-code="${p.code}">
+                                                Tambah
+                                            </button>
+                                        </td>
+                                    </tr>`;
+                            });
+                            $tbody.html(rows);
+                        } else {
+                            $tbody.html('<tr><td colspan="5" class="text-center p-4 text-gray-500">Tidak ada produk ditemukan.</td></tr>');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.responseText);
+                        $tbody.html('<tr><td colspan="5" class="text-center p-4 text-red-500">Gagal memuat data.</td></tr>');
+                    }
+                });
+            }
+
+            $(document).on('click', '.add-product-btn', function() {
+                const code = $(this).data('code');
+                const customerId = $('#cart_customer').val();
+                closeProductModal();
+                beep.play();
+                searchProduct(code, customerId);
+            });
+
+            let searchTimer;
+            $('#search-product-input').on('input', function() {
+                const keyword = $(this).val().trim();
+                clearTimeout(searchTimer);
+                searchTimer = setTimeout(() => {
+                    loadAllProducts(keyword);
+                }, 300);
+            });
         });
     </script>
 </body>

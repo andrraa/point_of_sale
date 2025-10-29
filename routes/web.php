@@ -138,6 +138,7 @@ Route::middleware('auth')->group(function () {
             Route::post('get-credit', 'getCredit')->name('cashier.get-credit');
             Route::post('checkout', 'checkout')->name('cashier.checkout');
             Route::get('search', 'search')->name('cashier.search');
+            Route::get('get-products', 'products')->name('cashier.get-products');
         });
     });
 });

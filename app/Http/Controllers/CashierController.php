@@ -305,4 +305,27 @@ class CashierController
 
         return response()->json(['html' => $html]);
     }
+
+    public function products(Request $request): JsonResponse
+    {
+        $search = $request->input('q');
+
+        $products = Stock::select(
+                'stock_code as code',
+                'stock_name as name',
+                'stock_total as stock'
+            )
+            ->when($search, function ($query, $search) {
+                $query->where('stock_name', 'like', "%{$search}%")
+                    ->orWhere('stock_code', 'like', "%{$search}%");
+            })
+            ->orderBy('stock_name')
+            ->limit(100)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $products
+        ]);
+    }
 }
