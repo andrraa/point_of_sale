@@ -91,7 +91,7 @@
                     }
                 },
                 order: [
-                    [3, 'asc']
+                    [1, 'asc']
                 ],
                 columns: [{
                         data: 'DT_RowIndex',
@@ -153,7 +153,7 @@
                     },
                 ],
                 columnDefs: [{
-                    target: [0, -1],
+                    target: [0, -1, 6],
                     searchable: false,
                     orderable: false
                 }],
