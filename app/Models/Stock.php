@@ -18,6 +18,7 @@ class Stock extends Model
         'stock_code',
         'stock_name',
         'stock_category_id',
+        'stock_rack_id',
         'stock_unit',
         'stock_purchase_price',
         'stock_sale_price_1',
@@ -49,6 +50,11 @@ class Stock extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'stock_category_id', 'category_id');
+    }
+
+    public function rack(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'stock_rack_id', 'category_id');
     }
 
     public function logs(): HasMany

@@ -31,10 +31,10 @@
 </div>
 
 <div class="grid grid-cols-3 gap-4 mb-3">
-    <div class="col-span-2">
+    <div>
         <x-form.label :props="[
             'for' => 'stock_category_id',
-            'label' => 'Stok Kategory',
+            'label' => 'Stok Kategori',
             'required' => true,
         ]" />
 
@@ -44,6 +44,21 @@
             'value' => old('stock_category_id', $stock->stock_category_id ?? null),
             'class' => 'w-full',
         ]" :options="$categories" />
+    </div>
+
+    <div>
+        <x-form.label :props="[
+            'for' => 'stock_rack_id',
+            'label' => 'Rak Kategori',
+            'required' => true,
+        ]" />
+
+        <x-form.select :props="[
+            'id' => 'stock_rack_id',
+            'name' => 'stock_rack_id',
+            'value' => old('stock_rack_id', $stock->stock_rack_id ?? null),
+            'class' => 'w-full',
+        ]" :options="$racks" />
     </div>
 
     <div>

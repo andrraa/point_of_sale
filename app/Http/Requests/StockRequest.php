@@ -32,6 +32,11 @@ class StockRequest extends FormRequest
                 'integer',
                 'exists:tbl_categories,category_id'
             ],
+            'stock_rack_id' => [
+                'nullable',
+                'integer',
+                'exists:tbl_categories,category_id'
+            ],
             'stock_unit' => [
                 'required',
                 'string',

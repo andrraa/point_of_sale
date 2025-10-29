@@ -26,7 +26,7 @@
         </button>
     </div>
 
-    <div class="bg-white rounded-xl shadow-lg border border-gray-200 mb-4 p-4">
+    <div class="bg-white rounded-xl shadow-lg border border-gray-200 mb-4 p-4 flex items-center gap-4">
         <div class="w-1/3">
             <x-form.label :props="[
                 'for' => 'filter',
@@ -41,6 +41,21 @@
                 'class' => 'w-full',
             ]" :options="$categories" />
         </div>
+
+        <div class="w-1/3">
+            <x-form.label :props="[
+                'for' => 'filterRack',
+                'label' => 'Filter Rak',
+                'required' => true,
+            ]" />
+
+            <x-form.select :props="[
+                'id' => 'filterRack',
+                'name' => 'filterRack',
+                'value' => null,
+                'class' => 'w-full',
+            ]" :options="$racks" />
+        </div>
     </div>
 
     <div class="bg-white rounded-xl shadow-lg p-4 border border-gray-200 overflow-x-auto">
@@ -51,6 +66,7 @@
                     <th class="p-3 bg-gray-100">Kode Stok</th>
                     <th class="p-3 bg-gray-100">Nama Stok</th>
                     <th class="p-3 bg-gray-100">Kategori</th>
+                    <th class="p-3 bg-gray-100">Rak</th>
                     <th class="p-3 bg-gray-100">Total Stok</th>
                     <th class="p-3 bg-gray-100">Stok Keluar</th>
                     <th class="p-3 bg-gray-100">Stok Sisa</th>
@@ -60,7 +76,7 @@
             </thead>
             <tfoot class="!text-[13px] !tracking-wide !font-medium bg-gray-100">
                 <tr>
-                    <td colspan="4" class="p-2 !text-center">Total</td>
+                    <td colspan="5" class="p-2 !text-center">Total</td>
                     <td id="total_stock_all" class="p-2"></td>
                     <td id="total_stock_out" class="p-2"></td>
                     <td id="total_stock_remaining" class="p-2"></td>
@@ -87,7 +103,8 @@
                 ajax: {
                     url: "{{ route('stock.index') }}",
                     data: function(d) {
-                        d.category_id = $('#filter').val()
+                        d.category_id = $('#filter').val(),
+                        d.rack_id = $('#filterRack').val();
                     }
                 },
                 order: [
@@ -110,6 +127,11 @@
                     {
                         data: 'category.category_name',
                         name: 'category.category_name',
+                        class: 'tracking-wide !text-xs !text-gray-900'
+                    },
+                    {
+                        data: 'rack.category_name',
+                        name: 'rack.category_name',
                         class: 'tracking-wide !text-xs !text-gray-900'
                     },
                     {
@@ -173,6 +195,10 @@
             });
 
             $('#filter').on('change', function() {
+                table.ajax.reload();
+            });
+
+            $('#filterRack').on('change', function() {
                 table.ajax.reload();
             });
 

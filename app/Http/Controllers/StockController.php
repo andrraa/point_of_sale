@@ -29,8 +29,9 @@ class StockController
     {
         if ($request->ajax()) {
             $category = $request->input('category_id');
+            $rack = $request->input('rack_id');
 
-            $stocks = Stock::with('category')
+            $stocks = Stock::with(['category', 'rack'])
                 ->select([
                     'stock_id',
                     'stock_code',
@@ -39,13 +40,17 @@ class StockController
                     'stock_in',
                     'stock_out',
                     'stock_category_id',
+                    'stock_rack_id',
                     'stock_purchase_price',
                     DB::raw('(stock_in - stock_out) as stock_remaining')
                 ])
                 ->when(
                     $category !== 'all',
-                    fn($q)
-                    => $q->where('stock_category_id', $category)
+                    fn($q) => $q->where('stock_category_id', $category)
+                )
+                ->when(
+                    $rack !== 'all',
+                    fn($q) => $q->where('stock_rack_id', $rack)
                 );
 
             $totalStockAll = (clone $stocks)->sum('stock_total');
@@ -81,7 +86,9 @@ class StockController
 
         $categories = Category::getItemCategories()->prepend('Semua Kategori', 'all');
 
-        return view('stock.index', compact('categories'));
+        $racks = Category::getRackCategories()->prepend('Semua Rak', 'all');
+
+        return view('stock.index', compact(['categories', 'racks']));
     }
 
     public function create(): View
@@ -91,7 +98,9 @@ class StockController
 
         $categories = Category::getItemCategories();
 
-        return view('stock.create', compact(['validator', 'categories']));
+        $racks = Category::getRackCategories();
+
+        return view('stock.create', compact(['validator', 'categories', 'racks']));
     }
 
     public function store(StockRequest $request): RedirectResponse
@@ -112,9 +121,11 @@ class StockController
 
         $categories = Category::getItemCategories();
 
+        $racks = Category::getRackCategories();
+
         $state = 'edit';
 
-        return view('stock.edit', compact(['stock', 'validator', 'categories', 'state']));
+        return view('stock.edit', compact(['stock', 'validator', 'categories', 'state', 'racks']));
     }
 
     public function update(StockRequest $request, Stock $stock): RedirectResponse
