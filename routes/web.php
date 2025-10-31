@@ -45,8 +45,6 @@ Route::middleware('auth')->group(function () {
             ->only(['update', 'destroy']);
         Route::get('sale/detail/{sale}', [SaleController::class, 'detail'])
             ->name('sale.detail');
-        Route::post('sale/report', [SaleController::class, 'report'])
-            ->name('sale.report');
 
         // STOCK
         Route::resource('stock', StockController::class)->except('show');
@@ -123,6 +121,9 @@ Route::middleware('auth')->group(function () {
         // STORE
         Route::resource('store', StoreController::class)->only(['index', 'store']);
     });
+
+    Route::post('sale/report', [SaleController::class, 'report'])
+            ->name('sale.report');
 
     // DASHBOARD
     Route::get('/', DashboardController::class)->name('dashboard');
