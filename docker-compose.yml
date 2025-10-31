@@ -13,21 +13,6 @@ services:
       - pos-network
       - proxy-net
 
-  webserver_pos:
-    image: nginx:alpine
-    container_name: pos-nginx
-    restart: unless-stopped
-    volumes:
-      - .:/var/www
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/certs:/etc/nginx/certs:ro
-      - pos-build:/var/www/public/build
-    networks:
-      - pos-network
-      - proxy-net
-    depends_on:
-      - app_pos
-
 networks:
   pos-network:
   proxy-net:
