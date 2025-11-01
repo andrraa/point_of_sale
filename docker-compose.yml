@@ -4,8 +4,6 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: denai_murah_app
-    environment:
-      APP_ENV: production
     volumes:
       - ./denai-murah:/var/www/denai-murah
     networks:
