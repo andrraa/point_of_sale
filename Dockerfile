@@ -1,14 +1,19 @@
+FROM node:20-alpine AS node_builder
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+RUN npm run build
+
 FROM php:8.4-fpm
 
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip \
-    pkg-config libsqlite3-dev \
-    libpng-dev libjpeg-dev libfreetype6-dev \
-    libxml2-dev libonig-dev \
-    nodejs npm \
+    git curl zip unzip libpng-dev libjpeg-dev libfreetype6-dev libonig-dev libxml2-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j"$(nproc)" pdo pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd \
-    && rm -rf /var/lib/apt/lists/*
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd \
+    && docker-php-ext-enable opcache
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -16,11 +21,13 @@ WORKDIR /var/www
 
 COPY . .
 
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+COPY --from=node_builder /app/public /var/www/public
+COPY --from=node_builder /app/node_modules /var/www/node_modules
 
-RUN npm install && npm run build
+RUN composer install --no-dev --optimize-autoloader
 
 RUN chown -R www-data:www-data /var/www
 
-EXPOSE 9001
+EXPOSE 9000
+
 CMD ["php-fpm"]
