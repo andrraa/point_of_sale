@@ -175,7 +175,7 @@
                     },
                 ],
                 columnDefs: [{
-                    target: [0, -1, 6],
+                    target: [0, -1, 7],
                     searchable: false,
                     orderable: false
                 }],
