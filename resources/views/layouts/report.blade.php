@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'Laporan')</title>
 
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+
     <style>
         body {
             font-family: Arial, sans-serif;

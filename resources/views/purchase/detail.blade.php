@@ -75,28 +75,30 @@
                             $totalEach = $detail['purchase_detail_price'] * $detail['purchase_detail_quantity'];
                         @endphp
 
-                        <tr class="{{ $loop->last ? 'border-b border-b-gray-100' : '' }}">
-                            <td class="p-2 tracking-wider !text-sm text-gray-900">
-                                {{ $detail['stock']['stock_code'] }}
-                            </td>
-                            <td class="p-2 tracking-wider !text-sm text-gray-900">
-                                {{ $detail['stock']['stock_name'] }}
-                            </td>
-                            <td class="p-2 tracking-wider !text-sm text-gray-900">
-                                Rp {{ number_format($detail['purchase_detail_price']) }}
-                            </td>
-                            <td class="p-2 tracking-wider !text-sm text-gray-900">
-                                {{ $detail['purchase_detail_quantity'] }} pcs
-                            </td>
-                            <td class="p-2 tracking-wider !text-sm text-gray-900">
-                                Rp
-                                {{ number_format($totalEach) }}
-                            </td>
-                        </tr>
+                        @if (isset($detail['stock']) && !empty($detail['stock']))
+                            <tr class="{{ $loop->last ? 'border-b border-b-gray-100' : '' }}">
+                                <td class="p-2 tracking-wider !text-sm text-gray-900">
+                                    {{ $detail['stock']['stock_code'] }}
+                                </td>
+                                <td class="p-2 tracking-wider !text-sm text-gray-900">
+                                    {{ $detail['stock']['stock_name'] }}
+                                </td>
+                                <td class="p-2 tracking-wider !text-sm text-gray-900">
+                                    Rp {{ number_format($detail['purchase_detail_price']) }}
+                                </td>
+                                <td class="p-2 tracking-wider !text-sm text-gray-900">
+                                    {{ $detail['purchase_detail_quantity'] }} pcs
+                                </td>
+                                <td class="p-2 tracking-wider !text-sm text-gray-900">
+                                    Rp
+                                    {{ number_format($totalEach) }}
+                                </td>
+                            </tr>
 
-                        @php
-                            $total += $totalEach;
-                        @endphp
+                            @php
+                                $total += $totalEach;
+                            @endphp
+                        @endif
                     @endforeach
                 </tbody>
                 <tfoot>

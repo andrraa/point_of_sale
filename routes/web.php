@@ -110,12 +110,13 @@ Route::middleware('auth')->group(function () {
             });
 
         // PURCHASE
-        Route::resource('purchase', PurchaseController::class)
-            ->except(['edit', 'update']);
+        Route::resource('purchase', PurchaseController::class);
         Route::prefix('purchase')->controller(PurchaseController::class)
             ->group(function () {
                 Route::post('get-item', 'getItem')->name('purchase.get.item');
                 Route::post('report', 'report')->name('purchase.report');
+                Route::post('update-item', 'updateItem')->name('purchase.update.item');
+                Route::post('delete-item', 'deleteItem')->name('purchase.delete.item');
             });
 
         // STORE

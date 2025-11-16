@@ -60,37 +60,39 @@
     ]" />
 </div>
 
-<div class="h-0.5 bg-gray-200 mt-4 mb-4"></div>
+@if (!isset($state))
+    <div class="h-0.5 bg-gray-200 mt-4 mb-4"></div>
 
-{{-- ITEMS --}}
-<div class="mb-4">
-    <h1 class="font-medium tracking-wide text-blue-500">Tambahkan Data Barang</h1>
-</div>
-
-<div class="grid grid-cols-3 gap-4 mb-4">
-    <div>
-        <x-form.input :props="[
-            'id' => 'item',
-            'name' => 'item',
-            'placeholder' => 'Masukkan kode produk',
-            'autofocus' => true,
-        ]" />
+    {{-- ITEMS --}}
+    <div class="mb-4">
+        <h1 class="font-medium tracking-wide text-blue-500">Tambahkan Data Barang</h1>
     </div>
 
-    <div>
-        <x-form.input :props="[
-            'id' => 'quantity',
-            'name' => 'quantity',
-            'class' => 'number-input',
-            'placeholder' => 'Masukkan Jumlah Barang (PCS)',
-            'value' => 1,
-        ]" />
-    </div>
+    <div class="grid grid-cols-3 gap-4 mb-4">
+        <div>
+            <x-form.input :props="[
+                'id' => 'item',
+                'name' => 'item',
+                'placeholder' => 'Masukkan kode produk',
+                'autofocus' => true,
+            ]" />
+        </div>
 
-    <div>
-        <button type="button" id="item-button"
-            class="px-4 py-[10px] border border-blue-500 rounded-md cursor-pointer text-blue-500 bg-white hover:bg-blue-500 hover:text-white font-medium transition duration-200">
-            Tambah Barang
-        </button>
+        <div>
+            <x-form.input :props="[
+                'id' => 'quantity',
+                'name' => 'quantity',
+                'class' => 'number-input',
+                'placeholder' => 'Masukkan Jumlah Barang (PCS)',
+                'value' => 1,
+            ]" />
+        </div>
+
+        <div>
+            <button type="button" id="item-button"
+                class="px-4 py-[10px] border border-blue-500 rounded-md cursor-pointer text-blue-500 bg-white hover:bg-blue-500 hover:text-white font-medium transition duration-200">
+                Tambah Barang
+            </button>
+        </div>
     </div>
-</div>
+@endif

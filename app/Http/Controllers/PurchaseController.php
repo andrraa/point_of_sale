@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PurchaseEditRequest;
 use App\Http\Requests\PurchaseReportRequest;
 use App\Http\Requests\PurchaseRequest;
 use App\Models\Category;
@@ -68,7 +69,8 @@ class PurchaseController
                 ->escapeColumns()
                 ->addColumn('actions', fn($purchase) => [
                     'detail' => route('purchase.show', $purchase->purchase_id),
-                    'delete' => route('purchase.destroy', $purchase->purchase_id)
+                    'delete' => route('purchase.destroy', $purchase->purchase_id),
+                    'edit' => route('purchase.edit', $purchase->purchase_id)
                 ])
                 ->addColumn('total_items', function ($purchase) {
                     $itemCount = $purchase->details->count();
@@ -205,9 +207,84 @@ class PurchaseController
         return view('purchase.detail', compact('purchase'));
     }
 
-    public function destroy(Purchase $purchase)
+    public function edit(Purchase $purchase): View
+    {
+        $validator = $this->validationService
+            ->generateValidation(PurchaseEditRequest::class, '#form-edit-purchase');
+
+        $regions = Region::getRegionDropdown();
+
+        $suppliers = Supplier::getSupplierDropdown();
+
+        $stocks = Stock::getStockDropdown();
+
+        $details = $purchase->details;
+
+        $state = "edit";
+
+        $purchaseDetailsHtml = '';
+        $index = 0;
+
+        foreach($details as $detail) {
+            $purchaseDetailsHtml .= view('purchase._data-edit')->with([
+                'data' => [
+                    'id' => $detail->stock->stock_id,
+                    'code' => $detail->stock->stock_code,
+                    'name' => $detail->stock->stock_name,
+                    'price' => $detail->stock->stock_purchase_price,
+                    'quantity' => $detail->purchase_detail_quantity,
+                    'total' => $detail->purchase_detail_quantity * $detail->stock->stock_purchase_price,
+                    'purchase_id' => $detail->purchase_detail_id
+                ],
+                'index' => $index
+            ])->render();
+
+            $index++;
+        }
+
+        return view('purchase.edit', compact([
+            'purchase', 'regions', 'suppliers', 'stocks', 'validator', 'purchaseDetailsHtml', 'state'
+        ]));
+    }
+
+    public function update(PurchaseEditRequest $request, Purchase $purchase): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        $purchase->update($validated);
+
+        flash()->preset('update_success');
+        return redirect()->route('purchase.index');
+    }
+
+    public function destroy(Purchase $purchase): JsonResponse
     {
         abort_unless(request()->expectsJson(), 403);
+
+        $details = $purchase->details;
+
+        foreach ($details as $detail) {
+            $stock = Stock::firstWhere('stock_id', $detail->purchase_detail_stock_id);
+
+            if ($stock) {
+                $stockTotal = (int) $stock->stock_total;
+                $stockIn = (int) $stock->stock_in;
+                $qty = (int) $detail->purchase_detail_quantity;
+
+                $stock->stock_total = $stockTotal - $qty;
+                $stock->stock_in = $stockIn - $qty;
+                $stock->save();
+            }
+
+            $detail->delete();
+        }
+
+        $purchase->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Purchase berhasil dihapus'
+        ]);
     }
 
     public function report(PurchaseReportRequest $request)
@@ -315,5 +392,50 @@ class PurchaseController
 
         return "INV/{$year}/{$month}/{$day}/"
             . str_pad($count + 1, 4, '0', STR_PAD_LEFT);
+    }
+
+    public function updateItem(Request $request): JsonResponse
+    {
+        $stock = Stock::firstWhere('stock_id', $request->stockId);
+        $item = PurchaseDetail::firstWhere('purchase_detail_id', $request->id);
+
+        $oldQty = $item->purchase_detail_quantity;
+        $newQty = $request->quantity;
+
+        $stock->stock_total -= $oldQty;
+        $stock->stock_in -= $oldQty;
+        $stock->stock_total += $newQty;
+        $stock->stock_in += $newQty;
+        $stock->save();
+
+        $item->purchase_detail_quantity = $request->quantity;
+        $item->purchase_detail_total_price = $request->quantity * $item->purchase_detail_price;
+        $item->save();
+
+        return response()->json([
+            'total' => $item->purchase_detail_total_price,
+            'total_rp' => number_format($item->purchase_detail_total_price, 0, ',', '.')
+        ]);
+    }
+
+    public function deleteItem(Request $request): JsonResponse
+    {
+        $item = PurchaseDetail::firstWhere('purchase_detail_id', $request->id);
+        $stock = Stock::firstWhere('stock_id', $request->stockId);
+
+        $stockTotal = (int) $stock->stock_total;
+        $stockIn = (int) $stock->stock_in;
+        $qty = (int) $item->purchase_detail_quantity;
+
+        $stock->stock_total = $stockTotal - $qty;
+        $stock->stock_in = $stockIn - $qty;
+
+        $stock->save();
+        $item->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Item berhasil dihapus'
+        ]);
     }
 }

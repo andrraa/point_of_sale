@@ -8,6 +8,8 @@
 
     <title>@yield('title', 'Point of Sale')</title>
 
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+
     @vite(['resources/css/app.css'])
     @stack('styles')
 </head>

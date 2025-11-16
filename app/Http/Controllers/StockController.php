@@ -33,16 +33,16 @@ class StockController
 
             $stocks = Stock::with(['category', 'rack'])
                 ->select([
-                    'stock_id',
-                    'stock_code',
-                    'stock_name',
-                    'stock_total',
-                    'stock_in',
-                    'stock_out',
-                    'stock_category_id',
-                    'stock_rack_id',
-                    'stock_purchase_price',
-                    DB::raw('(stock_in - stock_out) as stock_remaining')
+                    'tbl_stocks.stock_id',
+                    'tbl_stocks.stock_code',
+                    'tbl_stocks.stock_name',
+                    'tbl_stocks.stock_total',
+                    'tbl_stocks.stock_in',
+                    'tbl_stocks.stock_out',
+                    'tbl_stocks.stock_category_id',
+                    'tbl_stocks.stock_rack_id',
+                    'tbl_stocks.stock_purchase_price',
+                    DB::raw('(stock_total - ABS(stock_out)) as stock_remaining')
                 ])
                 ->when(
                     $category !== 'all',
@@ -63,7 +63,7 @@ class StockController
                     $category !== 'all',
                     fn($q) => $q->where('stock_category_id', $category)
                 )
-                ->selectRaw('SUM(stock_in - stock_out) as remaining')
+                ->selectRaw('SUM(stock_total - ABS(stock_out)) as remaining')
                 ->value('remaining');
 
             return DataTables::of($stocks)
