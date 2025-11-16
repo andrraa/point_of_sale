@@ -183,7 +183,7 @@
                     const json = settings.json;
 
                     if (json) {
-                        const price = json.total_stock_purchase_price;
+                        const price = json.total_stock_purchase_price ?? 0;
 
                         $('#total_stock_all').html(`${json.total_stock_all} pcs`);
                         $('#total_stock_out').html(`${json.total_stock_out} pcs`);

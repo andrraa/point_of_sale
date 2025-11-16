@@ -42,7 +42,10 @@ class StockController
                     'tbl_stocks.stock_category_id',
                     'tbl_stocks.stock_rack_id',
                     'tbl_stocks.stock_purchase_price',
-                    DB::raw('(stock_total - ABS(stock_out)) as stock_remaining')
+                    DB::raw("CASE 
+                            WHEN stock_total < 0 THEN stock_total + stock_out
+                            ELSE stock_total - ABS(stock_out)
+                        END AS stock_remaining")
                 ])
                 ->when(
                     $category !== 'all',
@@ -63,7 +66,12 @@ class StockController
                     $category !== 'all',
                     fn($q) => $q->where('stock_category_id', $category)
                 )
-                ->selectRaw('SUM(stock_total - ABS(stock_out)) as remaining')
+                ->selectRaw(
+                    "CASE 
+                            WHEN stock_total < 0 THEN stock_total + stock_out
+                            ELSE stock_total - ABS(stock_out)
+                        END AS remaining"
+                )
                 ->value('remaining');
 
             return DataTables::of($stocks)
