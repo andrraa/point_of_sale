@@ -42,10 +42,13 @@ class StockController
                     'tbl_stocks.stock_category_id',
                     'tbl_stocks.stock_rack_id',
                     'tbl_stocks.stock_purchase_price',
-                    DB::raw("CASE 
-                            WHEN stock_total < 0 THEN stock_total + stock_out
-                            ELSE stock_total - ABS(stock_out)
-                        END AS stock_remaining")
+                    DB::raw("(stock_total + stock_out) AS stock_awal"),
+                    DB::raw("
+                        CASE 
+                            WHEN stock_total < 0 THEN 0
+                            ELSE stock_total
+                        END AS stock_remaining
+                    ")
                 ])
                 ->when(
                     $category !== 'all',
@@ -56,23 +59,21 @@ class StockController
                     fn($q) => $q->where('stock_rack_id', $rack)
                 );
 
+            $totalStockAwal = (clone $stocks)->sum(DB::raw('stock_total + stock_out'));
             $totalStockAll = (clone $stocks)->sum('stock_total');
             $totalStockOut = (clone $stocks)->sum('stock_out');
-            $totalStockPurchasePrice = (new Stock)
-                ->where('stock_category_id', $request->category_id)
-                ->selectRaw('SUM(stock_purchase_price * stock_total) as total')
+            $totalStockPurchasePrice = Stock::when(
+                    $category !== 'all',
+                    fn($q) => $q->where('stock_category_id', $category)
+                )
+                ->selectRaw('SUM(stock_purchase_price * stock_total) AS total')
                 ->value('total');
             $totalStockRemaining = Stock::when(
                     $category !== 'all',
                     fn($q) => $q->where('stock_category_id', $category)
                 )
-                ->selectRaw(
-                    "CASE 
-                            WHEN stock_total < 0 THEN stock_total + stock_out
-                            ELSE stock_total - ABS(stock_out)
-                        END AS remaining"
-                )
-                ->value('remaining');
+                ->selectRaw("SUM(stock_total) AS total_remaining")
+                ->value('total_remaining');
 
             return DataTables::of($stocks)
                 ->addIndexColumn()
@@ -87,7 +88,8 @@ class StockController
                     'total_stock_all' => $totalStockAll,
                     'total_stock_out' => $totalStockOut,
                     'total_stock_purchase_price' => $totalStockPurchasePrice,
-                    'total_stock_remaining' => $totalStockRemaining
+                    'total_stock_remaining' => $totalStockRemaining,
+                    'total_stock_awal' => $totalStockAwal
                 ])
                 ->toJson();
         }
