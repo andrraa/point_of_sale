@@ -6,6 +6,7 @@ use App\Http\Requests\StockRequest;
 use App\Models\Category;
 use App\Models\Stock;
 use App\Models\StockLog;
+use App\Models\SupplierStock;
 use App\Services\ValidationService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
@@ -30,8 +31,9 @@ class StockController
         if ($request->ajax()) {
             $category = $request->input('category_id');
             $rack = $request->input('rack_id');
+            $supplier = $request->input('ss_id');
 
-            $stocks = Stock::with(['category', 'rack'])
+            $stocks = Stock::with(['category', 'rack', 'supplierStock'])
                 ->select([
                     'tbl_stocks.stock_id',
                     'tbl_stocks.stock_code',
@@ -42,6 +44,7 @@ class StockController
                     'tbl_stocks.stock_category_id',
                     'tbl_stocks.stock_rack_id',
                     'tbl_stocks.stock_purchase_price',
+                    'tbl_stocks.stock_ss_id',
                     DB::raw("(stock_total + stock_out) AS stock_awal"),
                     DB::raw("
                         CASE 
@@ -57,6 +60,10 @@ class StockController
                 ->when(
                     $rack !== 'all',
                     fn($q) => $q->where('stock_rack_id', $rack)
+                )
+                ->when(
+                    $supplier !== 'all',
+                    fn($q) => $q->where('stock_ss_id', $supplier)
                 );
 
             $totalStockAwal = (clone $stocks)->sum(DB::raw('stock_total + stock_out'));
@@ -98,7 +105,9 @@ class StockController
 
         $racks = Category::getRackCategories()->prepend('Semua Rak', 'all');
 
-        return view('stock.index', compact(['categories', 'racks']));
+        $suppliers = SupplierStock::getSupplierStockDropdown()->prepend('Semua Supplier', 'all');
+
+        return view('stock.index', compact(['categories', 'racks', 'suppliers']));
     }
 
     public function create(): View
@@ -110,7 +119,11 @@ class StockController
 
         $racks = Category::getRackCategories();
 
-        return view('stock.create', compact(['validator', 'categories', 'racks']));
+        $suppliers = SupplierStock::getSupplierStockDropdown();
+
+        return view('stock.create', compact([
+            'validator', 'categories', 'racks', 'suppliers'
+        ]));
     }
 
     public function store(StockRequest $request): RedirectResponse
@@ -133,9 +146,13 @@ class StockController
 
         $racks = Category::getRackCategories();
 
+        $suppliers = SupplierStock::getSupplierStockDropdown();
+
         $state = 'edit';
 
-        return view('stock.edit', compact(['stock', 'validator', 'categories', 'state', 'racks']));
+        return view('stock.edit', compact(
+            ['stock', 'validator', 'categories', 'state', 'racks', 'suppliers'
+        ]));
     }
 
     public function update(StockRequest $request, Stock $stock): RedirectResponse

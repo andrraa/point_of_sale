@@ -14,6 +14,7 @@ use App\Http\Controllers\StockLogController;
 use App\Http\Controllers\StockTakenController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\SupplierStockController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,9 @@ Route::middleware('auth')->group(function () {
         // SUPPLIER
         Route::resource('supplier', SupplierController::class)
             ->except('show');
+
+        // SUPPLIER STOCK
+        Route::resource('supplier-stock', SupplierStockController::class);
 
         // SALE
         Route::resource('sale', SaleController::class)

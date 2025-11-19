@@ -62,6 +62,11 @@ class StockRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'stock_ss_id' => [
+                'nullable',
+                'integer',
+                'exists:tbl_supplier_stocks,ss_id'
+            ]
         ];
     }
 

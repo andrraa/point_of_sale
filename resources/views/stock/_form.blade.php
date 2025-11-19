@@ -50,7 +50,6 @@
         <x-form.label :props="[
             'for' => 'stock_rack_id',
             'label' => 'Rak Kategori',
-            'required' => true,
         ]" />
 
         <x-form.select :props="[
@@ -94,7 +93,7 @@
     ]" />
 </div>
 
-<div class="grid grid-cols-3 gap-4 mb-6">
+<div class="grid grid-cols-3 gap-4 mb-3">
     <div>
         <x-form.label :props="[
             'for' => 'stock_sale_price_1',
@@ -142,6 +141,20 @@
             'value' => old('stock_sale_price_3', $stock->stock_sale_price_3 ?? 0),
         ]" />
     </div>
+</div>
+
+<div class="mb-6">
+    <x-form.label :props="[
+        'for' => 'stock_ss_id',
+        'label' => 'Supplier',
+    ]" />
+
+    <x-form.select :props="[
+        'id' => 'stock_ss_id',
+        'name' => 'stock_ss_id',
+        'value' => old('stock_ss_id', $stock->stock_ss_id ?? null),
+        'class' => 'w-full',
+    ]" :options="$suppliers" />
 </div>
 
 <div class="h-0.5 bg-gray-100 w-full mt-6 mb-6"></div>

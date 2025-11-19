@@ -48,6 +48,12 @@
                                 'navIcon' => 'fa-solid fa-boxes-stacked',
                                 'navTitle' => 'Stok Barang',
                             ],
+                            [
+                                'routeUrl' => route('supplier-stock.index'),
+                                'routePattern' => 'supplier-stock.*',
+                                'navIcon' => 'fa-solid fa-user-group',
+                                'navTitle' => 'Supplier Barang',
+                            ],
                         ],
                     ],
                     [

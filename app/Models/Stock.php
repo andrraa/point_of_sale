@@ -26,7 +26,8 @@ class Stock extends Model
         'stock_sale_price_3',
         'stock_total',
         'stock_in',
-        'stock_out'
+        'stock_out',
+        'stock_ss_id'
     ];
 
     public static function getStockDropdown(): Collection
@@ -65,5 +66,10 @@ class Stock extends Model
     public function takens(): HasMany
     {
         return $this->hasMany(StockTaken::class, 'stock_taken_stock_id', 'stock_id');
+    }
+
+    public function supplierStock(): BelongsTo
+    {
+        return $this->belongsTo(SupplierStock::class, 'stock_ss_id', 'ss_id');
     }
 }

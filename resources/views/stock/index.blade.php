@@ -56,6 +56,21 @@
                 'class' => 'w-full',
             ]" :options="$racks" />
         </div>
+
+        <div class="w-1/3">
+            <x-form.label :props="[
+                'for' => 'filterSS',
+                'label' => 'Filter Supplier',
+                'required' => true,
+            ]" />
+
+            <x-form.select :props="[
+                'id' => 'filterSS',
+                'name' => 'filterSS',
+                'value' => null,
+                'class' => 'w-full',
+            ]" :options="$suppliers" />
+        </div>
     </div>
 
     <div class="bg-white rounded-xl shadow-lg p-4 border border-gray-200 overflow-x-auto">
@@ -66,22 +81,21 @@
                     <th class="p-3 bg-gray-100">Kode Stok</th>
                     <th class="p-3 bg-gray-100">Nama Stok</th>
                     <th class="p-3 bg-gray-100">Kategori</th>
+                    <th class="p-3 bg-gray-100">Supplier</th>
                     <th class="p-3 bg-gray-100">Rak</th>
                     <th class="p-3 bg-gray-100">Stok Awal</th>
                     <th class="p-3 bg-gray-100">Stok Keluar</th>
                     <th class="p-3 bg-gray-100">Stok Akhir</th>
-                    <th class="p-3 bg-gray-100">Stok Sisa</th>
                     <th class="p-3 bg-gray-100">Harga Beli</th>
                     <th class="p-3 bg-gray-100">Aksi</th>
                 </tr>
             </thead>
             <tfoot class="!text-[13px] !tracking-wide !font-medium bg-gray-100">
                 <tr>
-                    <td colspan="5" class="p-2 !text-center">Total</td>
+                    <td colspan="6" class="p-2 !text-center">Total</td>
                     <td id="total_stock_awal" class="p-2"></td>
                     <td id="total_stock_out" class="p-2"></td>
                     <td id="total_stock_all" class="p-2"></td>
-                    <td id="total_stock_remaining" class="p-2"></td>
                     <td colspan="2" id="total_stock_purchase_price" class="p-2"></td>
                 </tr>
             </tfoot>
@@ -106,7 +120,8 @@
                     url: "{{ route('stock.index') }}",
                     data: function(d) {
                         d.category_id = $('#filter').val(),
-                        d.rack_id = $('#filterRack').val();
+                        d.rack_id = $('#filterRack').val(),
+                        d.ss_id = $('#filterSS').val();
                     }
                 },
                 order: [
@@ -130,6 +145,11 @@
                         data: 'category.category_name',
                         name: 'category.category_name',
                         class: 'tracking-wide !text-xs !text-gray-900'
+                    },
+                    {
+                        data: 'supplier_stock.ss_name',
+                        name: 'supplier_stock.ss_name',
+                        class: 'tracking-wide !text-xs !text-gray-900 line-clamp-1'
                     },
                     {
                         data: 'rack.category_name',
@@ -157,14 +177,6 @@
                         name: 'stock_total',
                         class: 'font-medium tracking-wide !text-xs !text-gray-900',
                         render: function(data) {
-                            return `${data} pcs`;
-                        }
-                    },
-                    {
-                        data: 'stock_remaining',
-                        name: 'stock_remaining',
-                        class: 'font-medium tracking-wide !text-xs !text-green-600',
-                        render: function(data, type, row) {
                             return `${data} pcs`;
                         }
                     },
@@ -200,7 +212,6 @@
                         $('#total_stock_awal').html(`${json.total_stock_awal} pcs`);
                         $('#total_stock_out').html(`${json.total_stock_out} pcs`);
                         $('#total_stock_all').html(`${json.total_stock_all} pcs`);
-                        $('#total_stock_remaining').html(`${json.total_stock_remaining} pcs`);
                         $('#total_stock_purchase_price').html(
                             `Rp ${customFunction.formatNumberToRupiah(price)}`);
                     }
@@ -212,6 +223,10 @@
             });
 
             $('#filterRack').on('change', function() {
+                table.ajax.reload();
+            });
+
+            $('#filterSS').on('change', function() {
                 table.ajax.reload();
             });
 
