@@ -197,7 +197,7 @@
                     },
                 ],
                 columnDefs: [{
-                    target: [0, -1, 5, 8],
+                    target: [0, -1, 4, 6],
                     searchable: false,
                     orderable: false
                 }],
