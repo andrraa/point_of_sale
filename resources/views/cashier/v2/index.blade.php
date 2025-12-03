@@ -13,30 +13,18 @@
 
 </head>
 
-<body class="h-dvh bg-gray-200 flex flex-col pb-4">
+<body class="h-screen bg-gray-200 flex flex-col pb-4">
     {{-- DATETIME --}}
-    <div class="px-4 pt-3 pb-1 flex items-center gap-4">
-        <div class="bg-white shadow-lg border flex items-center gap-2 rounded-full py-1 px-2 border-gray-200">
-            <div class="bg-blue-500 w-6 h-6 flex items-center justify-center rounded-full">
-                <i class="fa-solid fa-user text-white"></i>
-            </div>
-
+    <div class="px-4 pt-3 pb-1">
+        <div class="h-12 bg-blue-500 relative flex items-center justify-between px-4 shadow-md rounded-md">
             <div>
-                <h1 class="text-sm font-medium tracking-wider text-blue-500 capitalize">
-                    {{ Session::get('user')['full_name'] }}
-                </h1>
-            </div>
-        </div>
-
-        <div class="h-12 bg-blue-500 relative flex items-center justify-between px-4 shadow-lg rounded-xl grow">
-            <div>
-                <h1 class="font-bold uppercase text-white/80 tracking-wide">
+                <h1 class="font-medium uppercase text-white">
                     {{ $store->store_name }} # Telp: {{ $store->store_phone_number }}
                 </h1>
             </div>
 
             <div>
-                <span id="datetime" class="font-bold text-white/80 tracking-wide"></span>
+                <span id="datetime" class="font-medium text-white"></span>
             </div>
         </div>
     </div>
@@ -44,16 +32,12 @@
     {{-- TOTAL AND LOGO --}}
     <div class="h-32 w-full mt-2 px-4">
         {{-- TOTAL PRICE --}}
-        <div class="h-full bg-black/90 rounded-xl shadow-lg flex items-center justify-between px-8">
+        <div class="h-full bg-black/90 rounded-md shadow-md flex items-center justify-between px-8">
             <div>
-                <span class="text-white/80 text-2xl font-bold tracking-wide">
-                    TOTAL :
-                </span>
+                <span class="text-white text-2xl font-bold tracking-wide">TOTAL :</span>
             </div>
-
             <div>
-                <span id="total-price" class="text-orange-300 text-[50px] font-bold tracking-wide">
-                </span>
+                <span id="total-price" class="text-orange-300 text-[50px] font-bold tracking-wide"></span>
             </div>
         </div>
     </div>
@@ -61,7 +45,7 @@
     {{-- MAIN --}}
     <div class="h-[calc(100%-200px)] mt-4 px-4 flex gap-4 overflow-hidden">
         <div class="h-full flex-grow min-w-[400px] max-w-[calc(100%-400px)]">
-            <div class="flex items-center gap-4 bg-white/80 p-3 rounded-xl shadow-lg">
+            <div class="flex items-center gap-4 bg-white/80 p-3 rounded-md shadow-md">
                 <div class="w-1/3 flex items-center gap-2">
                     <label for="stock_code" class="font-medium uppercase text-sm">Kode</label>
 
@@ -93,7 +77,7 @@
                 </div>
             </div>
 
-            <div class="mt-4 bg-white shadow-lg h-full overflow-y-auto rounded-xl min-h-[480px]">
+            <div class="mt-4 bg-white shadow-md h-full overflow-y-auto rounded-md min-h-[480px]">
                 <table id="product-table" class="min-w-full table">
                     <thead
                         class="text-[13px] text-left border-t border-b border-t-gray-300 border-b-gray-300 bg-gray-100">
@@ -130,7 +114,7 @@
                 <div class="flex items-center gap-3 mb-3">
                     @foreach ($row as $button)
                         <div id="{{ $button['id'] }}"
-                            class="h-24 w-full bg-blue-500 text-white font-semibold uppercase rounded-xl shadow-lg hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center cursor-pointer tracking-wide">
+                            class="h-24 w-full bg-blue-500 text-white font-semibold uppercase rounded-md shadow-md hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center cursor-pointer tracking-wide">
                             {{ $button['label'] }}
                         </div>
                     @endforeach
@@ -145,20 +129,20 @@
 
                 @if ($isAdmin)
                     <a href="{{ route('dashboard') }}"
-                        class="h-24 w-full bg-blue-500 text-white font-semibold tracking-wide uppercase flex items-center justify-center cursor-pointer rounded-xl shadow-lg transiton-colors duration-300 hover:bg-blue-600">
+                        class="h-24 w-full bg-blue-500 text-white font-semibold tracking-wide uppercase flex items-center justify-center cursor-pointer rounded-md shadow-md transiton-colors duration-300 hover:bg-blue-600">
                         Admin
                     </a>
                 @endif
 
                 <div id="open-report-modal"
-                    class="h-24 w-full bg-green-500 text-white font-semibold uppercase rounded-xl shadow-lg hover:bg-green-600 transition-colors duration-300 flex items-center justify-center cursor-pointer tracking-wide">
+                    class="h-24 w-full bg-green-500 text-white font-semibold uppercase rounded-md shadow-md hover:bg-green-600 transition-colors duration-300 flex items-center justify-center cursor-pointer tracking-wide">
                     Laporan
                 </div>
 
                 <form action="{{ route('logout') }}" method="POST" class="w-full">
                     @csrf
                     <button type="submit"
-                        class="h-24 w-full bg-red-500 text-white font-semibold tracking-wide uppercase rounded-xl flex items-center justify-center cursor-pointer shadow-lg hover:bg-red-600 transition-colors duration-300">
+                        class="h-24 w-full bg-red-500 text-white font-semibold tracking-wide uppercase rounded-md flex items-center justify-center cursor-pointer shadow-md hover:bg-red-600 transition-colors duration-300">
                         Keluar
                     </button>
                 </form>
