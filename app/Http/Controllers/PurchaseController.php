@@ -382,6 +382,21 @@ class PurchaseController
         return view('purchase._data', compact(['data', 'index']));
     }
 
+    public function searchItem(Request $request): JsonResponse
+    {
+        $keyword = $request->q;
+        
+        $items = Stock::where('stock_name', 'like', "%{$keyword}%")
+            ->orWhere('stock_code', 'like', "%{$keyword}%")
+            ->limit(20)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $items
+        ]);
+    }
+
     private function generateInvoice(): string
     {
         $year = now()->format('Y');

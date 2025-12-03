@@ -117,6 +117,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('purchase', PurchaseController::class);
         Route::prefix('purchase')->controller(PurchaseController::class)
             ->group(function () {
+                Route::post('search-item', 'searchItem')->name('purchase.search.item');
                 Route::post('get-item', 'getItem')->name('purchase.get.item');
                 Route::post('report', 'report')->name('purchase.report');
                 Route::post('update-item', 'updateItem')->name('purchase.update.item');

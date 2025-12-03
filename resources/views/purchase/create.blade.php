@@ -42,6 +42,13 @@
     </script>
     <script type="module">
         $(document).ready(function() {
+            $('#item').on('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    $('#item-button').click();
+                }
+            });
+            
             const customFunction = window.CustomFunction;
 
             $('.number-input').on('input',
@@ -52,9 +59,77 @@
             $('#item-button').on('click', function(e) {
                 e.preventDefault();
 
-                const item = $('#item').val();
+                const item = $('#item').val().trim();
                 const quantity = $('#quantity').val();
 
+                if (item === '') {
+                    alert('Masukkan kode atau nama barang!');
+                    return;
+                }
+
+                if (isNaN(item)) {
+                    searchItemByName(item);
+                    return;
+                }
+
+                addItemByCode(item, quantity);
+            });
+
+            $(document).on('click', '.delete-row', function() {
+                $(this).closest('tr').remove();
+            });
+
+            function searchItemByName(keyword) {
+                $.ajax({
+                    url: "{{ route('purchase.search.item') }}",
+                    type: "POST",
+                    data: { q: keyword },
+                    success: function(res) {
+                        if (!res.data.length) {
+                            Swal.fire({
+                                title: 'Tidak ditemukan',
+                                text: 'Nama barang tidak cocok',
+                                icon: 'warning',
+                                timer: 1000
+                            });
+                            return;
+                        }
+
+                        let html = '<div class="text-left max-h-72 overflow-y-auto">';
+                        res.data.forEach(item => {
+                            html += `
+                                <div class="p-2 border-b hover:bg-blue-100 cursor-pointer select-item"
+                                    data-id="${item.stock_id}"
+                                    data-name="${item.stock_name}"
+                                    data-code="${item.stock_code}"
+                                    data-price="${item.stock_purchase_price}"
+                                >
+                                    <b>${item.stock_code}</b> - ${item.stock_name}
+                                </div>`;
+                        });
+                        html += '</div>';
+
+                        Swal.fire({
+                            title: 'Pilih Barang',
+                            html: html,
+                            showConfirmButton: false,
+                            width: 600,
+                        });
+
+                        $('.select-item').on('click', function() {
+                            const itemCode = $(this).data('code');
+                            const quantity = $('#quantity').val() || 1;
+
+                            Swal.close();
+
+                            $('#item').val(itemCode);
+                            $('#item-button').click();
+                        });
+                    }
+                });
+            }
+
+            function addItemByCode(item, quantity) {
                 if (quantity < 1 || quantity === '' || quantity === null) {
                     alert('Masukkan Jumlah Yang Valid!');
                     return;
@@ -87,11 +162,7 @@
                         }
                     },
                 });
-            });
-
-            $(document).on('click', '.delete-row', function() {
-                $(this).closest('tr').remove();
-            });
+            }
         });
     </script>
 @endpush
