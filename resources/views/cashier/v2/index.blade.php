@@ -248,37 +248,36 @@
             let lastEnterTime = 0;
 
             $('#stock_code').on('keydown', function(e) {
+                if (e.key === 'Enter' && e.ctrlKey) {
+                    e.preventDefault();
+
+                    if (cart.length > 0) {
+                        payment();
+                    } else {
+                        errorAlert('Keranjang kosong!');
+                    }
+
+                    return;
+                }
+
                 if (e.key === 'Enter') {
                     e.preventDefault();
 
-                    const now = Date.now();
-                    const timeDiff = now - lastEnterTime;
+                    const code = $(this).val().trim();
+                    const customerId = $('#cart_customer').val();
 
-                    lastEnterTime = now;
+                    if (code === '') {
+                        openProductModal();
+                        return;
+                    }
 
-                    if (timeDiff < 400) {
-                        if (cart.length > 0) {
-                            payment();
+                    if (code !== '') {
+                        beep.play();
+                        
+                        if (currentMode === 'scan') {
+                            searchProduct(code, customerId);
                         } else {
-                            errorAlert('Keranjang Kosong!.');
-                        }
-                    } else {
-                        const code = $(this).val().trim();
-                        const customerId = $('#cart_customer').val();
-
-                        if (code === '') {
-                            openProductModal();
-                            return;
-                        }
-
-                        if (code !== '') {
-                            beep.play();
-                            
-                            if (currentMode === 'scan') {
-                                searchProduct(code, customerId);
-                            } else {
-                                searchOnly(code);
-                            }
+                            searchOnly(code);
                         }
                     }
                 }
