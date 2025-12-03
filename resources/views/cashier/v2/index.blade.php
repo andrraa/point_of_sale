@@ -43,7 +43,7 @@
     </div>
 
     {{-- MAIN --}}
-    <div class="h-[calc(100%-200px)] mt-4 px-4 flex gap-4 overflow-hidden">
+    <div class="h-[calc(100%-200px)] mt-4 px-4 flex gap-4">
         <div class="h-full flex-grow min-w-[400px] max-w-[calc(100%-400px)]">
             <div class="flex items-center gap-4 bg-white/80 p-3 rounded-md shadow-md">
                 <div class="w-1/3 flex items-center gap-2">
@@ -77,7 +77,7 @@
                 </div>
             </div>
 
-            <div class="mt-4 bg-white shadow-md h-full overflow-y-auto rounded-md min-h-[480px]">
+            <div class="mt-4 bg-white shadow-md overflow-y-auto rounded-md h-[400px]">
                 <table id="product-table" class="min-w-full table">
                     <thead
                         class="text-[13px] text-left border-t border-b border-t-gray-300 border-b-gray-300 bg-gray-100">
