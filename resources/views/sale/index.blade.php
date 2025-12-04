@@ -139,7 +139,7 @@
                     },
                     {
                         data: 'created_at',
-                        name: 'created_at',
+                        name: 'tbl_sales.created_at',
                         class: 'tracking-wider !text-xs !text-gray-900',
                     },
                     {
@@ -182,7 +182,7 @@
                     },
                 ],
                 columnDefs: [{
-                    target: [0, -1],
+                    target: [0, 2, -1],
                     searchable: false,
                     orderable: false
                 }],

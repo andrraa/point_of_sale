@@ -29,43 +29,49 @@ class SaleController
     public function index(Request $request): View|JsonResponse
     {
         if ($request->ajax()) {
-            $startDate = $request->input('start_date') ?: now()->toDateString();
-            $endDate = $request->input('end_date') ?: now()->toDateString();
+            $startDate = Carbon::parse($request->input('start_date') ?: now())->startOfDay();
+            $endDate   = Carbon::parse($request->input('end_date') ?: now())->endOfDay();
 
-            $sales = Sale::with(
-                [
-                    'details',
-                    'customer',
-                    'credit'
-                ]
-            )->whereDate('created_at', '>=', $startDate)
-                ->whereDate('created_at', '<=', $endDate)
+            $sales = Sale::whereBetween('created_at', [$startDate, $endDate])
+                ->whereIn('sales_status', [Sale::PAID_STATUS, Sale::CREDIT_STATUS])
+                ->with([
+                    'customer:tbl_customers.customer_id,tbl_customers.customer_name',
+                    'details'
+                ])
                 ->orderByDesc('created_at');
 
-            $totalPrice = (clone $sales)->sum('sales_total_price');
-            $totalDebt = (clone $sales)->sum('sale_total_debt');
+            $summary = [
+                'total_sell_price' => 0,
+                'total_debt' => 0,
+            ];
+
+            $salesData = $sales->get();
+
+            foreach ($salesData as $sale) {
+                $summary['total_debt'] += $sale->sale_total_debt ?? 0;
+
+                foreach ($sale->details as $detail) {
+                    $summary['total_sell_price'] += $detail->sale_detail_price;
+                }
+            }
 
             return DataTables::of($sales)
                 ->addIndexColumn()
-                ->escapeColumns()
-                ->addColumn('actions', function ($sale) {
-                    $actions = [];
-
-                    if ($sale->sales_status != Sale::CANCEL_STATUS) {
-                        if ($sale->sales_status == Sale::PAID_STATUS) {
-                            $actions['edit'] = route('sale.edit', $sale->sales_id);
-                            $actions['delete'] = route('sale.destroy', $sale->sales_id);
-                        }
-                        $actions['print'] = $sale->sales_id;
-                        // $actions['detail'] = route('sale.show', $sale->sales_id);
-                    }
-
-                    return $actions;
-                })
                 ->addColumn('created_at', fn($sale) => $sale->formatted_created_at)
-                ->with([
-                    'total_price' => $totalPrice,
-                    'total_debt' => $totalDebt
+                ->addColumn('actions', function ($sale) { 
+                    $actions = []; 
+
+                    if ($sale->sales_status != Sale::CANCEL_STATUS) { 
+                        if ($sale->sales_status == Sale::PAID_STATUS) { 
+                            $actions['edit'] = route('sale.edit', $sale->sales_id); 
+                            $actions['delete'] = route('sale.destroy', $sale->sales_id); 
+                        } 
+                        
+                        $actions['print'] = $sale->sales_id; } return $actions; 
+                })
+                ->with([ 
+                    'total_price' => $summary['total_sell_price'], 
+                    'total_debt' => $summary['total_debt']
                 ])
                 ->toJson();
         }
@@ -164,7 +170,6 @@ class SaleController
                 $query->where('sales_status', SALE::PAID_STATUS)
                     ->orWhere('sales_status', SALE::CREDIT_STATUS);
             })
-            ->whereNull('deleted_at')
             ->whereHas('details', function ($query) use ($categoryId) {
                 if ($categoryId !== 'all') {
                     $query->where('sale_detail_stock_category_id', $categoryId);
@@ -244,8 +249,10 @@ class SaleController
         $endDate = Carbon::parse($endDate)->endOfDay();
 
         $sales = Sale::whereBetween('created_at', [$startDate, $endDate])
-            ->where('sales_status', SALE::PAID_STATUS)
-            ->whereNull('deleted_at')
+            ->where(function ($q) {
+                $q->where('sales_status', Sale::PAID_STATUS)
+                ->orWhere('sales_status', Sale::CREDIT_STATUS);
+            })
             ->whereHas('details', function ($query) use ($categoryId) {
                 if ($categoryId !== 'all') {
                     $query->where('sale_detail_stock_category_id', $categoryId);
