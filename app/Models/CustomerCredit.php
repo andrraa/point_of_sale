@@ -28,7 +28,7 @@ class CustomerCredit extends Model
 
     public function getCustomerCreditPaymentDateAttribute($value): string
     {
-        return Carbon::parse($value)->translatedFormat('d F Y, H:i');
+        return Carbon::parse($value)->setTimezone('Asia/Jakarta')->translatedFormat('d F Y, H:i');
     }
 
     public function customer(): BelongsTo

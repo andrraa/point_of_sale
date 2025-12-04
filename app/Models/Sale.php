@@ -32,7 +32,9 @@ class Sale extends Model
 
     public function getFormattedCreatedAtAttribute()
     {
-        return Carbon::parse($this->created_at)->translatedFormat('d F Y, H:i');
+        return Carbon::parse($this->created_at)
+            ->setTimezone('Asia/Jakarta')
+            ->translatedFormat('d F Y, H:i');
     }
 
     public function details(): HasMany

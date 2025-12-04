@@ -22,7 +22,7 @@ class Purchase extends Model
 
     public function getCreatedAtAttribute($value): string
     {
-        return Carbon::parse($value)->translatedFormat('d M Y, H:i');
+        return Carbon::parse($value)->setTimezone('Asia/Jakarta')->translatedFormat('d M Y, H:i');
     }
 
     public function supplier(): BelongsTo

@@ -281,7 +281,7 @@ class SaleController
 
             if (!isset($monthlyData[$monthKey])) {
                 $monthlyData[$monthKey] = [
-                    'month' => Carbon::parse($sale->created_at)->translatedFormat('F Y'),
+                    'month' => Carbon::parse($sale->created_at)->setTimezone('Asia/Jakarta')->translatedFormat('F Y'),
                     'total_quantity' => 0,
                     'total_sell_price' => 0,
                     'total_discount_amount' => 0,
