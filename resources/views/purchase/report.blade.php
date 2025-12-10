@@ -57,7 +57,7 @@
     @foreach ($datas as $data)
         <div class="report-wrapper">
             <h3>Invoice: {{ $data['invoice'] }}</h3>
-            <p>Tanggal: {{ \Carbon\Carbon::parse($data['date'])->format('d M Y') }}</p>
+            <p>Tanggal: {{ $data['date'] }}</p>
 
             @php
                 $totalSubQty = 0;

@@ -406,7 +406,7 @@ class PurchaseController
             return [
                 'invoice' => $purchase->purchase_invoice,
                 'description' => $purchase->purchase_description,
-                'date' => $purchase->created_at->format('d M Y'),
+                'date' => $purchase->created_at,
                 'supplier' => $purchase->supplier
                     ? $purchase->supplier->supplier_code . ' - ' . $purchase->supplier->supplier_name
                     : '-',
