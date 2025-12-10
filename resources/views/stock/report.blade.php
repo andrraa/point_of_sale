@@ -21,7 +21,7 @@
             <table style="width: 100%;">
                 <thead>
                     <tr>
-                        <th style="width: 10px;">No.</th>
+                        <th style="width: 70px;">No.</th>
                         <th style="width: 300px;">Barang</th>
                         <th style="width: 70px;">Stok Total</th>
                         <th style="width: 70px;">Stok Keluar</th>
