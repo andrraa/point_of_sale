@@ -380,7 +380,7 @@ class PurchaseController
                 'region:id,region_code,region_name',
                 'details' => function ($query) use ($category) {
                     $query->select([
-                        'purchase_id',
+                        'purchase_detail_id',
                         'purchase_detail_stock_code',
                         'purchase_detail_stock_name',
                         'purchase_detail_stock_category_name',
@@ -388,6 +388,7 @@ class PurchaseController
                         'purchase_detail_quantity',
                         'purchase_detail_total_price',
                         'purchase_detail_stock_category_id',
+                        'purchase_detail_purchase_id'
                     ]);
 
                     if ($category !== 'all') {
