@@ -2,6 +2,33 @@
 
 @section('title', 'Laporan Stok')
 
+@push('styles')
+    <style>
+        table {
+            page-break-inside: auto;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
+
+        thead {
+            display: table-header-group;
+        }
+
+        tfoot {
+            display: table-footer-group;
+        }
+
+        h2, h3 {
+            page-break-after: avoid;
+        }
+    </style>
+@endpush
+
 @section('content')
     @php
         $grandTotalQty = 0;
@@ -21,12 +48,12 @@
             <table style="width: 100%;">
                 <thead>
                     <tr>
-                        <th style="width: 70px;">No.</th>
+                        <th style="width: 50px;">No.</th>
                         <th style="width: 300px;">Barang</th>
                         <th style="width: 70px;">Stok Total</th>
                         <th style="width: 70px;">Stok Keluar</th>
                         <th style="width: 70px;">Stok Sisa</th>
-                        <th style="width: 70px;">Harga Beli</th>
+                        <th style="width: 90px;">Harga Beli</th>
                     </tr>
                 </thead>
                 <tbody>
