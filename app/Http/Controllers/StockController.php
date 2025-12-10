@@ -8,7 +8,7 @@ use App\Models\Stock;
 use App\Models\StockLog;
 use App\Models\SupplierStock;
 use App\Services\ValidationService;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -213,18 +213,34 @@ class StockController
     {
         $category = $request->input('stock_category');
 
-        $stocks = Stock::with('category')
-            ->when($category !== 'all', function ($query) use ($category) {
-                $query->where('stock_category_id', $category);
-            })
+        $stocks = Stock::query()
+            ->select([
+                'id',
+                'stock_code',
+                'stock_name',
+                'stock_total',
+                'stock_out',
+                'stock_in',
+                'stock_purchase_price',
+                'stock_category_id',
+            ])
+            ->with([
+                'category:id,category_name',
+            ])
+            ->when(
+                $category !== 'all',
+                fn($q) => $q->where('stock_category_id', $category)
+            )
+            ->orderBy('stock_category_id')
             ->get()
             ->groupBy('stock_category_id');
 
-        $pdf = Pdf::loadView(
-            'stock.report',
-            compact(['stocks'])
-        )
-            ->setPaper('a4', 'portrait');
+        $pdf = PDF::loadView('stock.report', compact('stocks'))
+            ->setPaper('a4')
+            ->setOption('margin-top', 10)
+            ->setOption('margin-bottom', 10)
+            ->setOption('margin-left', 10)
+            ->setOption('margin-right', 10);
 
         return $pdf->download("LAPORAN-STOK.pdf");
     }
