@@ -67,12 +67,12 @@
                     return;
                 }
 
-                if (isNaN(item)) {
-                    searchItemByName(item);
+                if (!isNaN(item)) {
+                    addItemByCode(item, quantity);
                     return;
                 }
 
-                addItemByCode(item, quantity);
+                searchItemByName(item);
             });
 
             $(document).on('click', '.delete-row', function() {
@@ -121,9 +121,9 @@
                             const quantity = $('#quantity').val() || 1;
 
                             Swal.close();
-
-                            $('#item').val(itemCode);
-                            $('#item-button').click();
+                            addItemByCode(itemCode, quantity);
+                            // $('#item').val(itemCode);
+                            // $('#item-button').click();
                         });
                     }
                 });
