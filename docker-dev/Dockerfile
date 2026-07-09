@@ -10,8 +10,6 @@ RUN apk add --no-cache \
     oniguruma-dev
 
 RUN docker-php-ext-install \
-    pdo_sqlite \
-    sqlite3 \
     zip \
     intl \
     mbstring \
