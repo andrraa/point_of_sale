@@ -45,7 +45,7 @@
                             <td>{{ $item['quantity'] }}</td>
                             <td>Rp {{ number_format($item['cost_price']) }}</td>
                             <td>Rp {{ number_format($item['total_price']) }}</td>
-                            <td>Rp {{ number_format($item['sell_price']) }}</td>
+                            <td>Rp {{ number_format($item['total_sell_price']) }}</td>
                             <td>Rp {{ number_format($item['discount_amount']) }}</td>
                             <td>Rp {{ number_format($item['profit']) }}</td>
                         </tr>
@@ -54,7 +54,7 @@
                             $totalSubQty += $item['quantity'];
                             $totalSubCostPrice += $item['cost_price'];
                             $totalSubGrossPrice += $item['total_price'];
-                            $totalSubNettoPrice += $item['sell_price'];
+                            $totalSubNettoPrice += $item['total_sell_price'];
                             $totalSubDiscountAmount += $item['discount_amount'];
                             $totalSubProfit += $item['profit'];
                         @endphp

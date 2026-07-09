@@ -190,6 +190,7 @@ class SaleController
                 'total_change' => $sale->sales_total_change,
                 'date' => $sale->created_at,
                 'items' => $sale->details->map(function ($detail) {
+                    $totalSellPrice = $detail->sale_detail_price * $detail->sale_detail_quantity;
                     $profit = ($detail->sale_detail_price - $detail->sale_detail_cost_price)
                         * $detail->sale_detail_quantity;
 
@@ -200,6 +201,7 @@ class SaleController
                         'category' => $detail->sale_detail_stock_category_name,
                         'cost_price' => $detail->sale_detail_cost_price,
                         'sell_price' => $detail->sale_detail_price,
+                        'total_sell_price' => $totalSellPrice,
                         'total_price' => $detail->sale_detail_total_price,
                         'discount' => $detail->sale_detail_discount,
                         'discount_amount' => $detail->sale_detail_discount_amount,
@@ -219,13 +221,18 @@ class SaleController
 
         foreach ($datas as $sale) {
             $totals['total_debt'] += $sale['total_debt'];
+            $saleTotalSellPrice = 0;
 
             foreach ($sale['items'] as $item) {
                 $totals['total_quantity'] += $item['quantity'];
-                $totals['total_sell_price'] += $item['sell_price'];
+                $saleTotalSellPrice += $item['total_sell_price'];
                 $totals['total_discount_amount'] += $item['discount_amount'];
                 $totals['total_profit'] += $item['profit'];
             }
+
+            $totals['total_sell_price'] += $categoryId === 'all'
+                ? $sale['total_price']
+                : $saleTotalSellPrice;
         }
 
         $formattedStartDate = Carbon::parse($startDate)->format('d M Y');
@@ -288,13 +295,18 @@ class SaleController
             }
 
             $monthlyData[$monthKey]['total_debt'] += $sale->sale_total_debt ?? 0;
+            $saleTotalSellPrice = 0;
 
             foreach ($sale->details as $detail) {
                 $monthlyData[$monthKey]['total_quantity'] += $detail->sale_detail_quantity;
-                $monthlyData[$monthKey]['total_sell_price'] += $detail->sale_detail_price;
+                $saleTotalSellPrice += $detail->sale_detail_price * $detail->sale_detail_quantity;
                 $monthlyData[$monthKey]['total_discount_amount'] += $detail->sale_detail_discount_amount;
                 $monthlyData[$monthKey]['total_profit'] += ($detail->sale_detail_price - $detail->sale_detail_cost_price) * $detail->sale_detail_quantity;
             }
+
+            $monthlyData[$monthKey]['total_sell_price'] += $categoryId === 'all'
+                ? $sale->sales_total_price
+                : $saleTotalSellPrice;
         }
 
         $formattedStartDate = Carbon::parse($startDate)->format('d M Y');
