@@ -49,10 +49,7 @@ class SaleController
 
             foreach ($salesData as $sale) {
                 $summary['total_debt'] += $sale->sale_total_debt ?? 0;
-
-                foreach ($sale->details as $detail) {
-                    $summary['total_sell_price'] += $detail->sale_detail_price;
-                }
+                $summary['total_sell_price'] += $sale->sales_total_price ?? 0;
             }
 
             return DataTables::of($sales)
