@@ -1,9 +1,10 @@
-<div class="grid grid-cols-2 gap-4 mb-3">
+<div class="grid grid-cols-2 gap-5 mb-4">
     <div>
         <x-form.label :props="[
             'for' => 'stock_code',
             'label' => 'Kode',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -19,6 +20,7 @@
             'for' => 'stock_name',
             'label' => 'Nama Barang',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -30,12 +32,13 @@
     </div>
 </div>
 
-<div class="grid grid-cols-3 gap-4 mb-3">
+<div class="grid grid-cols-3 gap-5 mb-4">
     <div>
         <x-form.label :props="[
             'for' => 'stock_category_id',
-            'label' => 'Stok Kategori',
+            'label' => 'Kategori',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.select :props="[
@@ -49,7 +52,8 @@
     <div>
         <x-form.label :props="[
             'for' => 'stock_rack_id',
-            'label' => 'Rak Kategori',
+            'label' => 'Rak',
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.select :props="[
@@ -63,8 +67,9 @@
     <div>
         <x-form.label :props="[
             'for' => 'stock_unit',
-            'label' => 'Stok Unit',
+            'label' => 'Unit',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -77,11 +82,12 @@
     </div>
 </div>
 
-<div class="mb-3">
+<div class="mb-4">
     <x-form.label :props="[
         'for' => 'stock_purchase_price',
         'label' => 'Harga Pokok / Harga Beli',
         'required' => true,
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -93,12 +99,13 @@
     ]" />
 </div>
 
-<div class="grid grid-cols-3 gap-4 mb-3">
+<div class="grid grid-cols-3 gap-5 mb-4">
     <div>
         <x-form.label :props="[
             'for' => 'stock_sale_price_1',
             'label' => 'Harga Jual 1 (Umum)',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -115,6 +122,7 @@
             'for' => 'stock_sale_price_2',
             'label' => 'Harga Jual 2 (Grosir)',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -131,6 +139,7 @@
             'for' => 'stock_sale_price_3',
             'label' => 'Harga Jual 3 (Gudang)',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -143,10 +152,11 @@
     </div>
 </div>
 
-<div class="mb-6">
+<div class="mb-4">
     <x-form.label :props="[
         'for' => 'stock_ss_id',
         'label' => 'Supplier',
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.select :props="[
@@ -157,7 +167,7 @@
     ]" :options="$suppliers" />
 </div>
 
-<div class="h-0.5 bg-gray-100 w-full mt-6 mb-6"></div>
+<div class="h-px bg-slate-200 w-full my-6"></div>
 
 <div class="mb-4 w-fit">
     <x-form.check :props="[
@@ -166,12 +176,13 @@
     ]" />
 </div>
 
-<div class="grid grid-cols-4 gap-4 mb-6">
+<div class="grid grid-cols-4 gap-5 mb-4">
     <div>
         <x-form.label :props="[
             'for' => 'stock_total',
             'label' => 'Stok Total',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[

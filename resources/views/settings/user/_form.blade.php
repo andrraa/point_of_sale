@@ -1,8 +1,9 @@
-<div class="mb-2">
+<div class="mb-4">
     <x-form.label :props="[
         'for' => 'full_name',
         'label' => 'Nama Lengkap',
         'required' => true,
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -13,11 +14,12 @@
     ]" />
 </div>
 
-<div class="mb-2">
+<div class="mb-4">
     <x-form.label :props="[
         'for' => 'username',
         'label' => 'Nama Pengguna',
         'required' => true,
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -28,10 +30,11 @@
     ]" />
 </div>
 
-<div class="mb-2">
+<div class="mb-4">
     <x-form.label :props="[
         'for' => 'password',
         'label' => 'Kata Sandi',
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -42,11 +45,12 @@
     ]" />
 </div>
 
-<div class="mb-6">
+<div class="mb-4">
     <x-form.label :props="[
         'for' => 'user_role_id',
         'label' => 'Akses',
         'required' => true,
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.select :props="[
@@ -57,7 +61,7 @@
     ]" :options="$roles" />
 </div>
 
-<div class="mb-6">
+<div class="mb-4">
     @php
         $statuses = collect([
             0 => 'Tidak Aktif',
@@ -69,6 +73,7 @@
         'for' => 'active',
         'label' => 'Status Pengguna',
         'required' => true,
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.select :props="[

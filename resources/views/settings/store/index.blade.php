@@ -5,23 +5,25 @@
 @section('navTitle', 'Toko')
 
 @section('content')
-    <div class="flex h-full max-h-full overflow-hidden gap-2">
+    <div class="flex h-full max-h-full overflow-hidden gap-4">
         @include('partials.widget.sidebar')
 
-        <main class="flex-1 h-full overflow-y-auto px-4 py-2">
-            <div class="mb-4">
-                <h1 class="font-medium tracking-wider text-blue-500">Informasi Toko</h1>
+        <main class="flex-1 h-full overflow-y-auto">
+            <div class="mb-5">
+                <h1 class="text-base font-semibold text-slate-800">Informasi Toko</h1>
+                <p class="text-sm text-slate-500 mt-0.5">Kelola informasi toko Anda</p>
             </div>
 
-            <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-lg">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
                 <form action="{{ route('store.store') }}" method="POST">
                     @csrf
 
-                    <div class="mb-2">
+                    <div class="mb-4">
                         <x-form.label :props="[
                             'for' => 'store_name',
                             'label' => 'Nama Toko',
                             'required' => true,
+                            'class' => 'text-slate-700 font-medium text-sm',
                         ]" />
 
                         <x-form.input :props="[
@@ -32,11 +34,12 @@
                         ]" />
                     </div>
 
-                    <div class="mb-2">
+                    <div class="mb-4">
                         <x-form.label :props="[
                             'for' => 'store_address',
                             'label' => 'Alamat Toko',
                             'required' => true,
+                            'class' => 'text-slate-700 font-medium text-sm',
                         ]" />
 
                         <x-form.input :props="[
@@ -47,11 +50,12 @@
                         ]" />
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-6">
                         <x-form.label :props="[
                             'for' => 'store_phone_number',
                             'label' => 'Nomor Telepon Toko',
                             'required' => true,
+                            'class' => 'text-slate-700 font-medium text-sm',
                         ]" />
 
                         <x-form.input :props="[

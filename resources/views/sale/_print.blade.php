@@ -128,7 +128,7 @@
     </button>
 
     <button type="button" id="print-button"
-        class="no-print w-full py-2 rounded-lg bg-blue-500 text-white text-sm hover:bg-blue-950 transition duration-200 tracking-wide cursor-pointer font-medium">
+        class="no-print w-full py-2 rounded-lg bg-slate-800 text-white text-sm hover:bg-slate-900 transition duration-200 tracking-wide cursor-pointer font-medium">
         Cetak
     </button>
 </div>

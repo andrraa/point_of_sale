@@ -5,22 +5,22 @@
 @section('navTitle', 'Pembelian Baru')
 
 @section('content')
-    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
         <form id="form-create-purchase" action="{{ route('purchase.store') }}" method="POST">
             @csrf
 
             @include('purchase._form')
 
-            <div class="pb-10 pt-2">
+            <div class="pb-10 pt-4">
                 <table class="w-full">
-                    <thead class="text-left text-sm bg-gray-100 font-medium">
+                    <thead class="text-left text-sm bg-slate-50 font-semibold text-slate-600">
                         <tr>
-                            <td class="p-2 tracking-wide">Kode Barang</td>
-                            <td class="p-2 tracking-wide">Nama Barang</td>
-                            <td class="p-2 tracking-wide">Harga Pokok</td>
-                            <td class="p-2 tracking-wide">Jumlah</td>
-                            <td class="p-2 tracking-wide">Total Harga</td>
-                            <td class="p-2 tracking-wide">Aksi</td>
+                            <td class="p-2 tracking-wide text-xs">Kode Barang</td>
+                            <td class="p-2 tracking-wide text-xs">Nama Barang</td>
+                            <td class="p-2 tracking-wide text-xs">Harga Pokok</td>
+                            <td class="p-2 tracking-wide text-xs">Jumlah</td>
+                            <td class="p-2 tracking-wide text-xs">Total Harga</td>
+                            <td class="p-2 tracking-wide text-xs">Aksi</td>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -48,7 +48,7 @@
                     $('#item-button').click();
                 }
             });
-            
+
             const customFunction = window.CustomFunction;
 
             $('.number-input').on('input',
@@ -98,7 +98,7 @@
                         let html = '<div class="text-left max-h-72 overflow-y-auto">';
                         res.data.forEach(item => {
                             html += `
-                                <div class="p-2 border-b hover:bg-blue-100 cursor-pointer select-item"
+                                <div class="p-2 border-b hover:bg-slate-100 cursor-pointer select-item"
                                     data-id="${item.stock_id}"
                                     data-name="${item.stock_name}"
                                     data-code="${item.stock_code}"
@@ -122,8 +122,6 @@
 
                             Swal.close();
                             addItemByCode(itemCode, quantity);
-                            // $('#item').val(itemCode);
-                            // $('#item-button').click();
                         });
                     }
                 });

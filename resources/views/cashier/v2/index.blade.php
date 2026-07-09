@@ -13,31 +13,30 @@
 
 </head>
 
-<body class="h-screen bg-gray-200 flex flex-col pb-4">
+<body class="h-screen bg-slate-100 flex flex-col pb-4">
     {{-- DATETIME --}}
     <div class="px-4 pt-3 pb-1">
-        <div class="h-12 bg-blue-500 relative flex items-center justify-between px-4 shadow-md rounded-md">
+        <div class="h-12 bg-gradient-to-r from-slate-900 to-blue-950 relative flex items-center justify-between px-4 shadow-md rounded-lg">
             <div>
-                <h1 class="font-medium uppercase text-white">
+                <h1 class="font-medium uppercase text-white text-sm tracking-wide">
                     {{ $store->store_name }} # Telp: {{ $store->store_phone_number }}
                 </h1>
             </div>
 
             <div>
-                <span id="datetime" class="font-medium text-white"></span>
+                <span id="datetime" class="font-medium text-white text-sm"></span>
             </div>
         </div>
     </div>
 
     {{-- TOTAL AND LOGO --}}
     <div class="h-32 w-full mt-2 px-4">
-        {{-- TOTAL PRICE --}}
-        <div class="h-full bg-black/90 rounded-md shadow-md flex items-center justify-between px-8">
+        <div class="h-full bg-gradient-to-r from-slate-900 to-slate-800 rounded-lg shadow-md flex items-center justify-between px-8">
             <div>
                 <span class="text-white text-2xl font-bold tracking-wide">TOTAL :</span>
             </div>
             <div>
-                <span id="total-price" class="text-orange-300 text-[50px] font-bold tracking-wide"></span>
+                <span id="total-price" class="text-amber-300 text-[50px] font-bold tracking-wide"></span>
             </div>
         </div>
     </div>
@@ -45,23 +44,23 @@
     {{-- MAIN --}}
     <div class="h-[calc(100%-200px)] mt-4 px-4 flex gap-4">
         <div class="h-full flex-grow min-w-[400px] max-w-[calc(100%-400px)]">
-            <div class="flex items-center gap-4 bg-white/80 p-3 rounded-md shadow-md">
+            <div class="flex items-center gap-4 bg-white p-3 rounded-lg shadow-sm border border-slate-200">
                 <div class="w-1/3 flex items-center gap-2">
-                    <label for="stock_code" class="font-medium uppercase text-sm">Kode</label>
+                    <label for="stock_code" class="font-medium uppercase text-sm text-slate-700">Kode</label>
 
                     <x-form.input :props="[
                         'id' => 'stock_code',
                         'name' => 'stock_code',
                         'value' => null,
                         'placeholder' => 'Scan / Masukkan Kode Produk',
-                        'class' => '!border-2 focus:!border-2 !py-1.5',
+                        'class' => '!border-2 !border-slate-300 focus:!border-slate-500 !py-1.5',
                     ]" />
 
                     <audio id="beep" src="{{ Vite::asset('resources/sound/beep.wav') }}" preload="auto"></audio>
                 </div>
 
                 <div class="flex items-center gap-2 w-1/3">
-                    <label for="stock_code" class="font-medium uppercase text-sm">Pelanggan</label>
+                    <label for="stock_code" class="font-medium uppercase text-sm text-slate-700">Pelanggan</label>
 
                     <x-form.select :props="[
                         'id' => 'cart_customer',
@@ -71,27 +70,26 @@
                     ]" :options="$customers" />
                 </div>
 
-                <div class="w-1/3 bg-black py-2.5 px-3 flex items-center justify-between rounded-md">
+                <div class="w-1/3 bg-gradient-to-r from-slate-900 to-slate-800 py-2.5 px-3 flex items-center justify-between rounded-lg shadow-sm">
                     <span class="text-sm uppercase text-white/80 font-bold">Hutang :</span>
-                    <span id="total-debt" class="text-orange-300 font-bold">0</span>
+                    <span id="total-debt" class="text-amber-300 font-bold">0</span>
                 </div>
             </div>
 
-            <div class="mt-4 bg-white shadow-md overflow-y-auto rounded-md h-[400px]">
+            <div class="mt-4 bg-white shadow-sm border border-slate-200 overflow-y-auto rounded-lg h-[400px]">
                 <table id="product-table" class="min-w-full table">
-                    <thead
-                        class="text-[13px] text-left border-t border-b border-t-gray-300 border-b-gray-300 bg-gray-100">
+                    <thead class="text-xs text-left border-t border-b border-slate-300 bg-slate-50 uppercase tracking-wide text-slate-600 font-semibold">
                         <tr>
-                            <th class="p-2 w-[100px] uppercase tracking-wide">Kode</th>
-                            <th class="p-2 uppercase tracking-wide">NAMA PRODUK</th>
-                            <th class="p-2 w-[90px] uppercase tracking-wide">JUMLAH</th>
-                            <th class="p-2 w-[90px] uppercase tracking-wide">HARGA</th>
-                            <th class="p-2 w-[90px] uppercase tracking-wide">DISKON %</th>
-                            <th class="p-2 w-[90px] uppercase tracking-wide">TOTAL</th>
+                            <th class="p-2 w-[100px]">Kode</th>
+                            <th class="p-2">NAMA PRODUK</th>
+                            <th class="p-2 w-[90px]">JUMLAH</th>
+                            <th class="p-2 w-[90px]">HARGA</th>
+                            <th class="p-2 w-[90px]">DISKON %</th>
+                            <th class="p-2 w-[90px]">TOTAL</th>
                             <th class="p-2 w-[50px]"></th>
                         </tr>
                     </thead>
-                    <tbody class="text-[13px] text-left">
+                    <tbody class="text-xs text-left">
                     </tbody>
                 </table>
             </div>
@@ -114,7 +112,7 @@
                 <div class="flex items-center gap-3 mb-3">
                     @foreach ($row as $button)
                         <div id="{{ $button['id'] }}"
-                            class="h-24 w-full bg-blue-500 text-white font-semibold uppercase rounded-md shadow-md hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center cursor-pointer tracking-wide">
+                            class="h-24 w-full bg-slate-800 text-white font-semibold uppercase rounded-lg shadow-md hover:bg-slate-700 transition-colors duration-200 flex items-center justify-center cursor-pointer tracking-wide text-sm">
                             {{ $button['label'] }}
                         </div>
                     @endforeach
@@ -129,20 +127,20 @@
 
                 @if ($isAdmin)
                     <a href="{{ route('dashboard') }}"
-                        class="h-24 w-full bg-blue-500 text-white font-semibold tracking-wide uppercase flex items-center justify-center cursor-pointer rounded-md shadow-md transiton-colors duration-300 hover:bg-blue-600">
+                        class="h-24 w-full bg-slate-800 text-white font-semibold tracking-wide uppercase flex items-center justify-center cursor-pointer rounded-lg shadow-md hover:bg-slate-700 transition-colors duration-200 text-sm">
                         Admin
                     </a>
                 @endif
 
                 <div id="open-report-modal"
-                    class="h-24 w-full bg-green-500 text-white font-semibold uppercase rounded-md shadow-md hover:bg-green-600 transition-colors duration-300 flex items-center justify-center cursor-pointer tracking-wide">
+                    class="h-24 w-full bg-emerald-600 text-white font-semibold uppercase rounded-lg shadow-md hover:bg-emerald-700 transition-colors duration-200 flex items-center justify-center cursor-pointer tracking-wide text-sm">
                     Laporan
                 </div>
 
                 <form action="{{ route('logout') }}" method="POST" class="w-full">
                     @csrf
                     <button type="submit"
-                        class="h-24 w-full bg-red-500 text-white font-semibold tracking-wide uppercase rounded-md flex items-center justify-center cursor-pointer shadow-md hover:bg-red-600 transition-colors duration-300">
+                        class="h-24 w-full bg-red-500 text-white font-semibold tracking-wide uppercase rounded-lg shadow-md flex items-center justify-center cursor-pointer hover:bg-red-600 transition-colors duration-200 text-sm">
                         Keluar
                     </button>
                 </form>
@@ -160,7 +158,7 @@
     <div id="modal-container"
         class="fixed inset-0 bg-gray-600/50 overflow-y-auto h-full w-full items-center justify-center hidden">
         <div id="modal-card"
-            class="relative mx-auto p-4 border border-gray-300 w-[219px] shadow-lg rounded-lg bg-white">
+            class="relative mx-auto p-4 border border-slate-300 w-[219px] shadow-lg rounded-xl bg-white">
         </div>
     </div>
 
@@ -168,31 +166,31 @@
     <div id="modal-all-products"
         class="fixed inset-0 bg-black/50 items-center justify-center hidden z-50">
         <div class="bg-white min-w-lg max-w-6xl rounded-xl shadow-lg overflow-hidden">
-            <div class="p-4 border-b flex justify-between items-center">
-                <h2 class="text-xl font-bold">Daftar Produk</h2>
-                <button id="close-product-modal" class="text-gray-500 hover:text-red-500">
+            <div class="p-4 border-b border-slate-200 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-slate-800">Daftar Produk</h2>
+                <button id="close-product-modal" class="text-slate-400 hover:text-red-500 transition-colors cursor-pointer">
                     <i class="fa-solid fa-xmark text-2xl"></i>
                 </button>
             </div>
 
-            <div class="p-4 border-b bg-gray-50">
+            <div class="p-4 border-b border-slate-200 bg-slate-50">
                 <input type="text" id="search-product-input"
-                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-slate-500"
                     placeholder="Cari produk..." />
             </div>
 
             <div class="p-4 max-h-[75vh] overflow-y-auto">
                 <table id="modal-product-table" class="w-full text-sm border-collapse">
-                    <thead class="bg-gray-100 text-left">
+                    <thead class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-600 font-semibold">
                         <tr>
-                            <th class="p-2 border">Kode</th>
-                            <th class="p-2 border">Nama Produk</th>
-                            <th class="p-2 border text-center">Stok</th>
-                            <th class="p-2 border text-center w-24">Aksi</th>
+                            <th class="p-2 border border-slate-200">Kode</th>
+                            <th class="p-2 border border-slate-200">Nama Produk</th>
+                            <th class="p-2 border border-slate-200 text-center">Stok</th>
+                            <th class="p-2 border border-slate-200 text-center w-24">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="modal-product-body">
-                        <tr><td colspan="5" class="text-center p-4 text-gray-500">Memuat...</td></tr>
+                        <tr><td colspan="5" class="text-center p-4 text-slate-400">Memuat...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -257,7 +255,7 @@
 
                     if (code !== '') {
                         beep.play();
-                        
+
                         if (currentMode === 'scan') {
                             searchProduct(code, customerId);
                         } else {
@@ -343,22 +341,22 @@
                                 $row.find('.quantity-input').val(existItem.quantity);
                             } else {
                                 $('#product-table tbody').append(`
-                                    <tr>
-                                        <td class="p-2 tracking-wide">${item.code}</td>
-                                        <td class="p-2 tracking-wide">${item.name}</td>
+                                    <tr class="border-b border-slate-100">
+                                        <td class="p-2 tracking-wide text-slate-700">${item.code}</td>
+                                        <td class="p-2 tracking-wide text-slate-700">${item.name}</td>
                                         <td class="p-2 tracking-wide">
-                                            <input type="number" class="quantity-input w-16 text-right p-1 rounded-sm border border-gray-200" 
+                                            <input type="number" class="quantity-input w-16 text-right p-1 rounded-sm border border-slate-300 text-slate-700"
                                                 data-code="${item.code}" min="1" max="${item.max_quantity}" value="${item.quantity}">
                                         </td>
-                                        <td class="p-2 tracking-wide">${item.price.toLocaleString()}</td>
+                                        <td class="p-2 tracking-wide text-slate-700">${item.price.toLocaleString()}</td>
                                         <td class="p-2 tracking-wide">
-                                            <input type="number" class="discount-input w-16 text-right p-1 rounded-sm border border-gray-200" 
+                                            <input type="number" class="discount-input w-16 text-right p-1 rounded-sm border border-slate-300 text-slate-700"
                                                 data-code="${item.code}" min="0" max="100" value="${item.discount}">
                                         </td>
-                                        <td class="p-2 tracking-wide total-cell">${(item.price * item.quantity).toLocaleString()}</td>
+                                        <td class="p-2 tracking-wide text-slate-700 total-cell">${(item.price * item.quantity).toLocaleString()}</td>
                                         <td class="p-2">
                                             <button class="delete-product cursor-pointer">
-                                                <i class="fa-solid fa-times text-red-500"></i>
+                                                <i class="fa-solid fa-times text-red-400 hover:text-red-600 transition-colors"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -790,10 +788,10 @@
             function updateModeButton() {
                 const $btn = $('#scan-button');
                 if (currentMode === 'scan') {
-                    $btn.removeClass('bg-yellow-500').addClass('bg-blue-500');
+                    $btn.removeClass('bg-yellow-500').addClass('bg-slate-800');
                     $btn.text('Mode: Pindai (F2)');
                 } else {
-                    $btn.removeClass('bg-blue-500').addClass('bg-yellow-500');
+                    $btn.removeClass('bg-slate-800').addClass('bg-yellow-500');
                     $btn.text('Mode: Cari (F2)');
                 }
             }
@@ -847,7 +845,7 @@
 
             function loadAllProducts(keyword = '') {
                 const $tbody = $('#modal-product-body');
-                $tbody.html('<tr><td colspan="5" class="text-center p-4 text-gray-500">Memuat data...</td></tr>');
+                $tbody.html('<tr><td colspan="5" class="text-center p-4 text-slate-400">Memuat data...</td></tr>');
 
                 $.ajax({
                     url: "{{ route('cashier.get-products') }}",
@@ -859,12 +857,12 @@
                             let rows = '';
                             res.data.forEach(p => {
                                 rows += `
-                                    <tr class="border-b hover:bg-gray-50">
-                                        <td class="p-2 font-medium">${p.code}</td>
-                                        <td class="p-2">${p.name}</td>
-                                        <td class="p-2 text-center">${p.stock ?? 0}</td>
+                                    <tr class="border-b border-slate-100 hover:bg-slate-50">
+                                        <td class="p-2 font-medium text-slate-700">${p.code}</td>
+                                        <td class="p-2 text-slate-700">${p.name}</td>
+                                        <td class="p-2 text-center text-slate-700">${p.stock ?? 0}</td>
                                         <td class="p-2 text-center">
-                                            <button class="add-product-btn bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600"
+                                            <button class="add-product-btn bg-slate-800 text-white px-3 py-1 rounded text-xs hover:bg-slate-700 transition-colors"
                                                 data-code="${p.code}">
                                                 Tambah
                                             </button>
@@ -873,7 +871,7 @@
                             });
                             $tbody.html(rows);
                         } else {
-                            $tbody.html('<tr><td colspan="5" class="text-center p-4 text-gray-500">Tidak ada produk ditemukan.</td></tr>');
+                            $tbody.html('<tr><td colspan="5" class="text-center p-4 text-slate-400">Tidak ada produk ditemukan.</td></tr>');
                         }
                     },
                     error: function(xhr) {

@@ -1,9 +1,10 @@
-<div class="grid grid-cols-2 gap-4 mb-4">
+<div class="grid grid-cols-2 gap-5 mb-4">
     <div>
         <x-form.label :props="[
             'for' => 'supplier_code',
             'label' => 'Kode Pemasok',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -19,6 +20,7 @@
             'for' => 'supplier_name',
             'label' => 'Nama Pemasok',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -30,12 +32,13 @@
     </div>
 </div>
 
-<div class="grid grid-cols-2 gap-4 mb-4">
+<div class="grid grid-cols-2 gap-5 mb-4">
     <div>
         <x-form.label :props="[
             'for' => 'supplier_address',
             'label' => 'Alamat Pemasok',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -51,6 +54,7 @@
             'for' => 'supplier_region_id',
             'label' => 'Wilayah Pemasok',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.select :props="[
@@ -66,6 +70,7 @@
     <x-form.label :props="[
         'for' => 'supplier_contact_person',
         'label' => 'Orang Yang Dapat Dihubungi',
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -76,11 +81,12 @@
     ]" />
 </div>
 
-<div class="grid grid-cols-2 gap-4 mb-4">
+<div class="grid grid-cols-2 gap-5 mb-4">
     <div>
         <x-form.label :props="[
             'for' => 'supplier_telepon_number',
             'label' => 'Nomor Telepon',
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -96,6 +102,7 @@
         <x-form.label :props="[
             'for' => 'supplier_handphone_number',
             'label' => 'Nomor Handphone',
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -112,6 +119,7 @@
     <x-form.label :props="[
         'for' => 'supplier_npwp_number',
         'label' => 'Nomor NPWP',
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -122,81 +130,3 @@
         'value' => old('supplier_npwp_number', $supplier->supplier_npwp_number ?? null),
     ]" />
 </div>
-{{-- 
-<div class="mb-4">
-    <x-form.label :props="[
-        'for' => 'supplier_last_buy',
-        'label' => 'Pembelian Terakhir',
-    ]" />
-
-    <x-form.input :props="[
-        'id' => 'supplier_last_buy',
-        'name' => 'supplier_last_buy',
-        'placeholder' => 'Masukkan Pembelian Terakhir',
-        'value' => old('supplier_last_buy', $supplier->supplier_last_buy ?? null),
-    ]" />
-</div>
-
-<div class="grid grid-cols-2 gap-4 mb-4">
-    <div>
-        <x-form.label :props="[
-            'for' => 'supplier_first_debt',
-            'label' => 'Hutang Awal',
-        ]" />
-
-        <x-form.input :props="[
-            'id' => 'supplier_first_debt',
-            'name' => 'supplier_first_debt',
-            'placeholder' => 'Masukkan Hutang Awal',
-            'class' => 'price-input',
-            'value' => old('supplier_first_debt', $supplier->supplier_first_debt ?? 0),
-        ]" />
-    </div>
-
-    <div>
-        <x-form.label :props="[
-            'for' => 'supplier_purchase',
-            'label' => 'Pembelian',
-        ]" />
-
-        <x-form.input :props="[
-            'id' => 'supplier_purchase',
-            'name' => 'supplier_purchase',
-            'placeholder' => 'Masukkan Pembelian',
-            'class' => 'price-input',
-            'value' => old('supplier_purchase', $customer->supplier_purchase ?? 0),
-        ]" />
-    </div>
-</div>
-
-<div class="grid grid-cols-2 gap-4 mb-4">
-    <div class="mb-4">
-        <x-form.label :props="[
-            'for' => 'supplier_payment',
-            'label' => 'Pembayaran',
-        ]" />
-
-        <x-form.input :props="[
-            'id' => 'supplier_payment',
-            'name' => 'supplier_payment',
-            'placeholder' => 'Masukkan Pembayaran',
-            'class' => 'price-input',
-            'value' => old('supplier_payment', $customer->supplier_payment ?? 0),
-        ]" />
-    </div>
-
-    <div class="mb-4">
-        <x-form.label :props="[
-            'for' => 'supplier_last_debt',
-            'label' => 'Hutang Akhir',
-        ]" />
-
-        <x-form.input :props="[
-            'id' => 'supplier_last_debt',
-            'name' => 'supplier_last_debt',
-            'placeholder' => 'Masukkan Hutang Akhir',
-            'class' => 'price-input',
-            'value' => old('supplier_last_debt', $customer->supplier_last_debt ?? 0),
-        ]" />
-    </div>
-</div> --}}

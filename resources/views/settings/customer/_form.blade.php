@@ -1,8 +1,9 @@
-<div class="mb-2">
+<div class="mb-4">
     <x-form.label :props="[
         'for' => 'category_type',
         'label' => 'Tipe Kategori',
         'required' => true,
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -14,11 +15,12 @@
     ]" />
 </div>
 
-<div class="mb-2">
+<div class="mb-4">
     <x-form.label :props="[
         'for' => 'category_code',
         'label' => 'Kode Kategori',
         'required' => true,
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -29,11 +31,12 @@
     ]" />
 </div>
 
-<div class="mb-2">
+<div class="mb-4">
     <x-form.label :props="[
         'for' => 'category_name',
         'label' => 'Nama Kategori',
         'required' => true,
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[

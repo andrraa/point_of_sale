@@ -9,69 +9,70 @@
         $today = \Carbon\Carbon::now()->toDateString();
     @endphp
 
-    <div class="mb-6 flex gap-2 items-center w-fit">
-        <x-action-button :props="[
-            'url' => route('purchase.create'),
-            'label' => 'Pembelian Baru',
-        ]" />
+    <div class="mb-4 flex items-center gap-2">
+        <a href="{{ route('purchase.create') }}"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 text-white text-sm font-medium tracking-wide border border-slate-800 hover:bg-white hover:text-slate-800 transition-all duration-200 shadow-sm">
+            <i class="fa-solid fa-plus text-xs"></i>
+            <span>Pembelian Baru</span>
+        </a>
 
         <button id="open-report-modal" type="button"
-            class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-red-500 hover:text-red-500 transition-all duration-300 cursor-pointer shadow-lg">
-            <i class="fa-solid fa-file text-xs mr-2"></i>
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-slate-700 text-sm font-medium tracking-wide border border-slate-300 hover:bg-slate-50 transition-all duration-200 shadow-sm cursor-pointer">
+            <i class="fa-solid fa-file text-xs"></i>
             Laporan Pembelian
         </button>
     </div>
 
-    <div class="bg-white rounded-xl shadow-lg border border-gray-200 mb-4 p-4">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm mb-4 p-5">
         <div class="w-full">
             <x-form.label :props="[
                 'for' => 'filter',
                 'label' => 'Filter Tanggal',
                 'required' => true,
+                'class' => 'text-slate-700 font-medium text-sm',
             ]" />
 
             <div class="flex items-center gap-4 pb-3">
                 <input type="date" id="start_date" name="start_date"
-                    class="px-4 py-2 w-full rounded-lg border border-gray-300 outline-none" value="{{ $today }}">
+                    class="px-4 py-2 w-full rounded-lg border border-slate-300 outline-none text-sm" value="{{ $today }}">
 
                 <input type="date" id="end_date" name="end_date"
-                    class="px-4 py-2 w-full rounded-lg border border-gray-300 outline-none" value="{{ $today }}">
+                    class="px-4 py-2 w-full rounded-lg border border-slate-300 outline-none text-sm" value="{{ $today }}">
             </div>
 
             <button id="filter-button"
-                class="px-4 py-2 bg-blue-500 text-white text-sm rounded-lg tracking-wide font-medium hover:bg-blue-600 transition-colors duration-300 cursor-pointer shadow-lg">
+                class="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg tracking-wide font-medium hover:bg-slate-700 transition-colors duration-200 cursor-pointer">
                 <i class="fa-solid fa-magnifying-glass text-xs mr-1"></i>
                 Cari Data
             </button>
         </div>
     </div>
 
-    <div class="bg-white rounded-xl shadow-lg p-4 border border-gray-200 overflow-x-auto">
-        <table id="purchase-table" class="w-full min-w-max">
-            <thead class="!text-[13px] tracking-wide text-left">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+        <table id="purchase-table" class="w-full">
+            <thead class="!text-xs tracking-wide text-left">
                 <tr>
-                    <th class="p-3 bg-gray-100">#</th>
-                    <th class="p-3 bg-gray-100">Invoice</th>
-                    <th class="p-3 bg-gray-100">Pemasok</th>
-                    <th class="p-3 bg-gray-100">Wilayah</th>
-                    <th class="p-3 bg-gray-100">Total Barang</th>
-                    <th class="p-3 bg-gray-100">Total Harga</th>
-                    <th class="p-3 bg-gray-100">Tanggal</th>
-                    <th class="p-3 bg-gray-100">Aksi</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">#</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Invoice</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Pemasok</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Wilayah</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Total Barang</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Total Harga</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Tanggal</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Aksi</th>
                 </tr>
             </thead>
-            <tfoot class="!text-[13px] tracking-wide">
+            <tfoot class="!text-xs tracking-wide">
                 <tr>
-                    <td colspan="4" class="p-3 bg-gray-100 !text-center font-medium">Total</td>
-                    <td id="total-quantity" class="p-3 bg-gray-100 font-medium"></td>
-                    <td id="total-price" class="p-3 bg-gray-100 font-medium"></td>
-                    <td colspan="2" class="p-3 bg-gray-100"></td>
+                    <td colspan="4" class="p-2 !text-center font-medium text-slate-600">Total</td>
+                    <td id="total-quantity" class="p-2 font-medium text-slate-700"></td>
+                    <td id="total-price" class="p-2 font-medium text-slate-700"></td>
+                    <td colspan="2" class="p-2"></td>
                 </tr>
             </tfoot>
         </table>
     </div>
 
-    {{-- REPORT MODAL --}}
     @include('purchase.modal')
 @endsection
 
@@ -106,12 +107,12 @@
                     {
                         data: 'purchase_invoice',
                         name: 'purchase_invoice',
-                        class: 'font-bold tracking-wide !text-xs !text-blue-500'
+                        class: 'font-bold tracking-wide !text-xs !text-slate-800'
                     },
                     {
                         data: 'supplier.supplier_name',
                         name: 'supplier.supplier_name',
-                        class: 'tracking-wide !text-xs !text-gray-900',
+                        class: 'tracking-wide !text-xs !text-slate-700',
                         render: function(data, type, row) {
                             return `${row.supplier.supplier_code} - ${row.supplier.supplier_name}`;
                         }
@@ -119,7 +120,7 @@
                     {
                         data: 'region.region_name',
                         name: 'region.region_name',
-                        class: 'tracking-wide !text-xs !text-gray-900',
+                        class: 'tracking-wide !text-xs !text-slate-700',
                         render: function(data, type, row) {
                             return `${row.region.region_code} - ${row.region.region_name}`;
                         }
@@ -127,12 +128,12 @@
                     {
                         data: 'total_items',
                         name: 'total_items',
-                        class: 'tracking-wide !text-xs !text-gray-900',
+                        class: 'tracking-wide !text-xs !text-slate-700',
                     },
                     {
                         data: 'total_price',
                         name: 'total_price',
-                        class: 'tracking-wide !text-xs !text-gray-900',
+                        class: 'tracking-wide !text-xs !text-slate-700',
                         render: function(data) {
                             return 'Rp ' + customFunction.formatNumberToRupiah(data);
                         }
@@ -140,7 +141,7 @@
                     {
                         data: 'created_at',
                         name: 'created_at',
-                        class: 'tracking-wide !text-xs !text-gray-900',
+                        class: 'tracking-wide !text-xs !text-slate-700',
                     },
                     {
                         data: 'actions',
@@ -171,22 +172,13 @@
                 table.ajax.reload();
             });
 
-            // Report Modal
             $('#open-report-modal').on('click', function() {
-                openModal();
+                $('#modal-sale-report').removeClass('hidden').addClass('flex');
             });
 
             $('.modal-report-cancel').on('click', function() {
-                closeModal();
-            });
-
-            function openModal() {
-                $('#modal-sale-report').removeClass('hidden').addClass('flex');
-            }
-
-            function closeModal() {
                 $('#modal-sale-report').removeClass('flex').addClass('hidden');
-            }
+            });
         });
     </script>
 @endpush

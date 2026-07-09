@@ -4,6 +4,7 @@
             'for' => 'sale_code',
             'label' => 'Bukti',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -19,6 +20,7 @@
             'for' => 'sale_date',
             'label' => 'Tanggal',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -36,6 +38,7 @@
             'for' => 'sale_customer',
             'label' => 'Pelanggan',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -51,6 +54,7 @@
             'for' => 'sale_area',
             'label' => 'Wilayah',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -67,6 +71,7 @@
         'for' => 'sale_sales',
         'label' => 'Salesman',
         'required' => true,
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -82,6 +87,7 @@
         'for' => 'sale_note',
         'label' => 'Keterangan',
         'required' => true,
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -98,6 +104,7 @@
             'for' => 'sale_payment_type',
             'label' => 'Cara Bayar',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -113,6 +120,7 @@
             'for' => 'sale_payment_due_date',
             'label' => 'Tanggal Jatuh Tempo',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[

@@ -19,7 +19,7 @@
         {{-- LEFT BRAND PANEL --}}
         <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 items-center justify-center relative overflow-hidden">
             <div class="absolute inset-0">
-                <div class="absolute top-1/4 -right-20 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[100px]"></div>
+                <div class="absolute top-1/4 -right-20 w-[400px] h-[400px] bg-slate-500/10 rounded-full blur-[100px]"></div>
                 <div class="absolute -bottom-20 -left-20 w-[300px] h-[300px] bg-indigo-500/10 rounded-full blur-[100px]"></div>
             </div>
 
@@ -62,7 +62,7 @@
                                     <i class="fa-solid fa-user text-sm"></i>
                                 </span>
                                 <input type="text" id="username" name="username"
-                                    class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-700 placeholder-slate-400 outline-none transition-all focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
+                                    class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-700 placeholder-slate-400 outline-none transition-all focus:border-slate-800 focus:ring-2 focus:ring-slate-800/20"
                                     placeholder="Masukkan nama pengguna" autofocus autocomplete="off">
                             </div>
                         </div>
@@ -76,13 +76,13 @@
                                     <i class="fa-solid fa-lock text-sm"></i>
                                 </span>
                                 <input type="password" id="password" name="password"
-                                    class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-700 placeholder-slate-400 outline-none transition-all focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
+                                    class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-700 placeholder-slate-400 outline-none transition-all focus:border-slate-800 focus:ring-2 focus:ring-slate-800/20"
                                     placeholder="Masukkan kata sandi">
                             </div>
                         </div>
 
                         <button type="submit" id="sign-in-button"
-                            class="w-full py-2.5 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-sm font-semibold rounded-lg shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition-all duration-200 cursor-pointer outline-none">
+                            class="w-full py-2.5 px-4 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-900 hover:to-slate-950 text-white text-sm font-semibold rounded-lg shadow-lg shadow-slate-800/20 hover:shadow-slate-800/30 transition-all duration-200 cursor-pointer outline-none">
                             Masuk
                         </button>
                     </form>

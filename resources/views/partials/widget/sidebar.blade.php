@@ -1,4 +1,4 @@
-<aside class="bg-white border border-gray-200 w-[200px] rounded-lg flex flex-col p-3 shadow-lg">
+<aside class="bg-white border border-slate-200 w-[200px] rounded-xl flex flex-col p-3 shadow-sm shrink-0">
     @php
         $menuItems = [
             [
@@ -43,23 +43,23 @@
         @foreach ($menuItems as $menu)
             @php
                 $navActiveClass = request()->routeIs($menu['routePattern'])
-                    ? 'text-blue-500 font-bold'
-                    : 'text-gray-500 hover:bg-blue-500/5';
+                    ? 'text-slate-800 font-semibold bg-slate-100'
+                    : 'text-slate-500 hover:bg-slate-50';
             @endphp
             <li>
                 <a href="{{ $menu['routeUrl'] }}">
                     <div
-                        class="flex items-center gap-2 p-3 outline-none text-xs rounded-lg text-center tracking-wider {{ $navActiveClass }}">
+                        class="flex items-center gap-2 p-2.5 outline-none text-xs rounded-lg tracking-wide transition-all duration-200 {{ $navActiveClass }}">
                         <div class="h-4 w-4 flex items-center justify-center">
                             <i class="{{ $menu['menuIcon'] }} text-[13px]"></i>
                         </div>
-                        <h1>{{ $menu['menuTitle'] }}</h1>
+                        <span>{{ $menu['menuTitle'] }}</span>
                     </div>
                 </a>
             </li>
 
             @if (!$loop->last)
-                <div class="h-[1px] bg-gray-200 mt-2 mb-2"></div>
+                <div class="h-px bg-slate-100 my-1.5"></div>
             @endif
         @endforeach
     </ul>

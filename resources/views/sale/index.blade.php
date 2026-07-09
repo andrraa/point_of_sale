@@ -11,18 +11,19 @@
 @section('content')
     <div class="mb-4 flex items-center gap-2">
         <button type="button" id="open-report-modal"
-            class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-red-500 hover:text-red-500 transition-all duration-300 cursor-pointer shadow-lg">
-            <i class="fa-solid fa-file text-xs mr-2"></i>
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-slate-700 text-sm font-medium tracking-wide border border-slate-300 hover:bg-slate-50 transition-all duration-200 shadow-sm cursor-pointer">
+            <i class="fa-solid fa-file text-xs"></i>
             Laporan Penjualan
         </button>
     </div>
 
-    <div class="bg-white rounded-xl shadow-lg border border-gray-200 mb-4 p-4">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm mb-4 p-5">
         <div class="w-full">
             <x-form.label :props="[
                 'for' => 'filter',
                 'label' => 'Filter Tanggal',
                 'required' => true,
+                'class' => 'text-slate-700 font-medium text-sm',
             ]" />
 
             <div class="flex items-center gap-4 pb-3">
@@ -31,39 +32,39 @@
                 @endphp
 
                 <input type="date" id="start_date" name="start_date"
-                    class="px-4 py-2 w-full rounded-lg border border-gray-300 outline-none" value="{{ $today }}">
+                    class="px-4 py-2 w-full rounded-lg border border-slate-300 outline-none text-sm" value="{{ $today }}">
 
                 <input type="date" id="end_date" name="end_date"
-                    class="px-4 py-2 w-full rounded-lg border border-gray-300 outline-none" value="{{ $today }}">
+                    class="px-4 py-2 w-full rounded-lg border border-slate-300 outline-none text-sm" value="{{ $today }}">
             </div>
 
             <button id="filter-button"
-                class="px-4 py-2 bg-blue-500 text-white text-sm rounded-lg tracking-wide font-medium hover:bg-blue-600 transition-colors duration-300 cursor-pointer shadow-lg">
+                class="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg tracking-wide font-medium hover:bg-slate-700 transition-colors duration-200 cursor-pointer">
                 <i class="fa-solid fa-magnifying-glass text-xs mr-1"></i>
                 Cari Data
             </button>
         </div>
     </div>
 
-    <div class="bg-white rounded-xl shadow-lg p-4 border border-gray-200 overflow-x-auto">
-        <table id="sale-table" class="w-full min-w-max">
-            <thead class="!text-[13px] tracking-wide text-left">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+        <table id="sale-table" class="w-full">
+            <thead class="!text-xs tracking-wide text-left">
                 <tr>
-                    <th class="p-3 bg-gray-100 w-[10px]">#</th>
-                    <th class="p-3 bg-gray-100 w-[100px]">Invoice</th>
-                    <th class="p-3 bg-gray-100 w-[200px]">Pelanggan</th>
-                    <th class="p-3 bg-gray-100 w-[150px]">Total Harga</th>
-                    <th class="p-3 bg-gray-100 w-[150px]">Total Hutang</th>
-                    <th class="p-3 bg-gray-100 w-[150px]">Tanggal Penjualan</th>
-                    <th class="p-3 bg-gray-100 w-[150px]">Status</th>
-                    <th class="p-3 bg-gray-100 w-[150px]">Aksi</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">#</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Invoice</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Pelanggan</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Total Harga</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Total Hutang</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Tanggal</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Status</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Aksi</th>
                 </tr>
             </thead>
-            <tfoot class="!text-[13px] !tracking-wide !font-medium bg-gray-100">
+            <tfoot class="!text-xs !tracking-wide !font-medium bg-slate-50">
                 <tr>
-                    <td colspan="3" class="p-2 !text-center">Total</td>
-                    <td id="total_price" class="p-2"></td>
-                    <td id="total_debt" class="p-2"></td>
+                    <td colspan="3" class="p-2 !text-center text-slate-600">Total</td>
+                    <td id="total_price" class="p-2 text-slate-700"></td>
+                    <td id="total_debt" class="p-2 text-slate-700"></td>
                     <td class="p-2"></td>
                     <td class="p-2"></td>
                     <td class="p-2"></td>
@@ -72,10 +73,10 @@
         </table>
     </div>
 
-    {{-- MODAL --}}
+    {{-- MODAL PRINT --}}
     <div id="modal-container"
         class="fixed inset-0 bg-gray-600/50 overflow-y-auto h-full w-full items-center justify-center hidden">
-        <div id="modal-card" class="relative mx-auto p-4 border border-gray-300 w-[219px] shadow-lg rounded-lg bg-white">
+        <div id="modal-card" class="relative mx-auto p-4 border border-slate-300 w-[219px] shadow-lg rounded-lg bg-white">
         </div>
     </div>
 
@@ -114,17 +115,17 @@
                     {
                         data: 'sales_invoice',
                         name: 'sales_invoice',
-                        class: 'font-bold !text-xs tracking-wider !text-blue-500'
+                        class: 'font-bold !text-xs tracking-wider !text-slate-800'
                     },
                     {
                         data: 'customer.customer_name',
                         name: 'customer.customer_name',
-                        class: 'tracking-wider !text-xs !text-gray-900',
+                        class: 'tracking-wider !text-xs !text-slate-700',
                     },
                     {
                         data: 'sales_total_price',
                         name: 'sales_total_price',
-                        class: 'tracking-wider !text-xs !text-gray-900',
+                        class: 'tracking-wider !text-xs !text-slate-700',
                         render: function(data) {
                             return 'Rp ' + customFunction.formatNumberToRupiah(data);
                         }
@@ -132,7 +133,7 @@
                     {
                         data: 'sale_total_debt',
                         name: 'sale_total_debt',
-                        class: 'tracking-wider !text-xs !text-gray-900',
+                        class: 'tracking-wider !text-xs !text-slate-700',
                         render: function(data) {
                             return 'Rp ' + customFunction.formatNumberToRupiah(data);
                         }
@@ -140,12 +141,12 @@
                     {
                         data: 'created_at',
                         name: 'tbl_sales.created_at',
-                        class: 'tracking-wider !text-xs !text-gray-900',
+                        class: 'tracking-wider !text-xs !text-slate-700',
                     },
                     {
                         data: 'sales_status',
                         name: 'sales_status',
-                        class: 'tracking-wider !text-xs !text-gray-900',
+                        class: 'tracking-wider !text-xs',
                         render: function(data, type, row) {
                             const statusMap = {
                                 1: 'Lunas',
@@ -160,10 +161,10 @@
                                 const creditStatus = row.credit.customer_credit_status == 1 ?
                                     'Lunas' : 'Belum Lunas';
                                 creditInfo =
-                                    `<span class="!text-xs text-green-700 font-medium">Status Kredit: ${creditStatus}</span>`;
+                                    `<span class="!text-xs text-emerald-600 font-medium">Status Kredit: ${creditStatus}</span>`;
                             }
 
-                            const color = data == 0 ? 'text-red-700' : 'text-blue-700';
+                            const color = data == 0 ? 'text-red-500' : 'text-slate-700';
 
                             return `
                                 <div class="flex flex-col gap-1">
@@ -242,20 +243,12 @@
 
             // Report Modal
             $('#open-report-modal').on('click', function() {
-                openModal();
+                $('#modal-sale-report').removeClass('hidden').addClass('flex');
             });
 
             $('.modal-report-cancel').on('click', function() {
-                closeModal();
-            });
-
-            function openModal() {
-                $('#modal-sale-report').removeClass('hidden').addClass('flex');
-            }
-
-            function closeModal() {
                 $('#modal-sale-report').removeClass('flex').addClass('hidden');
-            }
+            });
 
             $(document).on('click', '#cancel-print-button', function() {
                 $('#modal-container').addClass('hidden').removeClass('flex');

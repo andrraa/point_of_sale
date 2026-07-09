@@ -1,53 +1,64 @@
-{{-- STOCK TAKEN --}}
-<div id="modal-stock-taken" class="fixed inset-0 backdrop-blur-xs bg-gray-500/60 hidden justify-center items-center z-50">
-    <div class="bg-white rounded-xl w-[450px] p-3">
-        <div class="flex items-center justify-between mb-2">
-            <h2 class="text-lg font-semibold text-black/80 tracking-wide">
-                Pengambilan Stok Baru
-            </h2>
-
-            <button class="text-lg font-bold text-gray-500 px-2 cursor-pointer modal-taken-cancel">
-                x
-            </button>
+{{-- TAKEN MODAL --}}
+<div id="modal-taken"
+    class="fixed inset-0 backdrop-blur-xs bg-gray-500/60 hidden justify-center items-center z-50">
+    <div class="bg-white rounded-xl w-[500px] p-5 shadow-xl max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
+            <h2 class="text-base font-semibold text-slate-800">Pengambilan Stok</h2>
+            <button class="text-lg font-bold text-slate-400 px-2 cursor-pointer taken-cancel hover:text-slate-600 transition-colors">x</button>
         </div>
 
-        <form id="form-stock-taken" action="{{ route('stock.taken') }}" method="POST">
+        <form id="form-taken" action="{{ route('stock.taken.store') }}" method="POST">
             @csrf
 
-            <div class="mb-2">
-                <label for="stock_code" class="font-medium text-sm text-gray-500 tracking-wide block mb-0.5">
-                    Kode Stok
+            <div class="mb-4">
+                <label for="stock_taken_stock_id" class="block text-sm font-medium text-slate-700 mb-1.5">
+                    Barang <span class="text-red-500">*</span>
                 </label>
-
-                <input type="text" id="stock_code" name="stock_code"
-                    class="text-black/80 font-semibold tracking-wide px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm w-full outline-none">
-            </div>
-
-            <div class="mb-2">
-                <label for="quantity" class="font-medium text-sm text-gray-500 tracking-wide">
-                    Jumlah (pcs)
-                </label>
-                <input type="number" id="quantity" name="quantity"
-                    class="text-black/80 font-semibold tracking-wide px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm w-full outline-none">
+                <select name="stock_taken_stock_id" id="stock_taken_stock_id"
+                    class="w-full px-4 py-2 rounded-lg border border-slate-300 text-sm outline-none">
+                    <option value="">Pilih Barang</option>
+                    @foreach ($stocks as $stock)
+                        <option value="{{ $stock->stock_id }}">
+                            {{ $stock->stock_code }} - {{ $stock->stock_name }} (Stok: {{ $stock->stock_total }})
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="mb-4">
-                <div class="mb-1">
-                    <label for="description" class="font-medium text-sm text-gray-500 tracking-wide block mb-0.5">
-                        Keterangan
-                    </label>
-                    <textarea id="description" name="description"
-                        class="text-black/80 font-semibold tracking-wide px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm w-full outline-none"></textarea>
-                </div>
+                <label for="stock_taken_quantity" class="block text-sm font-medium text-slate-700 mb-1.5">
+                    Jumlah <span class="text-red-500">*</span>
+                </label>
+                <input type="text" name="stock_taken_quantity" id="stock_taken_quantity"
+                    class="w-full px-4 py-2 rounded-lg border border-slate-300 text-sm outline-none number-input"
+                    placeholder="Masukkan jumlah">
             </div>
 
-            <div class="flex items-center gap-2">
+            <div class="mb-4">
+                <label for="stock_taken_price" class="block text-sm font-medium text-slate-700 mb-1.5">
+                    Harga
+                </label>
+                <input type="text" name="stock_taken_price" id="stock_taken_price"
+                    class="w-full px-4 py-2 rounded-lg border border-slate-300 text-sm outline-none price-input"
+                    placeholder="Masukkan harga (jika ada)">
+            </div>
+
+            <div class="mb-4">
+                <label for="stock_taken_description" class="block text-sm font-medium text-slate-700 mb-1.5">
+                    Deskripsi <span class="text-red-500">*</span>
+                </label>
+                <textarea name="stock_taken_description" id="stock_taken_description"
+                    class="w-full px-4 py-2 rounded-lg border border-slate-300 text-sm outline-none resize-none"
+                    rows="3" placeholder="Masukkan deskripsi pengambilan"></textarea>
+            </div>
+
+            <div class="flex items-center gap-3 mt-6 pt-4 border-t border-slate-200">
                 <button type="button"
-                    class="modal-taken-cancel w-full py-1.5 text-sm border border-gray-300 rounded-lg text-black/80 tracking-wide font-semibold cursor-pointer hover:bg-gray-100 transition-colors duration-300">
+                    class="taken-cancel w-full py-2 text-sm border border-slate-300 rounded-lg text-slate-600 font-medium cursor-pointer hover:bg-slate-100 transition-colors duration-200">
                     Batal
                 </button>
                 <button type="submit"
-                    class="w-full py-1.5 text-sm bg-blue-500 rounded-lg text-white tracking-wide font-semibold cursor-pointer hover:bg-blue-600 transition-colors duration-300">
+                    class="w-full py-2 text-sm bg-slate-800 rounded-lg text-white font-medium cursor-pointer hover:bg-slate-700 transition-colors duration-200">
                     Simpan
                 </button>
             </div>
@@ -55,64 +66,39 @@
     </div>
 </div>
 
-{{-- STOCK REPORT --}}
-<div id="modal-stock-report"
+{{-- REPORT MODAL --}}
+<div id="modal-taken-report"
     class="fixed inset-0 backdrop-blur-xs bg-gray-500/60 hidden justify-center items-center z-50">
-    <div class="bg-white rounded-xl w-[450px] p-3">
-        <div class="flex items-center justify-between mb-2">
-            <h2 class="text-lg font-semibold text-black/80 tracking-wide">
-                Laporan Pengambilan Stok (PDF)
-            </h2>
-
-            <button class="text-lg font-bold text-gray-500 px-2 cursor-pointer modal-stock-cancel">
-                x
-            </button>
+    <div class="bg-white rounded-xl w-[450px] p-5 shadow-xl">
+        <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
+            <h2 class="text-base font-semibold text-slate-800">Laporan Pengambilan Stok</h2>
+            <button class="text-lg font-bold text-slate-400 px-2 cursor-pointer taken-report-cancel hover:text-slate-600 transition-colors">x</button>
         </div>
 
-        <form id="form-report" action="{{ route('stock.taken.report') }}" method="POST">
+        <form id="form-taken-report" action="{{ route('stock.taken.report') }}" method="POST">
             @csrf
 
-            <div class="mb-1">
-                <label for="stock_category" class="font-medium text-sm text-gray-500 tracking-wide block mb-1">
-                    Kategori
-                </label>
-
-                <select name="stock_category" id="stock_category"
-                    class="w-full px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm outline-none cursor-pointer">
-                    {{-- <option value="all">Semua Kategori</option> --}}
-                    @foreach ($categories as $key => $category)
-                        <option value="{{ $key }}">({{ $key }}) {{ $category }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="mb-2">
-                <label for="start_date" class="font-medium text-sm text-gray-500 tracking-wide mb-1">
-                    Tanggal Mulai
-                </label>
-
-                <input type="date" id="start_date" name="start_date"
-                    class="text-black/80 font-semibold tracking-wide px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm w-full outline-none"
+            <div class="mb-4">
+                <label for="start_date" class="block text-sm font-medium text-slate-700 mb-1.5">Tanggal Mulai</label>
+                <input type="date" name="start_date" id="start_date"
+                    class="w-full px-4 py-2 rounded-lg border border-slate-300 text-sm outline-none"
                     value="{{ $today }}">
             </div>
 
             <div class="mb-4">
-                <label for="end_date" class="font-medium text-sm text-gray-500 tracking-wide block mb-1">
-                    Tanggal Akhir
-                </label>
-
-                <input type="date" id="end_date" name="end_date"
-                    class="text-black/80 font-semibold tracking-wide px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm w-full outline-none"
+                <label for="end_date" class="block text-sm font-medium text-slate-700 mb-1.5">Tanggal Akhir</label>
+                <input type="date" name="end_date" id="end_date"
+                    class="w-full px-4 py-2 rounded-lg border border-slate-300 text-sm outline-none"
                     value="{{ $today }}">
             </div>
 
-            <div class="flex items-center gap-2 mt-4">
+            <div class="flex items-center gap-3 mt-6 pt-4 border-t border-slate-200">
                 <button type="button"
-                    class="modal-stock-cancel w-full py-1.5 text-sm border border-gray-300 rounded-lg text-black/80 tracking-wide font-semibold cursor-pointer hover:bg-gray-100 transition-colors duration-300">
+                    class="taken-report-cancel w-full py-2 text-sm border border-slate-300 rounded-lg text-slate-600 font-medium cursor-pointer hover:bg-slate-100 transition-colors duration-200">
                     Batal
                 </button>
                 <button type="submit"
-                    class="w-full py-1.5 text-sm bg-blue-500 rounded-lg text-white tracking-wide font-semibold cursor-pointer hover:bg-blue-600 transition-colors duration-300">
+                    class="w-full py-2 text-sm bg-slate-800 rounded-lg text-white font-medium cursor-pointer hover:bg-slate-700 transition-colors duration-200">
                     Export
                 </button>
             </div>

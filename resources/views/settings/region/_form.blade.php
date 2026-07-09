@@ -1,8 +1,9 @@
-<div class="mb-2">
+<div class="mb-4">
     <x-form.label :props="[
         'for' => 'region_code',
         'label' => 'Kode Wilayah',
         'required' => true,
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -13,11 +14,12 @@
     ]" />
 </div>
 
-<div class="mb-6">
+<div class="mb-4">
     <x-form.label :props="[
         'for' => 'region_name',
         'label' => 'Nama Wilayah',
         'required' => true,
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[

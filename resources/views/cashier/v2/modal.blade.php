@@ -1,76 +1,66 @@
 <div id="modal-pay" class="fixed inset-0 backdrop-blur-xs bg-gray-500/60 hidden justify-center items-center z-50">
 
-    <div class="bg-white rounded-xl w-[450px] p-3">
+    <div class="bg-white rounded-xl w-[450px] p-5 shadow-xl">
 
-        <div class="flex items-center justify-between mb-2">
-            <h2 class="text-lg font-semibold text-black/80 tracking-wide">
+        <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
+            <h2 class="text-base font-semibold text-slate-800">
                 Pembayaran Detail
             </h2>
 
-            <button class="text-lg font-bold text-gray-500 px-2 cursor-pointer modal-pay-cancel">x</button>
+            <button class="text-lg font-bold text-slate-400 px-2 cursor-pointer modal-pay-cancel hover:text-slate-600 transition-colors">x</button>
         </div>
 
-        <div class="mb-2">
-            <h2 class="font-semibold text-black/80 tracking-wide mb-1">Pelanggan</h2>
+        <div class="mb-4">
+            <h2 class="text-sm font-semibold text-slate-700 mb-2">Pelanggan</h2>
 
-            <div>
-                <label for="" class="font-medium text-sm text-gray-500 tracking-wide block mb-0.5">
-                    Nama
-                </label>
+            <div class="mb-2">
+                <label class="block text-sm text-slate-500 mb-1">Nama</label>
                 <input type="text" id="modal-customer-name"
-                    class="text-black/80 font-semibold tracking-wide px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm w-full outline-none"
+                    class="w-full px-4 py-2 rounded-lg border border-slate-300 text-sm outline-none text-slate-700 bg-slate-50"
                     readonly>
             </div>
 
             <div>
-                <label for="" class="font-medium text-sm text-gray-500 tracking-wide">
-                    Hutang
-                </label>
+                <label class="block text-sm text-slate-500 mb-1">Hutang</label>
                 <input type="text" id="modal-customer-debt"
-                    class="text-black/80 font-semibold tracking-wide px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm w-full outline-none"
+                    class="w-full px-4 py-2 rounded-lg border border-slate-300 text-sm outline-none text-slate-700 bg-slate-50"
                     readonly>
             </div>
         </div>
 
         <div class="mb-4">
-            <h2 class="font-semibold text-black/80 tracking-wide mb-1">Pembayaran</h2>
+            <h2 class="text-sm font-semibold text-slate-700 mb-2">Pembayaran</h2>
 
-            <div class="mb-1">
-                <label for="" class="font-medium text-sm text-gray-500 tracking-wide block mb-0.5">
-                    Total Belanja
-                </label>
+            <div class="mb-2">
+                <label class="block text-sm text-slate-500 mb-1">Total Belanja</label>
                 <input type="text" id="modal-customer-total"
-                    class="text-black/80 font-semibold tracking-wide px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm w-full outline-none"
+                    class="w-full px-4 py-2 rounded-lg border border-slate-300 text-sm outline-none text-slate-700 bg-slate-50"
                     readonly>
             </div>
 
             <div class="flex items-center gap-2">
-                <div>
-                    <label for="" class="font-medium text-sm text-gray-500 tracking-wide">
-                        Total Bayar
-                    </label>
+                <div class="flex-1">
+                    <label class="block text-sm text-slate-500 mb-1">Total Bayar</label>
                     <input type="text" id="modal-customer-pay"
-                        class="text-black/80 font-semibold tracking-wide px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm w-full outline-none price-input">
+                        class="w-full px-4 py-2 rounded-lg border border-slate-300 text-sm outline-none price-input">
                 </div>
 
-                <div>
-                    <label for="" class="font-medium text-sm text-gray-500 tracking-wide">
-                        Total Kembalian
-                    </label>
+                <div class="flex-1">
+                    <label class="block text-sm text-slate-500 mb-1">Total Kembalian</label>
                     <input type="text" id="modal-customer-change"
-                        class="text-black/80 font-semibold tracking-wide px-4 py-1.5 rounded-lg border border-gray-300 shadow-sm text-sm w-full outline-none"
+                        class="w-full px-4 py-2 rounded-lg border border-slate-300 text-sm outline-none text-slate-700 bg-slate-50"
                         readonly>
                 </div>
             </div>
         </div>
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-3 mt-6 pt-4 border-t border-slate-200">
             <button
-                class="modal-pay-cancel w-full py-1.5 text-sm border border-gray-300 rounded-lg text-black/80 tracking-wide font-semibold cursor-pointer hover:bg-gray-100 transition-colors duration-300">
+                class="modal-pay-cancel w-full py-2 text-sm border border-slate-300 rounded-lg text-slate-600 font-medium cursor-pointer hover:bg-slate-100 transition-colors duration-200">
                 Batal
             </button>
             <button id="modal-pay-confirm"
-                class="w-full py-1.5 text-sm bg-blue-500 rounded-lg text-white tracking-wide font-semibold cursor-pointer hover:bg-blue-600 transition-colors duration-300">
+                class="w-full py-2 text-sm bg-slate-800 rounded-lg text-white font-medium cursor-pointer hover:bg-slate-700 transition-colors duration-200">
                 Bayar
             </button>
         </div>

@@ -5,22 +5,23 @@
 @section('navTitle', 'Daftar Supplier')
 
 @section('content')
-    <div class="mb-6">
-        <x-action-button :props="[
-            'url' => route('supplier-stock.create'),
-            'label' => 'Supplier Baru',
-        ]" />
+    <div class="mb-4">
+        <a href="{{ route('supplier-stock.create') }}"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 text-white text-sm font-medium tracking-wide border border-slate-800 hover:bg-white hover:text-slate-800 transition-all duration-200 shadow-sm">
+            <i class="fa-solid fa-plus text-xs"></i>
+            <span>Supplier Baru</span>
+        </a>
     </div>
 
-    <div class="bg-white rounded-xl shadow-lg p-4 border border-gray-200 overflow-x-auto">
-        <table id="supplierStock-table" class="w-full min-w-max">
-            <thead class="!text-[13px] tracking-wide text-left">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+        <table id="supplierStock-table" class="w-full">
+            <thead class="!text-xs tracking-wide text-left">
                 <tr>
-                    <th class="p-3 bg-gray-100">#</th>
-                    <th class="p-3 bg-gray-100">Nama</th>
-                    <th class="p-3 bg-gray-100">No. Handphone</th>
-                    <th class="p-3 bg-gray-100">Alamat</th>
-                    <th class="p-3 bg-gray-100">Aksi</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">#</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Nama</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">No. Handphone</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Alamat</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Aksi</th>
                 </tr>
             </thead>
         </table>
@@ -51,17 +52,17 @@
                     {
                         data: 'ss_name',
                         name: 'ss_name',
-                        class: 'font-semibold tracking-wide !text-xs !text-blue-500'
+                        class: 'font-semibold tracking-wide !text-xs !text-slate-700'
                     },
                     {
                         data: 'ss_phone',
                         name: 'ss_phone',
-                        class: 'tracking-wide !text-xs !text-gray-900'
+                        class: 'tracking-wide !text-xs !text-slate-700'
                     },
                     {
                         data: 'ss_address',
                         name: 'ss_address',
-                        class: 'tracking-wide !text-xs !text-gray-900'
+                        class: 'tracking-wide !text-xs !text-slate-700'
                     },
                     {
                         data: 'actions',

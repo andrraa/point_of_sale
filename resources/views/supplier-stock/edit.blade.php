@@ -5,7 +5,7 @@
 @section('navTitle', 'Ubah Supplier')
 
 @section('content')
-    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
         <form id="form-edit-supplier" action="{{ route('supplier-stock.update', $supplierStock->ss_id) }}" method="POST">
             @csrf
             @method('PUT')

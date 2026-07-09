@@ -5,7 +5,12 @@
 @section('navTitle', 'Ubah Pelanggan')
 
 @section('content')
-    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+        <div class="mb-5 pb-4 border-b border-slate-100">
+            <h2 class="text-base font-semibold text-slate-800">Ubah Pelanggan</h2>
+            <p class="text-sm text-slate-500 mt-0.5">Perbarui data pelanggan</p>
+        </div>
+
         <form id="form-edit-customer" action="{{ route('customer.update', $customer->customer_id) }}" method="POST">
             @csrf
             @method('PUT')

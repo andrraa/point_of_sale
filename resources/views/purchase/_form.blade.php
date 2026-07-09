@@ -3,6 +3,7 @@
         'for' => 'purchase_invoice',
         'label' => 'Bukti / Faktur Beli',
         'required' => true,
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -20,6 +21,7 @@
             'for' => 'purchase_supplier_id',
             'label' => 'Pemasok / Supplier',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.select :props="[
@@ -35,6 +37,7 @@
             'for' => 'purchase_area',
             'label' => 'Wilayah',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.select :props="[
@@ -50,6 +53,7 @@
     <x-form.label :props="[
         'for' => 'purchase_note',
         'label' => 'Keterangan',
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -61,11 +65,10 @@
 </div>
 
 @if (!isset($state))
-    <div class="h-0.5 bg-gray-200 mt-4 mb-4"></div>
+    <div class="h-px bg-slate-200 mt-4 mb-4"></div>
 
-    {{-- ITEMS --}}
     <div class="mb-4">
-        <h1 class="font-medium tracking-wide text-blue-500">Tambahkan Data Barang</h1>
+        <h1 class="font-medium text-sm text-slate-700">Tambahkan Data Barang</h1>
     </div>
 
     <div class="grid grid-cols-3 gap-4 mb-4">
@@ -90,7 +93,7 @@
 
         <div>
             <button type="button" id="item-button"
-                class="px-4 py-[10px] border border-blue-500 rounded-md cursor-pointer text-blue-500 bg-white hover:bg-blue-500 hover:text-white font-medium transition duration-200">
+                class="px-4 py-[10px] border border-slate-300 rounded-lg cursor-pointer text-slate-700 bg-white hover:bg-slate-100 font-medium text-sm transition duration-200">
                 Tambah Barang
             </button>
         </div>

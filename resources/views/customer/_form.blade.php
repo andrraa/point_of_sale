@@ -1,9 +1,10 @@
-<div class="grid grid-cols-2 gap-4 mb-4">
+<div class="grid grid-cols-2 gap-5 mb-4">
     <div>
         <x-form.label :props="[
             'for' => 'customer_category_id',
             'label' => 'Kategori Pelanggan',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.select :props="[
@@ -19,6 +20,7 @@
             'for' => 'customer_name',
             'label' => 'Nama Pelanggan',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -30,11 +32,12 @@
     </div>
 </div>
 
-<div class="grid grid-cols-2 gap-4 mb-4">
+<div class="grid grid-cols-2 gap-5 mb-4">
     <div>
         <x-form.label :props="[
             'for' => 'customer_address',
             'label' => 'Alamat Pelanggan',
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -50,6 +53,7 @@
             'for' => 'customer_region_id',
             'label' => 'Wilayah Pelanggan',
             'required' => true,
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.select :props="[
@@ -61,11 +65,12 @@
     </div>
 </div>
 
-<div class="grid grid-cols-2 gap-4 mb-4">
+<div class="grid grid-cols-2 gap-5 mb-4">
     <div>
         <x-form.label :props="[
             'for' => 'customer_phone_number',
             'label' => 'Nomor Handphone',
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -81,6 +86,7 @@
         <x-form.label :props="[
             'for' => 'customer_npwp_number',
             'label' => 'Nomor NPWP',
+            'class' => 'text-slate-700 font-medium text-sm',
         ]" />
 
         <x-form.input :props="[
@@ -92,18 +98,3 @@
         ]" />
     </div>
 </div>
-
-{{-- <div class="mb-6">
-    <x-form.label :props="[
-        'for' => 'customer_credit_limit',
-        'label' => 'Batas Hutang',
-    ]" />
-
-    <x-form.input :props="[
-        'id' => 'customer_credit_limit',
-        'name' => 'customer_credit_limit',
-        'placeholder' => 'Masukkan Plafon Piutang',
-        'value' => old('customer_credit_limit', $customer->customer_credit_limit ?? 0),
-        'class' => 'price-input',
-    ]" />
-</div> --}}

@@ -43,16 +43,17 @@
 
 @section('content')
     <div class="grid grid-cols-2 gap-4 items-start">
-        <div class="bg-white rounded-lg p-6 border border-gray-200 shadow">
-            <div class="pb-2 mb-2 border-b border-b-gray-200">
-                <h1 class="font-medium tracking-wider text-blue-500">Pelanggan & Barang</h1>
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+            <div class="pb-3 mb-3 border-b border-slate-200">
+                <h1 class="font-semibold text-sm text-slate-700">Pelanggan & Barang</h1>
             </div>
 
-            <div class="mb-2">
+            <div class="mb-3">
                 <x-form.label :props="[
                     'for' => 'sales_customer_id',
                     'label' => 'Pelanggan',
                     'required' => true,
+                    'class' => 'text-slate-700 font-medium text-sm',
                 ]" />
                 <x-form.select :props="[
                     'id' => 'sales_customer_id',
@@ -67,6 +68,7 @@
                     'for' => 'sales_stock_id',
                     'label' => 'Barang',
                     'required' => true,
+                    'class' => 'text-slate-700 font-medium text-sm',
                 ]" />
                 <x-form.select :props="[
                     'id' => 'sales_stock_id',
@@ -75,6 +77,7 @@
                     'value' => null,
                 ]" :options="$stocks" />
             </div>
+
             <div class="flex gap-2">
                 <x-form.input :props="[
                     'id' => 'sales_quantity',
@@ -85,26 +88,26 @@
                 ]" />
 
                 <button type="button" id="chart-button"
-                    class=" rounded-md border border-blue-500 text-blue-500 transition duration-200 font-medium tracking-wide cursor-pointer hover:bg-blue-500 hover:text-white active:scale-95 px-4">
+                    class="px-4 rounded-lg border border-slate-800 text-slate-800 font-medium text-sm cursor-pointer hover:bg-slate-800 hover:text-white active:scale-95 transition-all duration-200">
                     Keranjang
                 </button>
             </div>
         </div>
 
         {{-- PAYMENT --}}
-        <div class="bg-white rounded-lg p-6 border border-gray-200 shadow">
-            <div class="pb-2 mb-4 border-b border-b-gray-200">
-                <h1 class="font-medium tracking-wider text-blue-500">Keranjang Belanja</h1>
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+            <div class="pb-3 mb-4 border-b border-slate-200">
+                <h1 class="font-semibold text-sm text-slate-700">Keranjang Belanja</h1>
             </div>
 
             {{-- ITEM --}}
             <div class="stockGroup mt-2">
-                <div class="rounded-md border border-gray-200 text-center py-4 italic text-sm tracking-wider text-gray-500">
+                <div class="rounded-lg border border-slate-200 text-center py-4 italic text-sm tracking-wide text-slate-400">
                     Keranjang Kosong.
                 </div>
             </div>
 
-            <div class="h-[1px] bg-gray-200 mt-6 mb-4"></div>
+            <div class="h-px bg-slate-200 mt-6 mb-4"></div>
 
             {{-- DISKON & PAYMENT METHOD --}}
             <div class="grid grid-cols-3 gap-4">
@@ -113,6 +116,7 @@
                         'for' => 'sales_payment_type',
                         'label' => 'Jenis Pembayaran',
                         'required' => true,
+                        'class' => 'text-slate-700 font-medium text-sm',
                     ]" />
                     <x-form.select :props="[
                         'id' => 'sales_payment_type',
@@ -130,6 +134,7 @@
                         'for' => 'sales_payment',
                         'label' => 'Jumlah Uang',
                         'required' => true,
+                        'class' => 'text-slate-700 font-medium text-sm',
                     ]" />
                     <x-form.input :props="[
                         'id' => 'sales_payment',
@@ -145,6 +150,7 @@
                         'for' => 'sales_discount',
                         'label' => 'Diskon (%)',
                         'required' => true,
+                        'class' => 'text-slate-700 font-medium text-sm',
                     ]" />
                     <x-form.input :props="[
                         'id' => 'sales_discount',
@@ -160,37 +166,37 @@
             </div>
 
             {{-- SUMMARY --}}
-            <div class="mt-6 mb-4 rounded-lg border border-gray-200 p-4">
+            <div class="mt-6 mb-4 rounded-lg border border-slate-200 p-4">
                 <div class="flex items-center justify-between mb-2">
-                    <div class="font-medium text-[15px] tracking-wide text-gray-900">
+                    <div class="font-medium text-sm tracking-wide text-slate-600">
                         <h2>Subtotal</h2>
                     </div>
-                    <div class="summary-subtotal font-medium text-[15px] tracking-wide text-gray-900">
+                    <div class="summary-subtotal font-medium text-sm tracking-wide text-slate-700">
                         <h2>Rp 0</h2>
                     </div>
                 </div>
                 <div class="flex items-center justify-between mb-2">
-                    <div class="font-medium text-[15px] tracking-wide text-gray-900">
+                    <div class="font-medium text-sm tracking-wide text-slate-600">
                         <h2>Diskon</h2>
                     </div>
-                    <div class="summary-discount font-medium text-[15px] tracking-wide text-red-500">
+                    <div class="summary-discount font-medium text-sm tracking-wide text-red-500">
                         <h2>Rp 0</h2>
                     </div>
                 </div>
 
                 <div class="flex items-center justify-between mt-2">
-                    <div class="font-bold tracking-wide text-blue-500 text-lg">
+                    <div class="font-bold tracking-wide text-slate-800 text-base">
                         <h2>Total</h2>
                     </div>
-                    <div class="summary-total font-bold tracking-wide text-blue-500 text-lg">
+                    <div class="summary-total font-bold tracking-wide text-slate-800 text-base">
                         <h2>Rp 0</h2>
                     </div>
                 </div>
                 <div class="flex items-center justify-between mt-1">
-                    <div class="font-bold tracking-wide text-green-700 text-lg">
+                    <div class="font-bold tracking-wide text-emerald-600 text-base">
                         <h2>Kembalian</h2>
                     </div>
-                    <div class="summary-change font-bold tracking-wide text-green-700 text-lg">
+                    <div class="summary-change font-bold tracking-wide text-emerald-600 text-base">
                         <h2>Rp 0</h2>
                     </div>
                 </div>
@@ -198,7 +204,7 @@
 
             {{-- CHECKOUT BUTTON --}}
             <button type="button" id="checkout-button"
-                class="px-4 py-2 w-full font-medium tracking-wide bg-blue-500 hover:bg-blue-950 rounded-md text-white transition duration-200 cursor-pointer active:scale-95">
+                class="px-4 py-2.5 w-full font-medium tracking-wide bg-slate-800 hover:bg-slate-700 rounded-lg text-white text-sm transition-all duration-200 cursor-pointer active:scale-95 shadow-sm">
                 Proses Pembayaran
             </button>
         </div>
@@ -208,7 +214,7 @@
     <div id="modal-container"
         class="fixed inset-0 bg-gray-600/50 overflow-y-auto h-full w-full items-center justify-center hidden">
         <div id="modal-card"
-            class="relative mx-auto p-4 border border-gray-300 w-full max-w-[400px] shadow-lg rounded-lg bg-white">
+            class="relative mx-auto p-4 border border-slate-300 w-full max-w-[400px] shadow-lg rounded-xl bg-white">
         </div>
     </div>
 @endsection
@@ -219,7 +225,6 @@
         $(document).ready(function() {
             const customFunction = window.CustomFunction;
 
-            // Number Input & Price Input
             $('.number-input').on('input',
                 function() {
                     this.value = customFunction.numberOnly(this.value);
@@ -234,10 +239,8 @@
             $('#sales_customer_id').on('change',
                 function() {
                     const customerId = $(this).val();
-
                     resetCartItems();
 
-                    // Check Credit
                     if (customerId != 1) {
                         $.ajax({
                             url: "{{ route('cashier.get-credit') }}",
@@ -252,7 +255,6 @@
                     }
                 });
 
-            // CHART
             let cartItems = [];
 
             $('#chart-button').on('click',
@@ -516,13 +518,13 @@
                 if (change < 0) {
                     changeElement
                         .text(`-Rp ${changeFormatted}`)
-                        .removeClass('text-green-700')
+                        .removeClass('text-emerald-600')
                         .addClass('text-red-500');
                 } else {
                     changeElement
                         .text(`Rp ${changeFormatted}`)
                         .removeClass('text-red-500')
-                        .addClass('text-green-700');
+                        .addClass('text-emerald-600');
                 }
             }
 
@@ -532,27 +534,27 @@
 
                 if (cartItems.length === 0) {
                     container.html(`
-                        <div class="rounded-md border border-gray-200 text-center py-4 italic text-sm tracking-wider text-gray-500">
+                        <div class="rounded-lg border border-slate-200 text-center py-4 italic text-sm tracking-wide text-slate-400">
                             Keranjang Kosong.
                         </div>
                     `);
                 } else {
                     cartItems.forEach((item, index) => {
                         const itemHtml = `
-                        <div class="stockItem mb-1 flex justify-between items-center" data-index="${index}">
+                        <div class="stockItem mb-2 flex justify-between items-center py-1" data-index="${index}">
                             <div>
-                                <h1 class="text-sm tracking-wider font-semibold">
+                                <h1 class="text-sm tracking-wider font-semibold text-slate-700">
                                 ${item.stockName}
                                 </h1>
-                                <h2 class="text-xs tracking-wider font-semibold text-gray-500">
+                                <h2 class="text-xs tracking-wider text-slate-500">
                                     Rp ${customFunction.formatNumberToRupiah(item.price)}
                                 </h2>
                             </div>
-                            <div class="space-x-2">
+                            <div class="space-x-2 flex items-center">
                                 <input type="text" name="sales_quantity[]"
-                                    class="number-input quantity-input border-b border-gray-300 outline-none py-2 px-4 rounded-lg w-[100px] focus:border focus:border-blue-500" value="${item.quantity}">
+                                    class="number-input quantity-input border-b border-slate-300 outline-none py-2 px-3 rounded-lg w-[90px] text-sm text-center focus:border-slate-500" value="${item.quantity}">
                                 <button type="button"
-                                    class="delete-item px-2 rounded-lg text-red-500 cursor-pointer active:scale-95 transition duration-200 hover:text-red-600 hover:shadow">
+                                    class="delete-item px-2 rounded-lg text-red-400 cursor-pointer active:scale-95 transition duration-200 hover:text-red-600">
                                     <i class="fa-solid fa-trash text-[14px]"></i>
                                 </button>
                             </div>

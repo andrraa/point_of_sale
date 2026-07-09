@@ -1,26 +1,25 @@
 @extends('layouts.app')
 
-@section('title', 'Log Stok Barang')
+@section('title', 'Log Stok')
 
-@section('navTitle', 'Stok Log: ' . ucwords(strtolower($stock->stock_name)))
+@section('navTitle', 'Log Stok: ' . ucwords(strtolower($stock->stock_name)))
 
 @section('content')
     <div class="mb-4 w-fit">
-        <a href="{{ route('stock.index') }}" class="w-fit mb-4">
-            <div
-                class="flex items-center gap-2 px-4 py-2 rounded-md text-sm bg-white shadow-lg hover:bg-gray-100 transition-colors duration-300 border border-gray-200 w-fit">
-                <i class="fa-solid fa-chevron-left text-xs"></i>
-                <span>Kembali</span>
-            </div>
+        <a href="{{ route('stock.index') }}"
+            class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm bg-white border border-slate-200 shadow-sm hover:bg-slate-50 transition-colors duration-200 text-slate-600 w-fit">
+            <i class="fa-solid fa-chevron-left text-xs"></i>
+            <span>Kembali</span>
         </a>
     </div>
 
-    <div class="bg-white rounded-xl shadow-lg border border-gray-200 mb-4 p-4">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm mb-4 p-5">
         <div class="w-full">
             <x-form.label :props="[
                 'for' => 'filter',
                 'label' => 'Filter Tanggal',
                 'required' => true,
+                'class' => 'text-slate-700 font-medium text-sm',
             ]" />
 
             <div class="flex items-center gap-4 pb-3">
@@ -29,47 +28,43 @@
                 @endphp
 
                 <input type="date" id="start_date" name="start_date"
-                    class="px-4 py-2 w-full rounded-lg border border-gray-300 outline-none" value="{{ $today }}">
+                    class="px-4 py-2 w-full rounded-lg border border-slate-300 outline-none text-sm" value="{{ $today }}">
 
                 <input type="date" id="end_date" name="end_date"
-                    class="px-4 py-2 w-full rounded-lg border border-gray-300 outline-none" value="{{ $today }}">
+                    class="px-4 py-2 w-full rounded-lg border border-slate-300 outline-none text-sm" value="{{ $today }}">
             </div>
 
             <button id="filter-button"
-                class="px-4 py-2 bg-blue-500 text-white text-sm rounded-lg tracking-wide font-medium hover:bg-blue-600 transition-colors duration-300 cursor-pointer">
+                class="px-4 py-2 bg-slate-800 text-white text-sm rounded-lg tracking-wide font-medium hover:bg-slate-700 transition-colors duration-200 cursor-pointer">
                 <i class="fa-solid fa-magnifying-glass text-xs mr-1"></i>
                 Cari Data
             </button>
         </div>
     </div>
 
-    <div class="bg-white rounded-xl shadow-lg p-4 border border-gray-200 overflow-x-auto">
-        <table id="stock-log-table" class="w-full min-w-max">
-            <thead class="!text-[13px] !tracking-wide text-left">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+        <table id="stock-log-table" class="w-full">
+            <thead class="!text-xs tracking-wide text-left">
                 <tr>
-                    <th class="p-3 bg-gray-100">#</th>
-                    <th class="p-3 bg-gray-100">Kode Stok</th>
-                    <th class="p-3 bg-gray-100">Nama Stok</th>
-                    <th class="p-3 bg-gray-100">Jumlah</th>
-                    <th class="p-3 bg-gray-100">Keterangan</th>
-                    <th class="p-3 bg-gray-100">Pengguna</th>
-                    <th class="p-3 bg-gray-100">Tanggal</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">#</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Kode Stok</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Nama Stok</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Jumlah</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Keterangan</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Pengguna</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Tanggal</th>
                 </tr>
             </thead>
-            <tfoot class="!text-[13px] !tracking-wide !font-medium">
-                <tr class="!bg-gray-100">
-                    <td colspan="3" class="p-2 !text-center italic">Total Stok Keluar</td>
-                    <td id="total_quantity_out" class="p-2"></td>
-                    <td class="p-2"></td>
-                    <td class="p-2"></td>
-                    <td class="p-2"></td>
+            <tfoot class="!text-xs !tracking-wide !font-medium">
+                <tr class="bg-slate-50">
+                    <td colspan="3" class="p-2 !text-center italic text-slate-500">Total Stok Keluar</td>
+                    <td id="total_quantity_out" class="p-2 text-slate-700"></td>
+                    <td colspan="3" class="p-2"></td>
                 </tr>
-                <tr class="!bg-gray-50">
-                    <td colspan="3" class="p-2 !text-center italic">Total Stok Masuk</td>
-                    <td id="total_quantity_in" class="p-2"></td>
-                    <td class="p-2"></td>
-                    <td class="p-2"></td>
-                    <td class="p-2"></td>
+                <tr class="bg-slate-100/50">
+                    <td colspan="3" class="p-2 !text-center italic text-slate-500">Total Stok Masuk</td>
+                    <td id="total_quantity_in" class="p-2 text-slate-700"></td>
+                    <td colspan="3" class="p-2"></td>
                 </tr>
             </tfoot>
         </table>
@@ -105,22 +100,22 @@
                     {
                         data: 'stock.stock_code',
                         name: 'stock.stock_code',
-                        class: 'font-bold tracking-wide !text-xs !text-blue-500'
+                        class: 'font-bold tracking-wide !text-xs !text-slate-800'
                     },
                     {
                         data: 'stock.stock_name',
                         name: 'stock.stock_name',
-                        class: 'tracking-wide !text-xs !text-gray-900 line-clamp-1'
+                        class: 'tracking-wide !text-xs !text-slate-700 line-clamp-1'
                     },
                     {
                         data: 'stock_log_quantity',
                         name: 'stock_log_quantity',
-                        class: 'tracking-wide !text-xs !text-gray-900',
+                        class: 'tracking-wide !text-xs',
                         render: function(data, type, row) {
                             if (row.stock_log_status === '0') {
                                 return `<span class="text-red-500 font-bold">-${data} pcs</span>`;
                             } else if (row.stock_log_status === '1') {
-                                return `<span class="text-red-600 font-bold">+${data} pcs</span>`;
+                                return `<span class="text-emerald-600 font-bold">+${data} pcs</span>`;
                             } else {
                                 return `<span>${data}</span>`;
                             }
@@ -129,17 +124,17 @@
                     {
                         data: 'stock_log_description',
                         name: 'stock_log_description',
-                        class: 'font-medium tracking-wide !text-xs !text-gray-900',
+                        class: 'font-medium tracking-wide !text-xs !text-slate-700',
                     },
                     {
                         data: 'user.full_name',
                         name: 'user.full_name',
-                        class: 'font-medium tracking-wide !text-xs !text-gray-900',
+                        class: 'font-medium tracking-wide !text-xs !text-slate-700',
                     },
                     {
                         data: 'created_at',
                         name: 'created_at',
-                        class: 'font-medium tracking-wide !text-xs !text-gray-900',
+                        class: 'font-medium tracking-wide !text-xs !text-slate-700',
                     },
                 ],
                 columnDefs: [{

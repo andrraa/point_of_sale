@@ -5,72 +5,46 @@
 @section('navTitle', 'Kategori Pelanggan')
 
 @section('content')
-    <div class="flex h-full max-h-full overflow-hidden gap-2">
+    <div class="flex h-full max-h-full overflow-hidden gap-4">
         @include('partials.widget.sidebar')
 
-        <main class="flex-1 h-full overflow-y-auto px-4 py-2">
-            <div class="pb-4">
-                <h1 class="font-medium tracking-wider text-blue-500">Daftar Kategori Pelanggan</h1>
+        <main class="flex-1 h-full overflow-y-auto">
+            <div class="mb-5">
+                <h1 class="text-base font-semibold text-slate-800">Daftar Kategori Pelanggan</h1>
+                <p class="text-sm text-slate-500 mt-0.5">Kelola kategori pelanggan</p>
             </div>
 
-            {{-- DATA --}}
-            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
-                <table class="w-full">
-                    <thead class="text-left bg-gray-100">
-                        <tr>
-                            <th class="p-3 !text-[13px] tracking-wider text-blue-500">#</th>
-                            <th class="p-3 !text-[13px] tracking-wider text-blue-500">Kode Kategori</th>
-                            <th class="p-3 !text-[13px] tracking-wider text-blue-500">Nama Kategori</th>
-                            <th class="p-3 !text-[13px] tracking-wider text-blue-500">Level Harga</th>
-                            {{-- <th class="p-3 !text-[13px] tracking-wider text-blue-500">Aksi</th> --}}
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        @foreach ($customerCategories as $index => $category)
-                            @php
-                                $class = $index % 2 != 0 ? 'bg-gray-50' : '';
-                                $border = $loop->last ? 'border-b border-b-gray-200' : '';
-                            @endphp
+            <div class="mb-5">
+                <x-action-button :props="[
+                    'url' => route('customer-category.create'),
+                    'label' => 'Kategori Baru',
+                ]" />
+            </div>
 
-                            <tr class="{{ $class }} {{ $border }}">
-                                <td class="p-3 !text-[13px] tracking-wider">{{ $index + 1 }}</td>
-                                <td class="p-3 !text-[13px] tracking-wider">{{ $category->category_code }}</td>
-                                <td class="p-3 !text-[13px] tracking-wider">{{ $category->category_name }}</td>
-                                <td class="p-3 !text-[13px] tracking-wider">{{ $category->category_price_level }}</td>
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-200 bg-slate-50">
+                                <th class="p-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">#</th>
+                                <th class="p-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Kode</th>
+                                <th class="p-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Nama Kategori</th>
+                                <th class="p-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Level Harga</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            @foreach ($customerCategories as $index => $category)
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="p-3 text-slate-500">{{ $index + 1 }}</td>
+                                    <td class="p-3 text-slate-700">{{ $category->category_code }}</td>
+                                    <td class="p-3 text-slate-700">{{ $category->category_name }}</td>
+                                    <td class="p-3 text-slate-700">{{ $category->category_price_level }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </main>
     </div>
 @endsection
-
-@push('scripts')
-    {{-- <script type="module">
-        $(document).ready(function() {
-            $('.delete-button').on('click', function() {
-                const categoryId = $(this).data('id');
-
-                Swal.fire({
-                    title: 'Apakah yakin?',
-                    text: 'Kategori akan dihapus.',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Hapus',
-                    cancelButtonText: 'Batal',
-                }).then((res) => {
-                    if (res.isConfirmed) {
-                        $.ajax({
-                            url: `/category/${categoryId}`,
-                            type: 'DELETE',
-                            success: function(response) {
-                                location.reload();
-                            }
-                        });
-                    }
-                });
-            });
-        });
-    </script> --}}
-@endpush

@@ -5,7 +5,7 @@
 @section('navTitle', 'Supplier Baru')
 
 @section('content')
-    <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
         <form id="form-create-supplier" action="{{ route('supplier-stock.store') }}" method="POST">
             @csrf
 

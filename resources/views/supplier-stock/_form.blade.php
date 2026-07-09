@@ -1,8 +1,9 @@
-<div class="mb-3">
+<div class="mb-4">
     <x-form.label :props="[
         'for' => 'ss_name',
         'label' => 'Nama Supplier',
         'required' => true,
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -13,11 +14,12 @@
     ]" />
 </div>
 
-<div class="mb-3">
+<div class="mb-4">
     <x-form.label :props="[
         'for' => 'ss_phone',
         'label' => 'No. Handphone Supplier',
         'required' => true,
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -29,10 +31,11 @@
     ]" />
 </div>
 
-<div class="mb-3">
+<div class="mb-4">
     <x-form.label :props="[
         'for' => 'ss_address',
         'label' => 'Alamat Supplier',
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.input :props="[
@@ -47,6 +50,7 @@
     <x-form.label :props="[
         'for' => 'ss_description',
         'label' => 'Keterangan Supplier',
+        'class' => 'text-slate-700 font-medium text-sm',
     ]" />
 
     <x-form.textarea :props="[

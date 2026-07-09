@@ -5,19 +5,17 @@
 @section('navTitle', 'Ubah Penjualan / Return Barang')
 
 @section('content')
-    <div class="mb-6 mt-2 w-fit">
-        <a href="{{ route('sale.index') }}">
-            <div
-                class="flex items-center gap-2 px-4 py-2 rounded-md text-sm bg-white shadow-lg hover:bg-gray-100 transition-colors duration-300 border border-gray-200">
-                <i class="fa-solid fa-chevron-left text-xs"></i>
-                <span>Kembali</span>
-            </div>
+    <div class="mb-4 w-fit">
+        <a href="{{ route('sale.index') }}"
+            class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm bg-white border border-slate-200 shadow-sm hover:bg-slate-50 transition-colors duration-200 text-slate-600">
+            <i class="fa-solid fa-chevron-left text-xs"></i>
+            <span>Kembali</span>
         </a>
     </div>
 
-    <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
         <table class="table w-full">
-            <thead class="!text-[13px] !tracking-wide !text-left bg-gray-100">
+            <thead class="!text-xs !tracking-wide !text-left bg-slate-50 font-semibold text-slate-600">
                 <tr>
                     <th class="p-2">No.</th>
                     <th class="p-2">Nama Barang</th>
@@ -30,14 +28,14 @@
                 $totalPrice = 0;
                 $totalQuantity = 0;
             @endphp
-            <tbody class="!text-[13px] !tracking-wide divide-y divide-gray-100">
+            <tbody class="!text-xs !tracking-wide divide-y divide-slate-100">
                 @foreach ($sale->details as $index => $detail)
                     <tr>
-                        <td class="p-2">{{ $index + 1 }}</td>
-                        <td class="p-2">
+                        <td class="p-2 text-slate-700">{{ $index + 1 }}</td>
+                        <td class="p-2 text-slate-700">
                             {{ $detail->sale_detail_stock_code . ' - ' . $detail->sale_detail_stock_name }}
                         </td>
-                        <td class="p-2">Rp {{ number_format($detail->sale_detail_price) }}</td>
+                        <td class="p-2 text-slate-700">Rp {{ number_format($detail->sale_detail_price) }}</td>
                         <td class="p-2">
                             <x-form.input :props="[
                                 'id' => 'quantity-' . $detail->sale_detail_id,
@@ -50,13 +48,13 @@
                             <div class="flex items-center gap-2">
                                 <button type="button" data-id="{{ $detail->sale_detail_id }}"
                                     data-url="{{ route('sale-detail.update', $detail->sale_detail_id) }}"
-                                    class="btn-save px-2 py-1 border rounded-sm cursor-pointer text-blue-500">
+                                    class="btn-save px-2 py-1 border border-slate-300 rounded cursor-pointer text-slate-800 hover:bg-slate-100 transition-colors text-xs">
                                     <i class="fa-solid fa-save"></i>
                                 </button>
 
                                 <button type="button" data-id="{{ $detail->sale_detail_id }}"
                                     data-url="{{ route('sale-detail.destroy', $detail->sale_detail_id) }}"
-                                    class="btn-delete px-2 py-1 border rounded-sm cursor-pointer text-red-500">
+                                    class="btn-delete px-2 py-1 border border-slate-300 rounded cursor-pointer text-red-500 hover:bg-slate-100 transition-colors text-xs">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </div>
@@ -70,18 +68,12 @@
                 @endforeach
             </tbody>
             <tfoot>
-                <tr>
-                    <td class="p-2 bg-gray-100 text-[13px] font-medium"></td>
-                    <td class="p-2 bg-gray-100 text-[13px] font-medium">
-                        Total:
-                    </td>
-                    <td class="p-2 bg-gray-100 text-[13px] font-medium">
-                        Rp {{ number_format($totalPrice) }}
-                    </td>
-                    <td class="p-2 bg-gray-100 text-[13px] font-medium">
-                        {{ $totalQuantity }} pcs
-                    </td>
-                    <td class="p-2 bg-gray-100 text-[13px] font-medium"></td>
+                <tr class="bg-slate-50">
+                    <td class="p-2 text-xs font-medium text-slate-600"></td>
+                    <td class="p-2 text-xs font-medium text-slate-600">Total:</td>
+                    <td class="p-2 text-xs font-medium text-slate-700">Rp {{ number_format($totalPrice) }}</td>
+                    <td class="p-2 text-xs font-medium text-slate-700">{{ $totalQuantity }} pcs</td>
+                    <td class="p-2 text-xs font-medium text-slate-600"></td>
                 </tr>
             </tfoot>
         </table>

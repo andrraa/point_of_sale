@@ -11,27 +11,26 @@
             'label' => 'Stok Baru',
         ]" />
 
-        <a href="{{ route('stock.taken') }}">
-            <div
-                class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium tracking-wide hover:bg-white border border-transparent hover:border-red-500 hover:text-red-500 transition-all duration-300 shadow-lg">
-                <i class="fa-solid fa-plus-minus text-xs mr-2"></i>
-                Pengambilan Stok
-            </div>
+        <a href="{{ route('stock.taken') }}"
+            class="px-4 py-2 rounded-lg bg-amber-500 text-white text-sm font-medium tracking-wide border border-amber-500 hover:bg-white hover:text-amber-500 transition-all duration-200 shadow-sm">
+            <i class="fa-solid fa-plus-minus text-xs mr-2"></i>
+            Pengambilan Stok
         </a>
 
         <button type="button" id="open-stock-modal"
-            class="px-4 py-2 rounded-lg bg-green-600 text-white text-sm font-medium tracking-wide border border-transparent hover:bg-white hover:border-green-600 hover:text-green-600 transition-all duration-300 cursor-pointer shadow-lg">
+            class="px-4 py-2 rounded-lg bg-emerald-600 text-white text-sm font-medium tracking-wide border border-emerald-600 hover:bg-white hover:text-emerald-600 transition-all duration-200 cursor-pointer shadow-sm">
             <i class="fa-solid fa-file text-xs mr-2"></i>
             Laporan Stok
         </button>
     </div>
 
-    <div class="bg-white rounded-xl shadow-lg border border-gray-200 mb-4 p-4 flex items-center gap-4">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm mb-4 p-5 flex items-center gap-4">
         <div class="w-1/3">
             <x-form.label :props="[
                 'for' => 'filter',
                 'label' => 'Filter Kategori',
                 'required' => true,
+                'class' => 'text-slate-700 font-medium text-sm',
             ]" />
 
             <x-form.select :props="[
@@ -47,6 +46,7 @@
                 'for' => 'filterRack',
                 'label' => 'Filter Rak',
                 'required' => true,
+                'class' => 'text-slate-700 font-medium text-sm',
             ]" />
 
             <x-form.select :props="[
@@ -62,6 +62,7 @@
                 'for' => 'filterSS',
                 'label' => 'Filter Supplier',
                 'required' => true,
+                'class' => 'text-slate-700 font-medium text-sm',
             ]" />
 
             <x-form.select :props="[
@@ -73,30 +74,30 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-xl shadow-lg p-4 border border-gray-200 overflow-x-auto">
-        <table id="stock-table" class="w-full min-w-max">
-            <thead class="!text-[13px] !tracking-wide text-left">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+        <table id="stock-table" class="w-full">
+            <thead class="!text-xs tracking-wide text-left">
                 <tr>
-                    <th class="p-3 bg-gray-100">#</th>
-                    <th class="p-3 bg-gray-100">Kode Stok</th>
-                    <th class="p-3 bg-gray-100">Nama Stok</th>
-                    <th class="p-3 bg-gray-100">Kategori</th>
-                    <th class="p-3 bg-gray-100">Supplier</th>
-                    <th class="p-3 bg-gray-100">Rak</th>
-                    <th class="p-3 bg-gray-100">Stok Awal</th>
-                    <th class="p-3 bg-gray-100">Stok Keluar</th>
-                    <th class="p-3 bg-gray-100">Stok Akhir</th>
-                    <th class="p-3 bg-gray-100">Harga Beli</th>
-                    <th class="p-3 bg-gray-100">Aksi</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">#</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Kode</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Nama Stok</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Kategori</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Supplier</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Rak</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Stok Awal</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Stok Keluar</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Stok Akhir</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Harga Beli</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Aksi</th>
                 </tr>
             </thead>
-            <tfoot class="!text-[13px] !tracking-wide !font-medium bg-gray-100">
-                <tr>
-                    <td colspan="6" class="p-2 !text-center">Total</td>
-                    <td id="total_stock_awal" class="p-2"></td>
-                    <td id="total_stock_out" class="p-2"></td>
-                    <td id="total_stock_all" class="p-2"></td>
-                    <td colspan="2" id="total_stock_purchase_price" class="p-2"></td>
+            <tfoot class="!text-xs !tracking-wide !font-medium">
+                <tr class="bg-slate-50">
+                    <td colspan="6" class="p-2 !text-center text-slate-600">Total</td>
+                    <td id="total_stock_awal" class="p-2 text-slate-700"></td>
+                    <td id="total_stock_out" class="p-2 text-slate-700"></td>
+                    <td id="total_stock_all" class="p-2 text-slate-700"></td>
+                    <td colspan="2" id="total_stock_purchase_price" class="p-2 text-slate-700"></td>
                 </tr>
             </tfoot>
         </table>
@@ -134,32 +135,32 @@
                     {
                         data: 'stock_code',
                         name: 'stock_code',
-                        class: 'font-bold tracking-wide !text-xs !text-blue-500'
+                        class: 'font-bold tracking-wide !text-xs !text-slate-800'
                     },
                     {
                         data: 'stock_name',
                         name: 'stock_name',
-                        class: 'tracking-wide !text-xs !text-gray-900 line-clamp-1'
+                        class: 'tracking-wide !text-xs !text-slate-700 line-clamp-1'
                     },
                     {
                         data: 'category.category_name',
                         name: 'category.category_name',
-                        class: 'tracking-wide !text-xs !text-gray-900'
+                        class: 'tracking-wide !text-xs !text-slate-700'
                     },
                     {
                         data: 'supplier_stock.ss_name',
                         name: 'supplier_stock.ss_name',
-                        class: 'tracking-wide !text-xs !text-gray-900 line-clamp-1'
+                        class: 'tracking-wide !text-xs !text-slate-700 line-clamp-1'
                     },
                     {
                         data: 'rack.category_name',
                         name: 'rack.category_name',
-                        class: 'tracking-wide !text-xs !text-gray-900'
+                        class: 'tracking-wide !text-xs !text-slate-700'
                     },
                     {
                         data: 'stock_awal',
                         name: 'stock_awal',
-                        class: 'font-medium tracking-wide !text-xs !text-red-500',
+                        class: 'font-medium tracking-wide !text-xs !text-slate-700',
                         render: function(data) {
                             return `${data} pcs`;
                         }
@@ -167,7 +168,7 @@
                     {
                         data: 'stock_out',
                         name: 'stock_out',
-                        class: 'font-medium tracking-wide !text-xs !text-red-500',
+                        class: 'font-medium tracking-wide !text-xs !text-slate-700',
                         render: function(data) {
                             return `${data} pcs`;
                         }
@@ -175,7 +176,7 @@
                     {
                         data: 'stock_total',
                         name: 'stock_total',
-                        class: 'font-medium tracking-wide !text-xs !text-gray-900',
+                        class: 'font-medium tracking-wide !text-xs !text-slate-700',
                         render: function(data) {
                             return `${data} pcs`;
                         }
@@ -183,7 +184,7 @@
                     {
                         data: 'stock_purchase_price',
                         name: 'stock_purchase_price',
-                        class: 'font-medium tracking-wide !text-xs !text-green-500',
+                        class: 'font-medium tracking-wide !text-xs !text-emerald-600',
                         render: function(data) {
                             return `Rp ${customFunction.formatNumberToRupiah(data)}`;
                         }
@@ -206,8 +207,6 @@
 
                     if (json) {
                         const price = json.total_stock_purchase_price ?? 0;
-
-                        console.log(json.total_stock_purchase_price);
 
                         $('#total_stock_awal').html(`${json.total_stock_awal} pcs`);
                         $('#total_stock_out').html(`${json.total_stock_out} pcs`);

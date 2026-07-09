@@ -5,15 +5,16 @@
 @section('navTitle', 'Rak')
 
 @section('content')
-    <div class="flex h-full max-h-full overflow-hidden gap-2">
+    <div class="flex h-full max-h-full overflow-hidden gap-4">
         @include('partials.widget.sidebar')
 
-        <main class="flex-1 h-full overflow-y-auto p-2">
-            <div class="mb-4">
-                <h1 class="font-medium tracking-wider text-blue-500">Ubah Rak</h1>
+        <main class="flex-1 h-full overflow-y-auto">
+            <div class="mb-5">
+                <h1 class="text-base font-semibold text-slate-800">Ubah Rak</h1>
+                <p class="text-sm text-slate-500 mt-0.5">Perbarui data rak</p>
             </div>
 
-            <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
                 <form id="form-edit-category" action="{{ route('rack.update', $category->category_id) }}" method="POST">
                     @csrf
                     @method('PUT')

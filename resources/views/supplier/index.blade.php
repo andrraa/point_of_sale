@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Supplier')
+@section('title', 'Pemasok')
 
 @section('navTitle', 'Daftar Pemasok')
 
@@ -12,12 +12,13 @@
         ]" />
     </div>
 
-    <div class="bg-white rounded-xl shadow-lg border border-gray-200 mb-4 p-4">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm mb-4 p-5">
         <div class="w-1/3">
             <x-form.label :props="[
                 'for' => 'filter',
-                'label' => 'Filter Kategori',
+                'label' => 'Filter Wilayah',
                 'required' => true,
+                'class' => 'text-slate-700 font-medium text-sm',
             ]" />
 
             <x-form.select :props="[
@@ -29,15 +30,15 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-xl shadow-lg p-4 border border-gray-200 overflow-x-auto">
-        <table id="supplier-table" class="w-full min-w-max">
-            <thead class="!text-[13px] tracking-wide text-left">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+        <table id="supplier-table" class="w-full">
+            <thead class="!text-xs tracking-wide text-left">
                 <tr>
-                    <th class="p-3 bg-gray-100">#</th>
-                    <th class="p-3 bg-gray-100">Kode Pemasok</th>
-                    <th class="p-3 bg-gray-100">Nama Pemasok</th>
-                    <th class="p-3 bg-gray-100">Wilayah Pemasok</th>
-                    <th class="p-3 bg-gray-100">Aksi</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">#</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Kode Pemasok</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Nama Pemasok</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Wilayah</th>
+                    <th class="p-3 bg-slate-50 text-slate-600 font-semibold">Aksi</th>
                 </tr>
             </thead>
         </table>
@@ -71,17 +72,17 @@
                     {
                         data: 'supplier_code',
                         name: 'supplier_code',
-                        class: 'font-semibold tracking-wide !text-xs !text-blue-500'
+                        class: 'font-semibold tracking-wide !text-xs !text-slate-800'
                     },
                     {
                         data: 'supplier_name',
                         name: 'supplier_name',
-                        class: 'tracking-wide !text-xs !text-gray-900'
+                        class: 'tracking-wide !text-xs !text-slate-700'
                     },
                     {
                         data: 'region.region_name',
                         name: 'region.region_name',
-                        class: 'tracking-wide !text-xs !text-gray-900'
+                        class: 'tracking-wide !text-xs !text-slate-700'
                     },
                     {
                         data: 'actions',

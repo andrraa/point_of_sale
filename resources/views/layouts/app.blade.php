@@ -15,13 +15,13 @@
 </head>
 
 <body>
-    <div class="h-dvh overflow-hidden bg-gray-100 flex">
+    <div class="h-dvh overflow-hidden bg-slate-50 flex">
         @include('partials.sidebar')
 
         <div class="h-full overflow-hidden w-full flex flex-col">
             @include('partials.navbar')
 
-            <main class="overflow-y-auto max-w-full px-6 pb-4 flex-l h-full">
+            <main class="overflow-y-auto max-w-full px-6 py-4 flex-1 min-h-0">
                 @yield('content')
             </main>
         </div>
