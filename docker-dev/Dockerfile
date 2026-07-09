@@ -7,9 +7,20 @@ RUN apk add --no-cache \
     libzip-dev \
     icu-dev \
     zlib-dev \
-    oniguruma-dev
+    oniguruma-dev \
+    freetype-dev \
+    libjpeg-turbo-dev \
+    libpng-dev \
+    libwebp-dev
+
+RUN docker-php-ext-configure gd \
+    --with-freetype \
+    --with-jpeg \
+    --with-webp
 
 RUN docker-php-ext-install \
+    gd \
+    bcmath \
     zip \
     intl \
     mbstring \
