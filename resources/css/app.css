@@ -16,7 +16,7 @@
 
 /* VALIDATION STYLE */
 .invalid-feedback {
-    @apply text-coral-red mt-0.5 tracking-wide;
+    @apply text-coral-red mt-1 tracking-wide text-xs;
 }
 
 /* SELECT2 */

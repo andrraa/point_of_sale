@@ -58,7 +58,7 @@
                                 Nama Pengguna <span class="text-red-500">*</span>
                             </label>
                             <div class="relative">
-                                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 pointer-events-none">
+                                <span class="absolute left-0 pl-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
                                     <i class="fa-solid fa-user text-sm"></i>
                                 </span>
                                 <input type="text" id="username" name="username"
@@ -72,7 +72,7 @@
                                 Kata Sandi <span class="text-red-500">*</span>
                             </label>
                             <div class="relative">
-                                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 pointer-events-none">
+                                <span class="absolute left-0 pl-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
                                     <i class="fa-solid fa-lock text-sm"></i>
                                 </span>
                                 <input type="password" id="password" name="password"
