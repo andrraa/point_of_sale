@@ -3,26 +3,15 @@ FROM php:8.3-fpm-alpine
 RUN apk add --no-cache \
     bash \
     curl \
-    libpng-dev \
-    libjpeg-turbo-dev \
-    freetype-dev \
+    sqlite-dev \
     libzip-dev \
-    zlib-dev \
     icu-dev \
-    oniguruma-dev \
-    postgresql-dev \
-    libwebp-dev
-
-RUN docker-php-ext-configure gd \
-    --with-freetype \
-    --with-jpeg \
-    --with-webp
+    zlib-dev \
+    oniguruma-dev
 
 RUN docker-php-ext-install \
-    pdo_mysql \
-    pdo_pgsql \
-    pgsql \
-    gd \
+    pdo_sqlite \
+    sqlite3 \
     zip \
     intl \
     mbstring \
